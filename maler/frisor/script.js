@@ -240,7 +240,6 @@ ScrollTrigger.create({trigger:".steps",start:"top 78%",once:true,onEnter:functio
   gsap.to("#hrs-bar",{scaleX:1,duration:2.8,ease:"power2.inOut"});
   $$(".step").forEach(function(s,i){gsap.delayedCall(i*.55,function(){s.classList.add("on")})});
 }});
-gsap.from(".step",{y:30,autoAlpha:0,duration:.9,stagger:.12,ease:"power3.out",scrollTrigger:{trigger:".steps",start:"top 85%"}});
 
 /* frisørliste */
 gsap.from(".cake",{y:60,autoAlpha:0,duration:1.1,stagger:.09,ease:"power3.out",scrollTrigger:{trigger:".cakes",start:"top 82%"}});
