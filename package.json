@@ -1,0 +1,11 @@
+{
+  "name": "northweb",
+  "private": true,
+  "description": "NorthWeb – nettside med e-postbekreftet kontaktskjema",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

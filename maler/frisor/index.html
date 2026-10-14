@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="nb">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salong Lys</title>
+<!--
+================================================================================
+  BRANSJEMAL v3 · FRISØR  (animert portefølje-versjon)
+
+  Søstermal til bakeri-, esport- og håndverker-malen. Samme oppbygging,
+  klassenavn og animasjoner. Nytt her: timebestilling med ledige dager og
+  klokkeslett direkte i skjemaet.
+
+  BIBLIOTEKER (lastes fra CDN, siden fungerer uten dem):
+  - Lenis 1.1.13 ........ myk scrolling
+  - GSAP 3.12.5 + ScrollTrigger ... alle scroll-animasjoner
+  Respekterer «redusert bevegelse»: da slås all animasjon av.
+
+  GJENBRUK
+  1. Farger og skrift: tokenene i :root (og de to mørke blokkene).
+  2. PLASSHOLDER = fiktivt innhold som byttes med kundens.
+  3. Seksjoner er merket «SEKSJON: …».
+  4. BRANSJEDETALJ = frisørspesifikt (behandlinger med varighet, en
+     balayage på 180 minutter, frisørene med neste ledige time).
+  5. Illustrasjonene ligger som <symbol> øverst i body. Bytt med foto
+     ved å erstatte <svg><use></svg> med <img>. Portrettene (a-*) bør
+     byttes med ekte bilder av frisørene.
+  6. TIMEBESTILLING: ledige tider er LIKSOM-data, regnet ut av erLedig()
+     i scriptet. Ved levering kobles den mot salongens bookingsystem, eller
+     så erstattes hele blokken med deres egen widget/lenke.
+     Uten JavaScript vises et vanlig tekstfelt for ønsket tid.
+  7. Åpningstider står to steder: i bunnen og i APNING i scriptet.
+
+  FIKTIV SALONG: Salong Lys AS, Trondheim. Navn, adresse, telefon, e-post,
+  org.nr., priser, frisører og sitat er PLASSHOLDERE.
+================================================================================
+-->
+<meta name="description" content="Frisørsalong på Bakklandet i Trondheim. Klipp, farge, balayage og bryllupshår. Bestill time på nett."><!-- PLASSHOLDER -->
+<meta property="og:title" content="Salong Lys, Trondheim"><!-- PLASSHOLDER -->
+<meta property="og:locale" content="nb_NO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=DM+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<canvas id="grain" aria-hidden="true"></canvas>
+
+<!-- ======================================================================
+     ILLUSTRASJONER (BRANSJEDETALJ). Brukes med <svg><use href="#id"/></svg>
+     ====================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F1F3F4"/><stop offset=".5" stop-color="#B5BCC1"/><stop offset="1" stop-color="#6E777D"/>
+    </linearGradient>
+    <linearGradient id="g-peach" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8C3A4"/><stop offset=".6" stop-color="#F1A67E"/><stop offset="1" stop-color="#D9825A"/>
+    </linearGradient>
+    <linearGradient id="g-balayage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3B2418"/><stop offset=".45" stop-color="#8A5A34"/><stop offset="1" stop-color="#EBC98F"/>
+    </linearGradient>
+    <linearGradient id="g-glass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B7CCB4"/><stop offset=".5" stop-color="#9DB49A"/><stop offset="1" stop-color="#7A9478"/>
+    </linearGradient>
+    <clipPath id="av-c"><circle cx="100" cy="100" r="90"/></clipPath>
+    <path id="sirkel" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" fill="none"/>
+
+    <!-- stempellogo med saks. PLASSHOLDER: bytt med kundens logo -->
+    <g id="saks-g" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+      <circle cx="84" cy="122" r="10"/><circle cx="116" cy="122" r="10"/>
+      <path d="M90 114 L124 70"/><path d="M110 114 L76 70"/>
+      <circle cx="100" cy="96" r="2.5" fill="currentColor" stroke="none"/>
+    </g>
+    <symbol id="stempel" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="2"/>
+      <text class="stamp" fill="currentColor"><textPath href="#sirkel">SALONG LYS · BAKKLANDET · TRONDHEIM ·</textPath></text>
+      <circle cx="100" cy="100" r="54" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <use href="#saks-g"/>
+    </symbol>
+    <symbol id="glimt" viewBox="0 0 200 200">
+      <path d="M100 10 C106 74 126 94 190 100 C126 106 106 126 100 190 C94 126 74 106 10 100 C74 94 94 74 100 10Z" fill="currentColor"/>
+    </symbol>
+
+    <!-- verktøy -->
+    <symbol id="i-saks" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="186" rx="60" ry="7" fill="#000" opacity=".14"/>
+      <path d="M104 106 L176 24 C181 19 188 24 183 31 L112 116Z" fill="url(#g-steel)"/>
+      <path d="M96 106 L24 24 C19 19 12 24 17 31 L88 116Z" fill="url(#g-steel)"/>
+      <path d="M92 112 L72 140" stroke="var(--peach)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M108 112 L128 140" stroke="var(--peach)" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="64" cy="156" r="20" fill="none" stroke="var(--peach)" stroke-width="10"/>
+      <circle cx="136" cy="156" r="20" fill="none" stroke="var(--peach)" stroke-width="10"/>
+      <path d="M128 140 l14 -2" stroke="var(--peach)" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="100" cy="106" r="7" fill="var(--gold)"/><circle cx="100" cy="106" r="2.5" fill="#8A6A2E"/>
+      <path d="M110 92 L170 30" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-kam" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="178" rx="76" ry="7" fill="#000" opacity=".14"/>
+      <g transform="rotate(-14 100 100)">
+        <path d="M24 116 H176" stroke="var(--plum)" stroke-width="44" stroke-dasharray="3.5 3.5"/>
+        <rect x="18" y="70" width="164" height="26" rx="10" fill="var(--plum)"/>
+        <rect x="26" y="74" width="148" height="5" rx="2.5" fill="#fff" opacity=".2"/>
+      </g>
+    </symbol>
+    <symbol id="i-foen" viewBox="0 0 200 200">
+      <ellipse cx="96" cy="188" rx="58" ry="7" fill="#000" opacity=".14"/>
+      <path d="M78 104 L66 176 a10 10 0 0 0 10 10 h14 a10 10 0 0 0 10 -10 L104 104Z" fill="url(#g-peach)"/>
+      <rect x="86" y="128" width="12" height="20" rx="4" fill="#1E1916" opacity=".8"/>
+      <rect x="30" y="50" width="122" height="62" rx="31" fill="url(#g-peach)"/>
+      <rect x="44" y="58" width="90" height="8" rx="4" fill="#fff" opacity=".45"/>
+      <circle cx="44" cy="81" r="20" fill="#1E1916"/>
+      <g stroke="#3A322D" stroke-width="2.5"><path d="M32 81h24M44 69v24M36 73l16 16M52 73l-16 16"/></g>
+      <rect x="148" y="60" width="30" height="42" rx="6" fill="#1E1916"/>
+      <g stroke="var(--peach)" stroke-width="4" stroke-linecap="round" opacity=".7"><path d="M186 70h8"/><path d="M188 82h10"/><path d="M186 94h8"/></g>
+      <path d="M74 182 C60 192 40 186 34 172" fill="none" stroke="#1E1916" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-bolle" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="176" rx="68" ry="7" fill="#000" opacity=".14"/>
+      <rect x="112" y="34" width="66" height="84" rx="3" fill="url(#g-steel)" transform="rotate(14 145 76)"/>
+      <path d="M150 20 L112 104" stroke="#1E1916" stroke-width="9" stroke-linecap="round"/>
+      <path d="M40 104 H160 C160 144 134 166 100 166 C66 166 40 144 40 104Z" fill="var(--plum)"/>
+      <ellipse cx="100" cy="104" rx="60" ry="13" fill="#7A4560"/>
+      <ellipse cx="100" cy="106" rx="51" ry="9" fill="#C8643B"/>
+      <path d="M104 106 L118 92 L126 98 L112 110Z" fill="#E9DDCB"/>
+      <path d="M58 122 C66 146 84 156 104 156" fill="none" stroke="#fff" stroke-width="4" opacity=".18" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-lokk" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="188" rx="54" ry="6" fill="#000" opacity=".12"/>
+      <rect x="40" y="40" width="80" height="120" rx="3" fill="url(#g-steel)" transform="rotate(-10 80 100)" opacity=".9"/>
+      <path d="M96 16 C66 44 132 70 102 102 C72 134 138 152 108 184 L88 184 C116 152 52 134 82 102 C112 70 46 44 76 16Z" fill="url(#g-balayage)"/>
+      <path d="M118 22 C92 48 150 72 122 104 C96 134 152 154 126 182 L112 182 C138 154 82 134 108 104 C136 72 80 48 104 22Z" fill="url(#g-balayage)" opacity=".85"/>
+      <path d="M86 28 C64 52 120 74 94 104" fill="none" stroke="#fff" stroke-width="2.5" opacity=".3" stroke-linecap="round"/>
+      <rect x="84" y="10" width="40" height="12" rx="6" fill="var(--peach)"/>
+    </symbol>
+    <symbol id="i-kniv" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="170" rx="80" ry="7" fill="#000" opacity=".14"/>
+      <g transform="rotate(-16 100 100)">
+        <rect x="18" y="100" width="128" height="22" rx="11" fill="var(--plum)"/>
+        <rect x="26" y="104" width="112" height="4" rx="2" fill="#fff" opacity=".2"/>
+        <path d="M58 72 H168 C176 72 182 80 176 88 L160 100 H58Z" fill="url(#g-steel)"/>
+        <path d="M60 96 H158" stroke="#fff" stroke-width="2" opacity=".8"/>
+        <circle cx="140" cy="111" r="6" fill="var(--gold)"/>
+      </g>
+    </symbol>
+    <symbol id="i-flaske" viewBox="0 0 200 200">
+      <ellipse cx="108" cy="182" rx="74" ry="7" fill="#000" opacity=".14"/>
+      <rect x="70" y="28" width="32" height="30" rx="4" fill="#1E1916"/>
+      <rect x="54" y="54" width="64" height="124" rx="16" fill="url(#g-glass)"/>
+      <rect x="62" y="62" width="8" height="100" rx="4" fill="#fff" opacity=".35"/>
+      <rect x="64" y="96" width="44" height="50" rx="4" fill="var(--paper,#F7F2EC)"/>
+      <rect x="72" y="108" width="28" height="4" rx="2" fill="#1E1916" opacity=".7"/>
+      <rect x="72" y="118" width="20" height="3" rx="1.5" fill="#1E1916" opacity=".35"/>
+      <rect x="120" y="116" width="62" height="64" rx="12" fill="url(#g-peach)"/>
+      <rect x="116" y="102" width="70" height="20" rx="6" fill="#1E1916"/>
+      <rect x="130" y="138" width="42" height="20" rx="3" fill="#fff" opacity=".7"/>
+    </symbol>
+    <symbol id="i-spray" viewBox="0 0 200 200">
+      <ellipse cx="96" cy="186" rx="50" ry="7" fill="#000" opacity=".14"/>
+      <path d="M64 30 H120 L128 52 H86 L84 64 H70Z" fill="#1E1916"/>
+      <path d="M84 52 L74 78 H58 L64 52Z" fill="#1E1916"/>
+      <rect x="72" y="60" width="40" height="22" rx="4" fill="#3A322D"/>
+      <path d="M66 84 H118 C130 84 138 96 138 110 V170 a12 12 0 0 1 -12 12 H58 a12 12 0 0 1 -12 -12 V110 C46 96 54 84 66 84Z" fill="var(--rose)"/>
+      <rect x="56" y="96" width="8" height="74" rx="4" fill="#fff" opacity=".4"/>
+      <rect x="66" y="120" width="56" height="34" rx="3" fill="#1E1916"/>
+      <text x="94" y="142" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="16" fill="var(--peach)">Lys</text>
+      <g fill="var(--rose)" opacity=".6"><circle cx="136" cy="34" r="3"/><circle cx="148" cy="28" r="2.5"/><circle cx="146" cy="42" r="2"/><circle cx="160" cy="36" r="2"/><circle cx="156" cy="22" r="1.5"/></g>
+    </symbol>
+
+    <!-- portretter av frisørene. PLASSHOLDER: bytt med ekte foto -->
+    <symbol id="a-ida" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" fill="var(--peach)"/>
+      <g clip-path="url(#av-c)">
+        <path d="M60 96 C58 54 80 42 100 42 C120 42 142 54 140 96 L142 134 H58Z" fill="#6B2E22"/>
+        <rect x="88" y="118" width="24" height="40" rx="10" fill="#D9A98C"/>
+        <path d="M28 200 C32 160 62 146 100 146 C138 146 168 160 172 200Z" fill="#1E1916"/>
+        <ellipse cx="100" cy="94" rx="31" ry="37" fill="#F2C9AE"/>
+        <path d="M68 88 C68 60 84 50 100 50 C118 50 134 60 133 86 C120 74 96 70 68 88Z" fill="#6B2E22"/>
+        <circle cx="70" cy="104" r="3" fill="var(--gold)"/>
+      </g>
+    </symbol>
+    <symbol id="a-jonas" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" fill="var(--sage)"/>
+      <g clip-path="url(#av-c)">
+        <rect x="88" y="118" width="24" height="40" rx="10" fill="#C99474"/>
+        <path d="M28 200 C32 160 62 146 100 146 C138 146 168 160 172 200Z" fill="var(--plum)"/>
+        <ellipse cx="100" cy="94" rx="31" ry="37" fill="#E8B896"/>
+        <path d="M68 86 C64 56 84 46 100 46 C118 46 136 56 132 86 C128 70 114 64 100 64 C86 64 72 70 68 86Z" fill="#2A211C"/>
+        <path d="M69 98 C69 128 86 138 100 138 C114 138 131 128 131 98 C124 114 112 118 100 118 C88 118 76 114 69 98Z" fill="#2A211C"/>
+      </g>
+    </symbol>
+    <symbol id="a-amina" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" fill="var(--gold)"/>
+      <g clip-path="url(#av-c)">
+        <g fill="#1E1614">
+          <circle cx="64" cy="70" r="18"/><circle cx="78" cy="48" r="18"/><circle cx="100" cy="40" r="18"/><circle cx="122" cy="48" r="18"/><circle cx="136" cy="70" r="18"/>
+          <circle cx="146" cy="94" r="18"/><circle cx="144" cy="118" r="17"/><circle cx="132" cy="138" r="15"/><circle cx="68" cy="138" r="15"/><circle cx="56" cy="118" r="17"/><circle cx="54" cy="94" r="18"/>
+        </g>
+        <rect x="88" y="118" width="24" height="40" rx="10" fill="#6E4329"/>
+        <path d="M28 200 C32 160 62 146 100 146 C138 146 168 160 172 200Z" fill="#F7F2EC"/>
+        <ellipse cx="100" cy="96" rx="30" ry="36" fill="#8D5A3B"/>
+        <g fill="#1E1614"><circle cx="80" cy="62" r="12"/><circle cx="98" cy="58" r="13"/><circle cx="118" cy="62" r="12"/></g>
+      </g>
+    </symbol>
+    <symbol id="a-sofie" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" fill="var(--rose)"/>
+      <g clip-path="url(#av-c)">
+        <circle cx="100" cy="42" r="20" fill="#C9955B"/>
+        <rect x="88" y="118" width="24" height="40" rx="10" fill="#DDB096"/>
+        <path d="M28 200 C32 160 62 146 100 146 C138 146 168 160 172 200Z" fill="var(--sage)"/>
+        <ellipse cx="100" cy="94" rx="31" ry="37" fill="#F5D3BC"/>
+        <path d="M68 92 C66 62 84 54 100 54 C116 54 134 62 132 92 C128 74 116 66 100 66 C84 66 72 74 68 92Z" fill="#C9955B"/>
+        <path d="M70 92 C66 104 68 116 72 122" fill="none" stroke="#C9955B" stroke-width="4" stroke-linecap="round"/>
+      </g>
+    </symbol>
+    <symbol id="a-emil" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" fill="#B9C8D8"/>
+      <g clip-path="url(#av-c)">
+        <rect x="88" y="118" width="24" height="40" rx="10" fill="#CFA07E"/>
+        <path d="M28 200 C32 160 62 146 100 146 C138 146 168 160 172 200Z" fill="#2F4A63"/>
+        <ellipse cx="100" cy="94" rx="31" ry="37" fill="#EBC2A2"/>
+        <path d="M66 88 C60 56 80 44 100 46 C124 44 142 58 134 88 L128 72 L118 82 L108 68 L96 80 L86 66 L76 82Z" fill="#8A5A34"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== SEKSJON: Toppmeny ===== -->
+<header class="top" id="top-bar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Salong Lys, til forsiden">
+      <svg aria-hidden="true"><use href="#stempel"/></svg><b>Salong Lys</b>
+    </a>
+    <nav class="nav" aria-label="Hovedmeny">
+      <a href="#behandlinger">Behandlinger</a>
+      <a href="#prosess">Bak stolen</a>
+      <a href="#frisorene">Frisørene</a>
+      <a href="#bestill">Bestill time</a>
+    </nav>
+    <a class="btn btn-red" href="#bestill">Bestill time <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===== SEKSJON: Hero ===== -->
+<section class="hero">
+  <div class="stamp-wrap" aria-hidden="true"><div class="stamp-spin"><svg><use href="#stempel"/></svg></div></div>
+  <div class="float f1" data-speed="0.35" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-foen"/></svg></div></div>
+  <div class="float f2" data-speed="0.6" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-saks"/></svg></div></div>
+  <div class="float f3" data-speed="0.15" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-spray"/></svg></div></div>
+
+  <div class="wrap">
+    <h1 aria-label="Hår som passer deg, ikke trenden."><!-- PLASSHOLDER -->
+      <span class="line" aria-hidden="true"><span class="li">Hår som</span></span>
+      <span class="line" aria-hidden="true"><span class="li">passer deg,</span></span>
+      <span class="line" aria-hidden="true"><span class="li soft">ikke trenden.</span></span>
+    </h1>
+    <div class="hero-row reveal-hero">
+      <p class="intro">Liten frisørsalong på Bakklandet. Fem frisører, god tid i stolen og kaffe som faktisk er god.</p>
+      <div class="actions">
+        <a class="btn btn-light magnet" href="#bestill">Bestill time <span class="arrow">→</span></a>
+        <a class="btn btn-line magnet" href="tel:+4773521840">Ring 73 52 18 40</a><!-- PLASSHOLDER -->
+      </div>
+    </div>
+    <div class="today reveal-hero">
+      <span><i class="dot" id="apent-dot" aria-hidden="true"></i><span id="apent">Åpent hverdager 09–19</span></span>
+      <span id="neste-ledig">Ledige timer denne uka</span>
+      <span>Øvre Bakklandet 12, Trondheim</span><!-- PLASSHOLDER -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Løpebånd ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>Klipp</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span class="o">Balayage</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span>Farge</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span class="o">Krøller</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span>Skjegg</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span class="o">Bryllupshår</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+    </div>
+    <div class="marquee-group">
+      <span>Klipp</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span class="o">Balayage</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span>Farge</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span class="o">Krøller</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span>Skjegg</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+      <span class="o">Bryllupshår</span><svg viewBox="0 0 200 200"><use href="#glimt"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEKSJON: Hilsen fra eieren ===== -->
+<section class="hello">
+  <div class="wrap">
+    <figure class="foto">
+      <!-- PLASSHOLDER: bytt .scene med <img src="" alt="Ida Lund i salongen" style="width:100%;height:116%;object-fit:cover"> -->
+      <div class="scene"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#a-ida"/></svg></div>
+      <figcaption><span>Ida, ved stol nummer én</span><span>siden 2012</span></figcaption>
+    </figure>
+    <div class="text">
+      <span class="kicker">Om oss</span>
+      <h2 class="h2">Hei, jeg er Ida.</h2><!-- PLASSHOLDER -->
+      <p class="up">Jeg åpnet Salong Lys i en gammel trehusbutikk på Bakklandet i 2012. Det var meg, to stoler og en kaffetrakter. I dag er vi fem frisører, og kaffetrakteren er byttet ut med en ordentlig espressomaskin.</p>
+      <p class="up">Vi setter av god tid til hver kunde. Du får alltid en prat før vi begynner, og vi sier fra hvis det du ønsker deg ikke kommer til å fungere med håret ditt.</p>
+      <p class="up">Usikker på hva du vil ha? Bestill en klipp og ta med et par bilder, så finner vi ut av det sammen.</p>
+      <span class="sign up">Ida Lund
+        <svg viewBox="0 0 200 18" preserveAspectRatio="none" aria-hidden="true"><path id="sign-line" d="M2 12 C40 4 80 16 120 8 S180 6 198 10"/></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Behandlinger (scroller sidelengs på store skjermer) ===== -->
+<section class="counter" id="behandlinger">
+  <div class="track">
+    <div class="panel intro">
+      <span class="kicker">Behandlinger</span>
+      <h2 class="h2" style="margin-top:1rem">Det vi gjør i stolen</h2>
+      <p class="lead">Seks behandlinger, med priser og hvor lang tid du bør sette av.</p><!-- PLASSHOLDER -->
+      <p class="hint"><i></i>Scroll for å se mer</p>
+    </div>
+    <!-- PLASSHOLDER: priser og varighet -->
+    <article class="panel">
+      <div class="pic"><span class="when">60 minutter</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-saks"/></svg></div>
+      <h3>Dameklipp <small>kr 790</small></h3>
+      <p>Vask, klipp og føn, og en prat om hva som passer hverdagen din.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">30 minutter</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-kniv"/></svg></div>
+      <h3>Herreklipp <small>kr 520</small></h3>
+      <p>Maskin eller saks, og skjeggtrim med varmt håndkle om du vil.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">2 timer</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-bolle"/></svg></div>
+      <h3>Farge <small>fra kr 1 290</small></h3>
+      <p>Ammoniakkfrie farger som er snille mot hodebunnen.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">3 timer</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-lokk"/></svg></div>
+      <h3>Balayage <small>fra kr 2 490</small></h3>
+      <p>Håndmalt lysning som gror pent ut. Du kan vente fire måneder til neste gang.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">45 minutter</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-foen"/></svg></div>
+      <h3>Føn og styling <small>kr 590</small></h3>
+      <p>Krøller, bølger eller blankt og glatt, til fest eller jobbintervju.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">30 minutter</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-flaske"/></svg></div>
+      <h3>Hårkur <small>kr 450</small></h3>
+      <p>Dyp fukt for tørt og slitt hår. Kan legges til hvilken som helst behandling.</p>
+    </article>
+  </div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+</section>
+
+<!-- ===== SEKSJON: 180 minutter (BRANSJEDETALJ, ekte rekkefølge for en balayage) ===== -->
+<section class="process" id="prosess">
+  <div class="wrap">
+    <div class="clock">
+      <span class="kicker">Bak stolen</span>
+      <div class="hours" data-total="180" aria-label="180 minutter for en balayage"><span id="hrs">0</span><small>min</small></div>
+      <div class="bar" aria-hidden="true"><i id="hrs-bar"></i></div>
+      <p>Så lang tid tar en balayage hos oss. Du får alltid vite på forhånd hvor lenge du blir sittende.</p>
+    </div>
+    <ol class="steps">
+      <li class="step"><span class="t">Minutt 0</span><h3>Konsultasjon</h3><p>Vi ser på håret ditt i dagslys, ser på bildene du har tatt med og blir enige om hva som er realistisk i dag.</p></li>
+      <li class="step"><span class="t">Minutt 15</span><h3>Lysningen males inn</h3><p>For hånd, lokk for lokk, der sola naturlig ville truffet håret ditt.</p></li>
+      <li class="step"><span class="t">Minutt 60</span><h3>Virketid og kaffe</h3><p>Mens fargen jobber får du kaffe, noe å lese og wifi. Vi sjekker fargen hvert tiende minutt.</p></li>
+      <li class="step"><span class="t">Minutt 120</span><h3>Toner og vask</h3><p>Toneren tar bort det gule og gir nyansen vi ble enige om. Ved vasken får du hodebunnsmassasje.</p></li>
+      <li class="step"><span class="t">Minutt 180</span><h3>Klipp og føn</h3><p>Vi klipper bort tørre tupper, føner og viser deg hvordan du får det til selv hjemme.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Frisørene + bryllup ===== -->
+<section class="order" id="frisorene">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Frisørene</span>
+      <h2 class="h2" style="margin-top:1rem">Velg din frisør</h2>
+      <p class="lead">Alle har sin spesialitet. Til høyre ser du når hver av dem har første ledige time.</p>
+      <div class="cakes"><!-- PLASSHOLDER: frisører og prisnivå -->
+        <div class="cake" data-cake="a-ida"><b>Ida</b><span class="price">Senior</span><span class="meta">Eier. Farge og balayage</span><span class="when" data-hvem="Ida">ledig snart</span></div>
+        <div class="cake" data-cake="a-jonas"><b>Jonas</b><span class="price">Senior</span><span class="meta">Herreklipp, fades og skjegg</span><span class="when" data-hvem="Jonas">ledig snart</span></div>
+        <div class="cake" data-cake="a-amina"><b>Amina</b><span class="price">Senior</span><span class="meta">Krøller og naturlig hår</span><span class="when" data-hvem="Amina">ledig snart</span></div>
+        <div class="cake" data-cake="a-sofie"><b>Sofie</b><span class="price">Stylist</span><span class="meta">Oppsatt hår og bryllup</span><span class="when" data-hvem="Sofie">ledig snart</span></div>
+        <div class="cake" data-cake="a-emil"><b>Emil</b><span class="price">Lærling, −50 %</span><span class="meta">Klipp til halv pris, med Ida ved siden av</span><span class="when" data-hvem="Emil">ledig snart</span></div>
+      </div>
+      <p class="tip"><b>Ny kunde?</b> Første time inkluderer alltid en konsultasjon på et kvarter, uten at det koster noe ekstra.</p>
+    </div>
+
+    <aside class="biz">
+      <svg class="bg-stamp" viewBox="0 0 200 200" aria-hidden="true" style="color:var(--peach)"><use href="#stempel"/></svg>
+      <span class="kicker" style="color:var(--peach)">Bryllup og selskap</span>
+      <h3>Hår til den store dagen</h3>
+      <p>Vi gjør klar brud, forlovere og mødre, i salongen eller der dere gjør dere i stand.</p><!-- PLASSHOLDER -->
+      <ul>
+        <li>Prøvetime en måned før</li>
+        <li>Vi kommer til dere i Trondheim og omegn</li>
+        <li>Opptil seks personer samme morgen</li>
+        <li>Hårspray og nåler til å fikse håret i løpet av dagen</li>
+      </ul>
+      <p>Fortell oss datoen og hvor mange dere er, så sender Sofie et tilbud.</p>
+      <a class="btn btn-light magnet" href="#bestill" data-behandling="Bryllup og selskap">Be om pris <span class="arrow">→</span></a>
+    </aside>
+  </div>
+</section>
+<div class="preview" id="preview" aria-hidden="true"><svg viewBox="0 0 200 200"><use id="preview-use" href="#a-ida"/></svg></div>
+
+<!-- ===== SEKSJON: Kundeuttalelse ===== -->
+<!-- PLASSHOLDER: sitatet er fiktivt. Bruk kun ekte uttalelser med samtykke. -->
+<section class="says">
+  <div class="wrap">
+    <figure>
+      <blockquote id="quote">«Jeg har gått til Amina i ni år. Hun er den første som har fått krøllene mine til å se ut som krøller, og ikke som en trekant.»</blockquote>
+      <figcaption>Camilla Berg, kunde siden 2016</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Timebestilling ===== -->
+<section class="contact" id="bestill">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Bestill time</span>
+      <h2 class="h2" style="margin-top:1rem">Finn en tid som passer</h2>
+      <p class="lead">Velg behandling, frisør og tid. Du får bekreftelse på SMS, og kan avbestille gratis inntil 24 timer før.</p>
+      <div class="phone">
+        <a href="tel:+4773521840" id="tlf">73 52 18 40</a><!-- PLASSHOLDER -->
+        <button class="copy" type="button" data-copy="73 52 18 40">Kopier</button>
+      </div>
+      <p class="small">Vi tar telefonen i åpningstiden, men ikke midt i en klipp. Send gjerne SMS.</p>
+      <span class="mail">hei@salonglys.no</span><!-- PLASSHOLDER -->
+    </div>
+
+    <form id="tilbud" novalidate>
+      <div class="field">
+        <label for="hva">Behandling</label>
+        <select id="hva" name="hva">
+          <option data-min="60">Dameklipp, 60 min</option><option data-min="30">Herreklipp, 30 min</option><option data-min="120">Farge, 2 t</option><option data-min="180">Balayage, 3 t</option>
+          <option data-min="45">Føn og styling, 45 min</option><option data-min="30">Hårkur, 30 min</option><option data-min="60">Bryllup og selskap</option>
+        </select>
+      </div>
+      <fieldset>
+        <legend>Frisør</legend>
+        <div class="choice" id="frisor-valg">
+          <input type="radio" name="hvem" id="h-alle" value="alle" checked><label for="h-alle">Første ledige</label>
+          <input type="radio" name="hvem" id="h-ida" value="Ida"><label for="h-ida">Ida</label>
+          <input type="radio" name="hvem" id="h-jonas" value="Jonas"><label for="h-jonas">Jonas</label>
+          <input type="radio" name="hvem" id="h-amina" value="Amina"><label for="h-amina">Amina</label>
+          <input type="radio" name="hvem" id="h-sofie" value="Sofie"><label for="h-sofie">Sofie</label>
+          <input type="radio" name="hvem" id="h-emil" value="Emil"><label for="h-emil">Emil</label>
+        </div>
+      </fieldset>
+
+      <!-- Vises når JavaScript kjører -->
+      <div id="booking-js" hidden>
+        <fieldset>
+          <legend>Dag</legend>
+          <div class="choice days" id="dager"></div>
+        </fieldset>
+        <fieldset style="margin-top:1.3rem">
+          <legend>Tid</legend>
+          <div class="choice slots" id="tider"></div>
+          <p class="err" id="err-tid" hidden>Velg et klokkeslett.</p>
+        </fieldset>
+      </div>
+      <!-- Reserve uten JavaScript -->
+      <div class="field" id="tid-reserve">
+        <label for="onsket">Ønsket dag og tid</label>
+        <input type="text" id="onsket" name="onsket">
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="field"><label for="navn">Navn</label><input type="text" id="navn" name="navn" autocomplete="name" required></div>
+          <p class="err" id="err-navn" hidden>Skriv inn navnet ditt.</p>
+        </div>
+        <div>
+          <div class="field"><label for="telefon">Mobil</label><input type="tel" id="telefon" name="telefon" autocomplete="tel" required></div>
+          <p class="err" id="err-telefon" hidden>Vi trenger nummeret for å sende bekreftelse.</p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="melding">Noe vi bør vite? <span class="opt">(hårlengde, allergier, hva du ønsker deg)</span></label>
+        <textarea id="melding" name="melding"></textarea>
+      </div>
+      <div class="form-foot">
+        <small>Vi bruker opplysningene bare til timen din.</small>
+        <button class="btn btn-red magnet" type="submit">Bestill time <span class="arrow">→</span></button>
+      </div>
+      <div class="done" id="kvittering" hidden role="status">
+        <b id="kvittering-tekst">Takk! Timen er fylt ut.</b>
+        <p>Dette er en eksempelside, så ingenting ble sendt.</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ===== SEKSJON: Bunn ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="big-cta">
+        <h3>Tid for en ny sveis?</h3>
+        <a class="btn btn-red magnet" href="#bestill">Bestill time <span class="arrow">→</span></a>
+      </div>
+      <div>
+        <h4>Salongen</h4>
+        <p>Øvre Bakklandet 12<br>7016 Trondheim</p><!-- PLASSHOLDER -->
+        <p style="margin-top:.5rem"><a href="https://www.google.com/maps/search/?api=1&query=Bakklandet%20Trondheim">Vis i kart</a></p>
+      </div>
+      <div>
+        <h4>Åpent</h4>
+        <dl><!-- PLASSHOLDER, samme som APNING i scriptet -->
+          <dt>Man–fre</dt><dd>09.00–19.00</dd>
+          <dt>Lørdag</dt><dd>10.00–16.00</dd>
+          <dt>Søndag</dt><dd>Stengt</dd>
+        </dl>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <p>73 52 18 40<br>hei@salonglys.no</p><!-- PLASSHOLDER -->
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true"><span>L</span><span>y</span><span>s</span><span>.</span></div>
+    <div class="legal">
+      <span>Salong Lys AS · Org.nr. 999 999 999</span><!-- PLASSHOLDER -->
+      <span>Eksempelside. Salongen er fiktiv.</span><!-- Fjern ved levering til ekte kunde -->
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn-out" href="tel:+4773521840">Ring</a>
+  <a class="btn btn-red" href="#bestill">Bestill time</a>
+</div>
+
+<!-- Strukturerte data. PLASSHOLDER: alle felter. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HairSalon","name":"Salong Lys AS",
+ "telephone":"+47 73 52 18 40","email":"hei@salonglys.no",
+ "address":{"@type":"PostalAddress","streetAddress":"Øvre Bakklandet 12","postalCode":"7016","addressLocality":"Trondheim","addressCountry":"NO"},
+ "openingHours":["Mo-Fr 09:00-19:00","Sa 10:00-16:00"]}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>

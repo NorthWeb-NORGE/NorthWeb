@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="nb">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brekke Bakeri</title>
+<!--
+================================================================================
+  BRANSJEMAL v3 · BAKERI  (animert portefølje-versjon)
+
+  BIBLIOTEKER (lastes fra CDN, siden fungerer uten dem):
+  - Lenis 1.1.13 ........ myk scrolling
+  - GSAP 3.12.5 + ScrollTrigger ... alle scroll-animasjoner
+  Respekterer «redusert bevegelse»: da slås all animasjon av.
+
+  GJENBRUK FOR NYTT YRKE
+  1. Farger og skrift: tokenene i :root (og de to mørke blokkene).
+  2. PLASSHOLDER = fiktivt innhold som byttes med kundens.
+  3. Seksjoner er merket «SEKSJON: …».
+  4. BRANSJEDETALJ = bakerspesifikt (brødtegninger, 36-timers prosess,
+     kakefrister). Forslag for elektriker: prosess = «Fra befaring til
+     ferdigmelding», produkter = tjenester, frister = responstid.
+  5. Illustrasjonene ligger som <symbol> øverst i body. Bytt med foto
+     ved å erstatte <svg><use></svg> med <img>.
+  6. Skjemaet sender ingenting. Koble til i sendSkjema().
+
+  FIKTIV BEDRIFT: Brekke Bakeri AS, Os. Navn, adresse, telefon, e-post,
+  org.nr., priser og sitat er PLASSHOLDERE.
+================================================================================
+-->
+<meta name="description" content="Lite familiebakeri på Osøyro. Surdeigsbrød, skillingsboller og kaker på bestilling. Vi leverer også til borettslag og bedrifter."><!-- PLASSHOLDER -->
+<meta property="og:title" content="Brekke Bakeri, Os"><!-- PLASSHOLDER -->
+<meta property="og:locale" content="nb_NO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<canvas id="grain" aria-hidden="true"></canvas>
+
+<!-- ======================================================================
+     ILLUSTRASJONER (BRANSJEDETALJ). Brukes med <svg><use href="#id"/></svg>
+     ====================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="g-loaf" cx="38%" cy="32%" r="75%">
+      <stop offset="0" style="stop-color:var(--loaf-hi)"/><stop offset=".6" style="stop-color:var(--loaf)"/><stop offset="1" style="stop-color:var(--loaf-lo)"/>
+    </radialGradient>
+    <linearGradient id="g-long" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:var(--loaf-hi)"/><stop offset=".55" style="stop-color:var(--loaf)"/><stop offset="1" style="stop-color:var(--loaf-lo)"/>
+    </linearGradient>
+    <filter id="mel" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 .97  0 0 0 0 .92  0 0 0 -2.4 1.25"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <path id="sirkel" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" fill="none"/>
+
+    <!-- stempellogo. PLASSHOLDER: bytt med kundens logo -->
+    <symbol id="stempel" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="100" cy="100" r="87" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <text class="stamp" fill="currentColor"><textPath href="#sirkel">BREKKE BAKERI · OSØYRO · SIDEN 1987 ·</textPath></text>
+      <circle cx="100" cy="100" r="54" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <use href="#aks"/>
+    </symbol>
+    <symbol id="aks-s" viewBox="0 0 200 200"><use href="#aks"/></symbol>
+    <g id="aks" fill="currentColor">
+      <rect x="99" y="70" width="2" height="70"/>
+      <ellipse cx="92" cy="80" rx="5" ry="9" transform="rotate(-25 92 80)"/><ellipse cx="108" cy="80" rx="5" ry="9" transform="rotate(25 108 80)"/>
+      <ellipse cx="92" cy="96" rx="5" ry="9" transform="rotate(-25 92 96)"/><ellipse cx="108" cy="96" rx="5" ry="9" transform="rotate(25 108 96)"/>
+      <ellipse cx="92" cy="112" rx="5" ry="9" transform="rotate(-25 92 112)"/><ellipse cx="108" cy="112" rx="5" ry="9" transform="rotate(25 108 112)"/>
+      <ellipse cx="100" cy="64" rx="4.5" ry="8"/>
+    </g>
+
+    <!-- brød sett ovenfra -->
+    <symbol id="l-surdeig" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="176" rx="70" ry="10" fill="#000" opacity=".12"/>
+      <circle cx="100" cy="98" r="76" fill="url(#g-loaf)"/>
+      <circle cx="100" cy="98" r="76" fill="#fff" filter="url(#mel)" opacity=".5"/>
+      <path d="M50 70 C82 52 126 58 150 92" fill="none" stroke="var(--loaf-score)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M52 74 C84 58 124 63 147 95" fill="none" stroke="var(--loaf-lo)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+      <path d="M64 124 C88 136 116 134 136 120" fill="none" stroke="var(--loaf-score)" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+    </symbol>
+    <symbol id="l-grov" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="164" rx="80" ry="9" fill="#000" opacity=".12"/>
+      <rect x="20" y="46" width="160" height="108" rx="20" fill="url(#g-long)"/>
+      <rect x="20" y="46" width="160" height="108" rx="20" fill="#fff" filter="url(#mel)" opacity=".35"/>
+      <g fill="var(--loaf-score)">
+        <ellipse cx="48" cy="72" rx="4.5" ry="2.4"/><ellipse cx="82" cy="88" rx="4.5" ry="2.4" transform="rotate(30 82 88)"/><ellipse cx="120" cy="66" rx="4.5" ry="2.4"/>
+        <ellipse cx="152" cy="96" rx="4.5" ry="2.4" transform="rotate(-25 152 96)"/><ellipse cx="58" cy="122" rx="4.5" ry="2.4" transform="rotate(15 58 122)"/>
+        <ellipse cx="104" cy="118" rx="4.5" ry="2.4"/><ellipse cx="140" cy="132" rx="4.5" ry="2.4" transform="rotate(40 140 132)"/><ellipse cx="96" cy="58" rx="4.5" ry="2.4"/>
+        <ellipse cx="36" cy="100" rx="4.5" ry="2.4" transform="rotate(-50 36 100)"/><ellipse cx="128" cy="96" rx="4.5" ry="2.4" transform="rotate(70 128 96)"/>
+        <ellipse cx="76" cy="140" rx="4.5" ry="2.4" transform="rotate(-10 76 140)"/><ellipse cx="164" cy="64" rx="4.5" ry="2.4" transform="rotate(20 164 64)"/>
+      </g>
+    </symbol>
+    <symbol id="l-bolle" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="172" rx="66" ry="9" fill="#000" opacity=".12"/>
+      <circle cx="100" cy="98" r="72" fill="url(#g-loaf)"/>
+      <path d="M100 98 m0 -9 a9 9 0 1 1 -9 9 a18 18 0 1 1 18 18 a27 27 0 1 1 -27 -27 a36 36 0 1 1 36 36 a45 45 0 1 1 -45 -45 a54 54 0 1 1 54 54" fill="none" stroke="var(--loaf-lo)" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+      <path d="M100 98 m0 -9 a9 9 0 1 1 -9 9 a18 18 0 1 1 18 18 a27 27 0 1 1 -27 -27 a36 36 0 1 1 36 36 a45 45 0 1 1 -45 -45 a54 54 0 1 1 54 54" fill="none" stroke="var(--loaf-score)" stroke-width="2" stroke-linecap="round" opacity=".9" transform="translate(-1.5 -1.5)"/>
+      <g fill="#fff"><circle cx="70" cy="70" r="2"/><circle cx="128" cy="80" r="1.8"/><circle cx="90" cy="134" r="2"/><circle cx="140" cy="118" r="1.6"/><circle cx="62" cy="110" r="1.7"/><circle cx="112" cy="58" r="1.8"/></g>
+    </symbol>
+    <symbol id="l-baguette" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="132" rx="92" ry="8" fill="#000" opacity=".12"/>
+      <rect x="8" y="76" width="184" height="46" rx="23" fill="url(#g-long)" transform="rotate(-8 100 99)"/>
+      <rect x="8" y="76" width="184" height="46" rx="23" fill="#fff" filter="url(#mel)" opacity=".3" transform="rotate(-8 100 99)"/>
+      <g transform="rotate(-8 100 99)" stroke-linecap="round">
+        <g stroke="var(--loaf-lo)" stroke-width="7" opacity=".45"><path d="M34 108 L56 88"/><path d="M70 108 L92 88"/><path d="M106 108 L128 88"/><path d="M142 108 L164 88"/></g>
+        <g stroke="var(--loaf-score)" stroke-width="4"><path d="M33 106 L55 86"/><path d="M69 106 L91 86"/><path d="M105 106 L127 86"/><path d="M141 106 L163 86"/></g>
+      </g>
+    </symbol>
+    <symbol id="l-rund" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="176" rx="74" ry="9" fill="#000" opacity=".12"/>
+      <g><circle cx="66" cy="66" r="38" fill="url(#g-loaf)"/><circle cx="134" cy="66" r="38" fill="url(#g-loaf)"/><circle cx="66" cy="134" r="38" fill="url(#g-loaf)"/><circle cx="134" cy="134" r="38" fill="url(#g-loaf)"/></g>
+      <g fill="#fff" filter="url(#mel)" opacity=".4"><circle cx="134" cy="66" r="38"/><circle cx="66" cy="134" r="38"/></g>
+      <g stroke="var(--loaf-score)" stroke-width="4" stroke-linecap="round"><path d="M50 66h32"/><path d="M118 66h32"/><path d="M50 134h32"/><path d="M118 134h32"/></g>
+      <g fill="var(--cream)" opacity=".9"><ellipse cx="58" cy="54" rx="3" ry="1.6"/><ellipse cx="76" cy="80" rx="3" ry="1.6"/><ellipse cx="60" cy="146" rx="3" ry="1.6"/><ellipse cx="78" cy="122" rx="3" ry="1.6"/></g>
+    </symbol>
+    <symbol id="l-fyrste" viewBox="0 0 200 200">
+      <clipPath id="fk"><circle cx="100" cy="98" r="64"/></clipPath>
+      <ellipse cx="100" cy="176" rx="72" ry="9" fill="#000" opacity=".12"/>
+      <circle cx="100" cy="98" r="76" fill="url(#g-loaf)"/>
+      <circle cx="100" cy="98" r="64" fill="var(--loaf-lo)" opacity=".55"/>
+      <g clip-path="url(#fk)" stroke="var(--loaf-hi)" stroke-width="7" stroke-linecap="round">
+        <path d="M20 40 L180 200"/><path d="M50 10 L210 170"/><path d="M-10 70 L150 230"/><path d="M80 -20 L240 140"/>
+        <path d="M180 40 L20 200"/><path d="M150 10 L-10 170"/><path d="M210 70 L50 230"/><path d="M120 -20 L-40 140"/>
+      </g>
+      <circle cx="100" cy="98" r="76" fill="#fff" filter="url(#mel)" opacity=".25"/>
+    </symbol>
+
+    <!-- kaker -->
+    <symbol id="k-blot" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="168" rx="74" ry="10" fill="#000" opacity=".1"/>
+      <path d="M32 82 v62 a68 20 0 0 0 136 0 v-62 z" fill="var(--cream)"/>
+      <path d="M32 112 a68 20 0 0 0 136 0" fill="none" stroke="#E7DCCB" stroke-width="3"/>
+      <ellipse cx="100" cy="82" rx="68" ry="20" fill="#FFF9F1"/>
+      <g fill="var(--berry)"><circle cx="72" cy="76" r="7"/><circle cx="96" cy="70" r="7"/><circle cx="122" cy="76" r="7"/><circle cx="84" cy="88" r="7"/><circle cx="110" cy="88" r="7"/><circle cx="134" cy="86" r="6"/></g>
+      <g fill="var(--leaf)"><ellipse cx="100" cy="64" rx="5" ry="2.4" transform="rotate(-30 100 64)"/></g>
+    </symbol>
+    <symbol id="k-marsipan" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="168" rx="74" ry="10" fill="#000" opacity=".1"/>
+      <path d="M30 86 a70 22 0 0 1 140 0 v56 a70 22 0 0 1 -140 0 z" fill="var(--marzipan)"/>
+      <ellipse cx="100" cy="86" rx="70" ry="22" fill="#F5DDD7"/>
+      <g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M30 142 q10 10 20 0 q10 10 20 0 q10 10 20 0 q10 10 20 0 q10 10 20 0 q10 10 20 0 q10 10 20 0"/></g>
+      <g transform="translate(100 82)"><circle r="9" fill="#D9687A"/><circle r="4" fill="#F2B6BF"/><ellipse cx="-14" cy="4" rx="7" ry="3" fill="var(--leaf)"/><ellipse cx="14" cy="4" rx="7" ry="3" fill="var(--leaf)"/></g>
+    </symbol>
+    <symbol id="k-krans" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="176" rx="70" ry="8" fill="#000" opacity=".1"/>
+      <g fill="#D6A061" stroke="#fff" stroke-width="2.5">
+        <rect x="34" y="150" width="132" height="16" rx="8"/><rect x="44" y="134" width="112" height="16" rx="8"/><rect x="54" y="118" width="92" height="16" rx="8"/>
+        <rect x="64" y="102" width="72" height="16" rx="8"/><rect x="74" y="86" width="52" height="16" rx="8"/><rect x="84" y="70" width="32" height="16" rx="8"/>
+      </g>
+      <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M40 158 q6 -6 12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0"/><path d="M60 126 q6 -6 12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0"/><path d="M80 94 q6 -6 12 0 t12 0 t12 0 t12 0"/></g>
+      <rect x="98" y="34" width="3" height="36" fill="#7A5A3A"/><path d="M101 36 h26 l-6 8 l6 8 h-26 z" fill="var(--berry)"/><rect x="101" y="42" width="26" height="4" fill="#fff"/>
+    </symbol>
+    <symbol id="k-sjoko" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="160" rx="86" ry="9" fill="#000" opacity=".1"/>
+      <path d="M18 66 l164 0 l0 74 l-164 0 z" fill="var(--choc)"/>
+      <path d="M18 66 l164 0 l0 12 l-164 0 z" fill="#6B4430"/>
+      <g stroke="#3A2117" stroke-width="2"><path d="M59 66 v74"/><path d="M100 66 v74"/><path d="M141 66 v74"/><path d="M18 103 h164"/></g>
+      <g fill="#F1E3C8"><circle cx="38" cy="84" r="3"/><circle cx="80" cy="90" r="3"/><circle cx="120" cy="82" r="3"/><circle cx="160" cy="92" r="3"/><circle cx="44" cy="120" r="3"/><circle cx="86" cy="126" r="3"/><circle cx="124" cy="118" r="3"/><circle cx="162" cy="126" r="3"/></g>
+      <g fill="#C93A3A"><circle cx="58" cy="80" r="2.4"/><circle cx="104" cy="96" r="2.4"/><circle cx="140" cy="122" r="2.4"/></g>
+    </symbol>
+    <symbol id="k-glutenfri" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="168" rx="72" ry="10" fill="#000" opacity=".1"/>
+      <path d="M32 90 a68 20 0 0 1 136 0 v46 a68 20 0 0 1 -136 0 z" fill="var(--choc)"/>
+      <ellipse cx="100" cy="90" rx="68" ry="20" fill="#5C3726"/>
+      <g fill="none" stroke="#2E1A11" stroke-width="2.5" stroke-linecap="round"><path d="M50 86 q50 16 100 0"/><path d="M58 96 q42 12 84 0"/></g>
+      <g fill="#F5EDE0"><circle cx="78" cy="82" r="5"/><circle cx="100" cy="78" r="5"/><circle cx="122" cy="82" r="5"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== SEKSJON: Toppmeny ===== -->
+<header class="top" id="top-bar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Brekke Bakeri, til forsiden">
+      <svg aria-hidden="true"><use href="#stempel"/></svg><b>Brekke Bakeri</b>
+    </a>
+    <nav class="nav" aria-label="Hovedmeny">
+      <a href="#disken">I disken</a>
+      <a href="#prosess">Slik baker vi</a>
+      <a href="#bestill">Kaker og bedrift</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn btn-red" href="#kontakt">Bestill <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===== SEKSJON: Hero ===== -->
+<section class="hero">
+  <div class="stamp-wrap" aria-hidden="true"><div class="stamp-spin"><svg><use href="#stempel"/></svg></div></div>
+  <div class="float f1" data-speed="0.35" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#l-surdeig"/></svg></div></div>
+  <div class="float f2" data-speed="0.6" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#l-bolle"/></svg></div></div>
+  <div class="float f3" data-speed="0.15" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#l-rund"/></svg></div></div>
+
+  <div class="wrap">
+    <h1 aria-label="Ferskt brød fra Osøyro, hver morgen."><!-- PLASSHOLDER -->
+      <span class="line" aria-hidden="true"><span class="li">Ferskt brød</span></span>
+      <span class="line" aria-hidden="true"><span class="li">fra Osøyro,</span></span>
+      <span class="line" aria-hidden="true"><span class="li soft">hver morgen.</span></span>
+    </h1>
+    <div class="hero-row reveal-hero">
+      <p class="intro">Familiebakeri siden 1987. Vi baker brød, boller og kaker til butikken, til selskapet ditt og til kontoret.</p>
+      <div class="actions">
+        <a class="btn btn-light magnet" href="#kontakt">Bestill eller be om tilbud <span class="arrow">→</span></a>
+        <a class="btn btn-line magnet" href="tel:+4756301240">Ring 56 30 12 40</a><!-- PLASSHOLDER -->
+      </div>
+    </div>
+    <div class="today reveal-hero">
+      <span><i class="dot" aria-hidden="true"></i><span id="apent">Åpent i dag 06.30–17.00</span></span>
+      <span>Hamnevegen 12, Os</span><!-- PLASSHOLDER -->
+      <span>Skillingsboller ferske fra kl. 06</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Løpebånd ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>Surdeigsbrød</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span class="o">Skillingsboller</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span>Kransekake</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span class="o">Rundstykker</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span>Fyrstekake</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span class="o">Møtemat</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+    </div>
+    <div class="marquee-group">
+      <span>Surdeigsbrød</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span class="o">Skillingsboller</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span>Kransekake</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span class="o">Rundstykker</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span>Fyrstekake</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+      <span class="o">Møtemat</span><svg viewBox="0 0 200 200"><use href="#aks-s"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEKSJON: Hilsen fra eierne ===== -->
+<section class="hello">
+  <div class="wrap">
+    <figure class="foto">
+      <!-- PLASSHOLDER: bytt .scene med <img src="" alt="Kari og Mats Brekke i bakeriet" style="width:100%;height:116%;object-fit:cover"> -->
+      <div class="scene"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-surdeig"/></svg></div>
+      <figcaption><span>Morgenens første surdeigsbrød</span><span>kl. 06.40</span></figcaption>
+    </figure>
+    <div class="text">
+      <span class="kicker">Om oss</span>
+      <h2 class="h2">Hei, vi er Kari og Mats.</h2><!-- PLASSHOLDER -->
+      <p class="up">Pappa Odd startet bakeriet i 1987, og vi har bakt i det samme lokalet på Osøyro siden. Mats har mesterbrev og står ved ovnen fra klokka tre om natta. Kari driver butikken og tar imot bestillingene.</p>
+      <p class="up">Vi bruker norsk mel, lar surdeigen jobbe i halvannet døgn og baker alt fra bunnen. Det som ikke blir solgt, henter Kirkens Bymisjon på kvelden.</p>
+      <p class="up">Skal du ha kake til konfirmasjonen, eller trenger dere møtemat på jobben? Ring eller send en forespørsel, så finner vi ut av det sammen.</p>
+      <span class="sign up">Kari &amp; Mats Brekke
+        <svg viewBox="0 0 200 18" preserveAspectRatio="none" aria-hidden="true"><path id="sign-line" d="M2 12 C40 4 80 16 120 8 S180 6 198 10"/></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: I disken (scroller sidelengs på store skjermer) ===== -->
+<section class="counter" id="disken">
+  <div class="track">
+    <div class="panel intro">
+      <span class="kicker">I disken</span>
+      <h2 class="h2" style="margin-top:1rem">Det vi baker hver dag</h2>
+      <p class="lead">Seks faste varer som kundene kommer tilbake for. Priser per stykk.</p><!-- PLASSHOLDER -->
+      <p class="hint"><i></i>Scroll for å se mer</p>
+    </div>
+    <!-- PLASSHOLDER: priser og tidspunkt -->
+    <article class="panel">
+      <div class="pic"><span class="when">Ferdig kl. 06.40</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-surdeig"/></svg></div>
+      <h3>Surdeigsbrød <small>kr 78</small></h3>
+      <p>Hever i 36 timer. Sprø skorpe og holder seg i flere dager.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Ferdig kl. 04.30</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-grov"/></svg></div>
+      <h3>Grovbrød med rug <small>kr 62</small></h3>
+      <p>Ekstra grovt med solsikkekjerner. Kundenes favoritt til matpakken.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Ferdig kl. 06.00</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-bolle"/></svg></div>
+      <h3>Skillingsbolle <small>kr 39</small></h3>
+      <p>Med kardemomme i deigen og godt med kanel i hver runde.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">To runder daglig</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-baguette"/></svg></div>
+      <h3>Baguette <small>kr 42</small></h3>
+      <p>Ny runde klokka halv tre, så den er sprø til middag.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Ferdig kl. 05.15</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-rund"/></svg></div>
+      <h3>Rundstykker, 4 stk. <small>kr 48</small></h3>
+      <p>Lyse, grove eller med havre. Klar til morgenleveransene.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Ferdig kl. 10.00</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-fyrste"/></svg></div>
+      <h3>Fyrstekake <small>kr 189</small></h3>
+      <p>Mandelfyll og mørdeig. Holder til 8–10 personer.</p>
+    </article>
+  </div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+</section>
+
+<!-- ===== SEKSJON: 36 timer (BRANSJEDETALJ, ekte rekkefølge) ===== -->
+<section class="process" id="prosess">
+  <div class="wrap">
+    <div class="clock">
+      <span class="kicker">Slik baker vi</span>
+      <div class="hours" aria-label="36 timer fra deig til disk"><span id="hrs">0</span><small>timer</small></div>
+      <div class="bar" aria-hidden="true"><i id="hrs-bar"></i></div>
+      <p>Så lang tid tar ett surdeigsbrød hos oss, fra deigen settes til brødet ligger i disken.</p>
+    </div>
+    <ol class="steps">
+      <li class="step" data-h="0"><span class="t">Dag 1, kl. 14.00</span><h3>Deigen settes</h3><p>Norsk mel, vann, salt og surdeig fra kulturen vi har holdt i live siden 1991.</p></li>
+      <li class="step" data-h="12"><span class="t">Dag 1 til dag 3, 4 °C</span><h3>Kald heving</h3><p>Deigen hviler i kjølerommet. Melkesyrebakteriene gir smak og gjør brødet lettere å fordøye.</p></li>
+      <li class="step" data-h="34"><span class="t">Dag 3, kl. 03.00</span><h3>Forming og innsnitt</h3><p>Mats former hvert brød for hånd og snitter det med barberblad, så skorpen kan åpne seg i ovnen.</p></li>
+      <li class="step" data-h="35"><span class="t">Dag 3, kl. 05.50</span><h3>Steinovn, 250 °C</h3><p>Damp de første minuttene gir den blanke, sprø skorpen.</p></li>
+      <li class="step" data-h="36"><span class="t">Dag 3, kl. 07.30</span><h3>I disken og på bilen</h3><p>Brødet ligger i butikken og er på vei til faste kunder før kontorene åpner.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Bestilling (privat + borettslag/bedrift) ===== -->
+<section class="order" id="bestill">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Kaker på bestilling</span>
+      <h2 class="h2" style="margin-top:1rem">Bakt samme dag som du henter</h2>
+      <p class="lead">Derfor trenger vi litt tid i forkant. Her er fristene som gjelder resten av året.</p>
+      <div class="cakes"><!-- PLASSHOLDER: priser og frister -->
+        <div class="cake" data-cake="k-blot"><b>Bløtkake</b><span class="price">fra kr 545</span><span class="meta">12–16 personer, også med multekrem</span><span class="when">2 dager før</span></div>
+        <div class="cake" data-cake="k-marsipan"><b>Marsipankake</b><span class="price">fra kr 690</span><span class="meta">12–40 personer, med navn og pynt</span><span class="when">3 dager før</span></div>
+        <div class="cake" data-cake="k-krans"><b>Kransekake, 18 ringer</b><span class="price">kr 1 150</span><span class="meta">Rundt 25 personer</span><span class="when">1 uke før</span></div>
+        <div class="cake" data-cake="k-sjoko"><b>Sjokoladekake i langpanne</b><span class="price">kr 520</span><span class="meta">30 biter, fin til dugnad</span><span class="when">dagen før</span></div>
+        <div class="cake" data-cake="k-glutenfri"><b>Glutenfri sjokoladekake</b><span class="price">kr 495</span><span class="meta">10–12 personer, bakes på egen dag</span><span class="when">5 dager før</span></div>
+      </div>
+      <p class="tip"><b>Konfirmasjon i mai?</b> Bestill helst tre uker før. Da fylles kalenderen fort.</p>
+    </div>
+
+    <aside class="biz">
+      <svg class="bg-stamp" viewBox="0 0 200 200" aria-hidden="true" style="color:var(--brand-ink)"><use href="#stempel"/></svg>
+      <span class="kicker" style="color:#F2BFAE">Borettslag og bedrift</span>
+      <h3>Fast levering, én faktura</h3>
+      <p>Vi leverer til kontorer, byggeplasser og borettslag fra Os til Lagunen.</p><!-- PLASSHOLDER -->
+      <ul>
+        <li>Møtemat levert før klokka åtte</li>
+        <li>Fast frokost én eller flere dager i uka</li>
+        <li>Kake og kaffe til dugnad og årsmøte</li>
+        <li>EHF-faktura og samlefaktura hver måned</li>
+      </ul>
+      <p>Si hvor mange dere er og hvor ofte, så sender vi et tilbud.</p>
+      <a class="btn btn-light magnet" href="#kontakt" data-kunde="bedrift">Be om tilbud <span class="arrow">→</span></a>
+    </aside>
+  </div>
+</section>
+<div class="preview" id="preview" aria-hidden="true"><svg viewBox="0 0 200 200"><use id="preview-use" href="#k-blot"/></svg></div>
+
+<!-- ===== SEKSJON: Kundeuttalelse ===== -->
+<!-- PLASSHOLDER: sitatet er fiktivt. Bruk kun ekte uttalelser med samtykke. -->
+<section class="says">
+  <div class="wrap">
+    <figure>
+      <blockquote id="quote">«Vi har fått fredagsfrokost fra Brekke i fire år. Den har ikke kommet for sent én eneste gang, og ingen på kontoret vil bytte.»</blockquote>
+      <figcaption>Ingrid Sæle, kontorleder i et regnskapsbyrå på Os</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Kontakt ===== -->
+<section class="contact" id="kontakt">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Kontakt</span>
+      <h2 class="h2" style="margin-top:1rem">Bestill eller spør oss</h2>
+      <p class="lead">Fyll ut skjemaet, så svarer Kari i løpet av dagen. Haster det, er det best å ringe.</p>
+      <div class="phone">
+        <a href="tel:+4756301240" id="tlf">56 30 12 40</a><!-- PLASSHOLDER -->
+        <button class="copy" type="button" data-copy="56 30 12 40">Kopier</button>
+      </div>
+      <p class="small">Telefonen er betjent hverdager 06.30–15.00.</p>
+      <span class="mail">bestilling@brekkebakeri.no</span><!-- PLASSHOLDER -->
+    </div>
+
+    <form id="tilbud" novalidate>
+      <fieldset>
+        <legend>Hvem bestiller?</legend>
+        <div class="choice">
+          <input type="radio" name="kunde" id="k-privat" value="privat" checked><label for="k-privat">Privat</label>
+          <input type="radio" name="kunde" id="k-borettslag" value="borettslag"><label for="k-borettslag">Borettslag</label>
+          <input type="radio" name="kunde" id="k-bedrift" value="bedrift"><label for="k-bedrift">Bedrift</label>
+        </div>
+      </fieldset>
+      <div class="row">
+        <div class="field">
+          <label for="hva">Hva trenger du?</label>
+          <select id="hva" name="hva">
+            <option>Kake</option><option>Kransekake</option><option>Møtemat</option>
+            <option>Dugnad eller årsmøte</option><option>Fast levering</option><option>Noe annet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dato">Dato</label>
+          <input type="date" id="dato" name="dato">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="field"><label for="navn">Navn</label><input type="text" id="navn" name="navn" autocomplete="name" required></div>
+          <p class="err" id="err-navn" hidden>Skriv inn navnet ditt.</p>
+        </div>
+        <div>
+          <div class="field"><label for="telefon">Telefon</label><input type="tel" id="telefon" name="telefon" autocomplete="tel" required></div>
+          <p class="err" id="err-telefon" hidden>Skriv inn et nummer vi kan ringe deg på.</p>
+        </div>
+      </div>
+      <div class="field" id="org-felt" hidden>
+        <label for="org">Firma eller borettslag <span class="opt">(valgfritt)</span></label>
+        <input type="text" id="org" name="org">
+      </div>
+      <div class="field">
+        <label for="melding">Fortell litt mer <span class="opt">(antall personer, smak, allergier)</span></label>
+        <textarea id="melding" name="melding"></textarea>
+      </div>
+      <div class="form-foot">
+        <small>Vi bruker opplysningene bare til å svare deg.</small>
+        <button class="btn btn-red magnet" type="submit">Send forespørsel <span class="arrow">→</span></button>
+      </div>
+      <div class="done" id="kvittering" hidden role="status">
+        <b>Takk! Forespørselen er fylt ut.</b>
+        <p>Dette er en eksempelside, så ingenting ble sendt.</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ===== SEKSJON: Bunn ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="big-cta">
+        <h3>Sulten på noe godt til helgen?</h3>
+        <a class="btn btn-light magnet" href="#kontakt">Bestill nå <span class="arrow">→</span></a>
+      </div>
+      <div>
+        <h4>Butikken</h4>
+        <p>Hamnevegen 12<br>5200 Os</p><!-- PLASSHOLDER -->
+        <p style="margin-top:.5rem"><a href="https://www.google.com/maps/search/?api=1&query=Os%C3%B8yro">Vis i kart</a></p>
+      </div>
+      <div>
+        <h4>Åpent</h4>
+        <dl><!-- PLASSHOLDER -->
+          <dt>Man–fre</dt><dd>06.30–17.00</dd>
+          <dt>Lørdag</dt><dd>07.00–15.00</dd>
+          <dt>Søndag</dt><dd>09.00–14.00</dd>
+        </dl>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <p>56 30 12 40<br>bestilling@brekkebakeri.no</p><!-- PLASSHOLDER -->
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true"><span>B</span><span>r</span><span>e</span><span>k</span><span>k</span><span>e</span></div>
+    <div class="legal">
+      <span>Brekke Bakeri AS · Org.nr. 999 999 999</span><!-- PLASSHOLDER -->
+      <span>Eksempelside. Bakeriet er fiktivt.</span><!-- Fjern ved levering til ekte kunde -->
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn-out" href="tel:+4756301240">Ring</a>
+  <a class="btn btn-red" href="#kontakt">Bestill</a>
+</div>
+
+<!-- Strukturerte data. PLASSHOLDER: alle felter. Bytt @type per bransje. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Bakery","name":"Brekke Bakeri AS",
+ "telephone":"+47 56 30 12 40","email":"bestilling@brekkebakeri.no",
+ "address":{"@type":"PostalAddress","streetAddress":"Hamnevegen 12","postalCode":"5200","addressLocality":"Os","addressCountry":"NO"},
+ "openingHours":["Mo-Fr 06:30-17:00","Sa 07:00-15:00","Su 09:00-14:00"]}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>

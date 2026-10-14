@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="nb">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haugland Bygg</title>
+<!--
+================================================================================
+  BRANSJEMAL v3 · HÅNDVERKER  (animert portefølje-versjon)
+
+  Søstermal til bakeri-mal.html og esport-mal.html. Samme oppbygging,
+  klassenavn og animasjoner, nytt innhold, nye farger og nye illustrasjoner.
+
+  BIBLIOTEKER (lastes fra CDN, siden fungerer uten dem):
+  - Lenis 1.1.13 ........ myk scrolling
+  - GSAP 3.12.5 + ScrollTrigger ... alle scroll-animasjoner
+  Respekterer «redusert bevegelse»: da slås all animasjon av.
+
+  GJENBRUK
+  1. Farger og skrift: tokenene i :root (og de to mørke blokkene).
+  2. PLASSHOLDER = fiktivt innhold som byttes med kundens.
+  3. Seksjoner er merket «SEKSJON: …».
+  4. BRANSJEDETALJ = tømrerspesifikt (tjenester med veiledende pris,
+     21 dager fra befaring til ferdig bad, småjobber med responstid).
+     Forslag for elektriker: prosessen blir «Fra befaring til samsvars-
+     erklæring», tjenestene blir sikringsskap, lading, smarthus osv.
+     Forslag for rørlegger: «Fra lekkasje til tørt», responstid i døgn.
+  5. Illustrasjonene ligger som <symbol> øverst i body. Bytt med foto
+     ved å erstatte <svg><use></svg> med <img>.
+  6. Skjemaet sender ingenting. Koble til i sendSkjema(). Bildefeltet
+     må ha en mottaker som tar imot filer (f.eks. Formspree eller egen backend).
+  7. «Ledig for oppstart fra uke …» regnes ut i scriptet (LEDIG_OM).
+
+  FIKTIV BEDRIFT: Haugland Bygg AS, Sandnes. Navn, adresse, telefon, e-post,
+  org.nr., priser, godkjenninger og sitat er PLASSHOLDERE.
+================================================================================
+-->
+<meta name="description" content="Tømrerfirma på Jæren. Nytt bad, kjøkken, tilbygg, tak, vinduer og terrasse med fast pris etter gratis befaring. For private, borettslag og bedrifter."><!-- PLASSHOLDER -->
+<meta property="og:title" content="Haugland Bygg, Sandnes"><!-- PLASSHOLDER -->
+<meta property="og:locale" content="nb_NO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<canvas id="grain" aria-hidden="true"></canvas>
+
+<!-- ======================================================================
+     ILLUSTRASJONER (BRANSJEDETALJ). Brukes med <svg><use href="#id"/></svg>
+     ====================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E6C08A"/><stop offset=".55" stop-color="#C9965A"/><stop offset="1" stop-color="#9C6C38"/>
+    </linearGradient>
+    <linearGradient id="g-wood-h" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E6C08A"/><stop offset=".55" stop-color="#C9965A"/><stop offset="1" stop-color="#8E6232"/>
+    </linearGradient>
+    <linearGradient id="g-steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E3E7EA"/><stop offset=".5" stop-color="#A3ABB1"/><stop offset="1" stop-color="#5E676E"/>
+    </linearGradient>
+    <linearGradient id="g-glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#D6ECF2"/><stop offset="1" stop-color="#86B3C4"/>
+    </linearGradient>
+    <linearGradient id="g-pine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2F6E55"/><stop offset="1" stop-color="#143526"/>
+    </linearGradient>
+    <path id="sirkel" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" fill="none"/>
+
+    <!-- stempellogo med hus. PLASSHOLDER: bytt med kundens logo -->
+    <g id="hus-g" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M66 104 L100 72 L134 104"/>
+      <path d="M75 96 V132 H125 V96"/>
+      <path d="M93 132 V113 H107 V132"/>
+      <path d="M117 86 V74 H125 V93"/>
+    </g>
+    <symbol id="stempel" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="100" cy="100" r="87" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <text class="stamp" fill="currentColor"><textPath href="#sirkel">HAUGLAND BYGG · SANDNES · SIDEN 1998 ·</textPath></text>
+      <circle cx="100" cy="100" r="56" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <use href="#hus-g"/>
+    </symbol>
+    <symbol id="hus-s" viewBox="0 0 200 200">
+      <path d="M100 22 L186 100 H160 V178 H40 V100 H14Z" fill="currentColor"/>
+    </symbol>
+
+    <!-- verktøy -->
+    <symbol id="i-hammer" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="184" rx="66" ry="7" fill="#000" opacity=".14"/>
+      <g transform="rotate(-28 100 100)">
+        <rect x="91" y="58" width="18" height="128" rx="7" fill="url(#g-wood-h)"/>
+        <rect x="88" y="136" width="24" height="52" rx="9" fill="var(--red)"/>
+        <g stroke="#000" stroke-opacity=".2" stroke-width="2"><path d="M88 148h24M88 158h24M88 168h24M88 178h24"/></g>
+        <rect x="58" y="34" width="86" height="28" rx="4" fill="url(#g-steel)"/>
+        <rect x="42" y="30" width="22" height="36" rx="4" fill="url(#g-steel)"/>
+        <path d="M142 38 C166 36 182 50 188 74 L178 74 C172 60 160 54 142 58Z" fill="url(#g-steel)"/>
+        <rect x="62" y="38" width="76" height="4" rx="2" fill="#fff" opacity=".55"/>
+      </g>
+    </symbol>
+    <symbol id="i-drill" viewBox="0 0 200 200">
+      <ellipse cx="96" cy="188" rx="60" ry="7" fill="#000" opacity=".14"/>
+      <path d="M40 58 H138 a16 16 0 0 1 16 16 V98 a16 16 0 0 1 -16 16 H114 L106 156 H70 L80 114 H40 a16 16 0 0 1 -16 -16 V74 a16 16 0 0 1 16 -16Z" fill="url(#g-pine)"/>
+      <path d="M40 58 H138 a16 16 0 0 1 16 16 V78 H24 V74 a16 16 0 0 1 16 -16Z" fill="#fff" opacity=".1"/>
+      <g stroke="#0E2A1E" stroke-width="3" stroke-linecap="round"><path d="M40 76v24M48 76v24M56 76v24"/></g>
+      <rect x="104" y="70" width="40" height="8" rx="4" fill="var(--sun)"/>
+      <rect x="112" y="116" width="10" height="18" rx="4" fill="#1B1E1C"/>
+      <rect x="154" y="74" width="20" height="24" rx="3" fill="url(#g-steel)"/>
+      <rect x="174" y="79" width="8" height="14" rx="2" fill="#5E676E"/>
+      <path d="M182 86 H198" stroke="#5E676E" stroke-width="4" stroke-linecap="round"/>
+      <rect x="60" y="152" width="58" height="30" rx="5" fill="#1B1E1C"/>
+      <rect x="68" y="161" width="22" height="5" rx="2" fill="var(--sun)"/>
+    </symbol>
+    <symbol id="i-vater" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="156" rx="88" ry="7" fill="#000" opacity=".14"/>
+      <g transform="rotate(-10 100 100)">
+        <rect x="10" y="80" width="180" height="40" rx="5" fill="var(--sun)"/>
+        <rect x="10" y="80" width="180" height="8" rx="4" fill="#fff" opacity=".35"/>
+        <rect x="10" y="80" width="16" height="40" rx="4" fill="#1B1E1C"/><rect x="174" y="80" width="16" height="40" rx="4" fill="#1B1E1C"/>
+        <rect x="76" y="88" width="48" height="24" rx="12" fill="#1B1E1C"/>
+        <rect x="80" y="92" width="40" height="16" rx="8" fill="#CFEFA0"/>
+        <ellipse cx="100" cy="100" rx="8" ry="5" fill="#fff" opacity=".9"/>
+        <path d="M90 92 V108 M110 92 V108" stroke="#1B1E1C" stroke-width="1.5"/>
+        <circle cx="48" cy="100" r="9" fill="#1B1E1C"/><circle cx="48" cy="100" r="5" fill="#CFEFA0"/>
+        <circle cx="152" cy="100" r="9" fill="#1B1E1C"/><circle cx="152" cy="100" r="5" fill="#CFEFA0"/>
+      </g>
+    </symbol>
+    <symbol id="i-tumstokk" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="178" rx="76" ry="7" fill="#000" opacity=".14"/>
+      <g fill="none">
+        <path d="M24 152 L74 66 L124 152 L174 66" stroke="#C8901F" stroke-width="20" transform="translate(0 4)"/>
+        <path d="M24 152 L74 66 L124 152 L174 66" stroke="var(--sun)" stroke-width="20"/>
+        <path d="M24 152 L74 66 L124 152 L174 66" stroke="#1B1E1C" stroke-width="7" stroke-dasharray="1.4 5.6"/>
+      </g>
+      <g fill="url(#g-steel)"><circle cx="74" cy="66" r="7"/><circle cx="124" cy="152" r="7"/></g>
+    </symbol>
+
+    <!-- tjenester -->
+    <symbol id="i-bad" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="188" rx="76" ry="6" fill="#000" opacity=".12"/>
+      <rect x="26" y="20" width="148" height="160" rx="3" fill="var(--tile)"/>
+      <g stroke="var(--grout)" stroke-width="2">
+        <path d="M26 52H174M26 84H174M26 116H174M26 148H174"/>
+        <path d="M63 20V52M137 20V52M100 52V84M63 84V116M137 84V116M100 116V148M63 148V180M137 148V180"/>
+      </g>
+      <path d="M152 20 V60 H126" fill="none" stroke="#8D969C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <ellipse cx="120" cy="64" rx="24" ry="7" fill="url(#g-steel)"/>
+      <g fill="#5FA8C8">
+        <ellipse cx="104" cy="86" rx="2" ry="5"/><ellipse cx="116" cy="98" rx="2" ry="5"/><ellipse cx="128" cy="84" rx="2" ry="5"/><ellipse cx="138" cy="102" rx="2" ry="5"/>
+        <ellipse cx="108" cy="118" rx="2" ry="5"/><ellipse cx="124" cy="124" rx="2" ry="5"/><ellipse cx="134" cy="140" rx="2" ry="5"/><ellipse cx="112" cy="146" rx="2" ry="5"/>
+      </g>
+      <rect x="26" y="166" width="148" height="14" fill="#1B1E1C" opacity=".1"/>
+      <rect x="106" y="171" width="28" height="4" rx="2" fill="#8D969C"/>
+    </symbol>
+    <symbol id="i-kjokken" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="190" rx="82" ry="6" fill="#000" opacity=".12"/>
+      <rect x="22" y="18" width="156" height="50" rx="2" fill="var(--cream)"/>
+      <path d="M100 18V68" stroke="#D3CCBB" stroke-width="2"/>
+      <g fill="#2C2F2D"><rect x="88" y="56" width="8" height="3" rx="1.5"/><rect x="104" y="56" width="8" height="3" rx="1.5"/></g>
+      <rect x="22" y="68" width="156" height="32" fill="var(--tile)"/>
+      <g stroke="var(--grout)" stroke-width="1.5"><path d="M22 84H178M48 68V84M100 68V84M152 68V84M74 84V100M126 84V100"/></g>
+      <path d="M56 100 V80 a10 10 0 0 1 20 0 V86" fill="none" stroke="#8D969C" stroke-width="5" stroke-linecap="round"/>
+      <rect x="140" y="84" width="16" height="16" rx="3" fill="var(--red)"/>
+      <path d="M148 84 C140 72 142 62 148 56 C154 62 156 72 148 84Z" fill="#4F7A3E"/>
+      <rect x="16" y="100" width="168" height="10" rx="2" fill="#2C2F2D"/>
+      <rect x="22" y="110" width="156" height="72" fill="url(#g-wood)"/>
+      <g stroke="#8E6232" stroke-width="2"><path d="M74 110V182M126 110V182M126 134H178M126 158H178"/></g>
+      <g fill="#2C2F2D"><rect x="64" y="118" width="3" height="18" rx="1.5"/><rect x="84" y="118" width="3" height="18" rx="1.5"/><rect x="146" y="120" width="12" height="3" rx="1.5"/><rect x="146" y="144" width="12" height="3" rx="1.5"/><rect x="146" y="168" width="12" height="3" rx="1.5"/></g>
+    </symbol>
+    <symbol id="i-hus" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="178" rx="88" ry="7" fill="#000" opacity=".12"/>
+      <rect x="20" y="86" width="96" height="86" fill="var(--cream)"/>
+      <g stroke="#D3CCBB" stroke-width="1.5"><path d="M20 100H116M20 114H116M20 128H116M20 142H116M20 156H116"/></g>
+      <path d="M10 92 L68 36 L126 92Z" fill="var(--red)"/>
+      <path d="M10 92 L68 36 L126 92" fill="none" stroke="#8E2E1E" stroke-width="4" stroke-linejoin="round"/>
+      <rect x="58" y="130" width="20" height="42" fill="var(--pine)"/>
+      <rect x="30" y="104" width="20" height="22" fill="url(#g-glass)" stroke="#fff" stroke-width="3"/>
+      <rect x="86" y="104" width="20" height="22" fill="url(#g-glass)" stroke="#fff" stroke-width="3"/>
+      <rect x="116" y="110" width="70" height="62" fill="url(#g-wood)"/>
+      <g stroke="#9C6C38" stroke-width="1.5"><path d="M130 110V172M144 110V172M158 110V172M172 110V172"/></g>
+      <rect x="112" y="104" width="78" height="8" fill="#2C2F2D"/>
+      <rect x="126" y="122" width="50" height="40" fill="url(#g-glass)" stroke="#fff" stroke-width="3"/>
+      <g stroke="#C8901F" stroke-width="1.5"><path d="M116 92 H186" stroke-dasharray="4 3"/><path d="M116 87v10M186 87v10"/></g>
+    </symbol>
+    <symbol id="i-tak" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="182" rx="86" ry="7" fill="#000" opacity=".12"/>
+      <clipPath id="tak-c"><path d="M14 150 L100 52 L186 150Z"/></clipPath>
+      <rect x="128" y="40" width="22" height="50" fill="#8A4A3A"/><rect x="124" y="34" width="30" height="8" fill="#5E3328"/>
+      <path d="M14 150 L100 52 L186 150Z" fill="#B8462F"/>
+      <g clip-path="url(#tak-c)" fill="none" stroke="#8E3322" stroke-width="3">
+        <path d="M0 76 q10 10 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+        <path d="M-10 92 q10 10 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+        <path d="M0 108 q10 10 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+        <path d="M-10 124 q10 10 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+        <path d="M0 140 q10 10 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+      </g>
+      <path d="M14 150 L100 52 L186 150" fill="none" stroke="#6E2618" stroke-width="5" stroke-linejoin="round"/>
+      <rect x="34" y="152" width="132" height="24" fill="var(--cream)"/>
+      <rect x="10" y="148" width="180" height="7" rx="3.5" fill="url(#g-steel)"/>
+      <rect x="160" y="152" width="6" height="26" fill="#8D969C"/>
+    </symbol>
+    <symbol id="i-vindu" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="186" rx="76" ry="6" fill="#000" opacity=".12"/>
+      <rect x="36" y="20" width="128" height="150" rx="2" fill="var(--cream)" stroke="#D3CCBB" stroke-width="2"/>
+      <rect x="46" y="30" width="108" height="130" fill="url(#g-glass)"/>
+      <path d="M58 82 L86 40 M62 152 L94 104 M110 82 L132 50" stroke="#fff" stroke-width="5" opacity=".55" stroke-linecap="round"/>
+      <path d="M100 30V160M46 92H154" stroke="var(--cream)" stroke-width="8"/>
+      <rect x="106" y="98" width="4" height="14" rx="2" fill="#5E676E"/>
+      <rect x="26" y="168" width="148" height="10" rx="2" fill="url(#g-wood)"/>
+    </symbol>
+    <symbol id="i-terrasse" viewBox="0 0 200 200">
+      <ellipse cx="104" cy="176" rx="86" ry="7" fill="#000" opacity=".12"/>
+      <g fill="#9C6C38"><rect x="21" y="80" width="6" height="42"/><rect x="67" y="66" width="6" height="42"/><rect x="113" y="52" width="6" height="40"/><rect x="149" y="68" width="6" height="40"/><rect x="179" y="82" width="6" height="40"/></g>
+      <path d="M20 80 L116 52 L184 82" fill="none" stroke="#B9844C" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M20 120 L84 160 L84 168 L20 128Z" fill="#8E6232"/>
+      <path d="M84 160 L184 120 L184 128 L84 168Z" fill="#A9763F"/>
+      <path d="M20 120 L120 90 L184 120 L84 160Z" fill="url(#g-wood)"/>
+      <g stroke="#9C6C38" stroke-width="2"><path d="M32.8 128 L132.8 96"/><path d="M45.6 136 L145.6 102"/><path d="M58.4 144 L158.4 108"/><path d="M71.2 152 L171.2 114"/></g>
+      <rect x="132" y="98" width="14" height="14" rx="2" fill="var(--red)"/>
+      <path d="M139 98 C132 88 134 80 139 76 C144 80 146 88 139 98Z" fill="#4F7A3E"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== SEKSJON: Toppmeny ===== -->
+<header class="top" id="top-bar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Haugland Bygg, til forsiden">
+      <svg aria-hidden="true"><use href="#stempel"/></svg><b>Haugland Bygg</b>
+    </a>
+    <nav class="nav" aria-label="Hovedmeny">
+      <a href="#tjenester">Tjenester</a>
+      <a href="#prosess">Slik jobber vi</a>
+      <a href="#smajobber">Småjobber og borettslag</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn btn-red" href="#kontakt">Befaring <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===== SEKSJON: Hero ===== -->
+<section class="hero">
+  <div class="stamp-wrap" aria-hidden="true"><div class="stamp-spin"><svg><use href="#stempel"/></svg></div></div>
+  <div class="float f1" data-speed="0.35" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-drill"/></svg></div></div>
+  <div class="float f2" data-speed="0.6" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-hammer"/></svg></div></div>
+  <div class="float f3" data-speed="0.15" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-tumstokk"/></svg></div></div>
+
+  <div class="wrap">
+    <h1 aria-label="Fast pris. Ryddig jobb. Ferdig i tide."><!-- PLASSHOLDER -->
+      <span class="line" aria-hidden="true"><span class="li">Fast pris.</span></span>
+      <span class="line" aria-hidden="true"><span class="li">Ryddig jobb.</span></span>
+      <span class="line" aria-hidden="true"><span class="li soft">Ferdig i tide.</span></span>
+    </h1>
+    <div class="hero-row reveal-hero">
+      <p class="intro">Tømrerfirma på Jæren siden 1998. Vi pusser opp bad og kjøkken, bygger på og legger nytt tak for private, borettslag og bedrifter.</p>
+      <div class="actions">
+        <a class="btn btn-light magnet" href="#kontakt">Bestill gratis befaring <span class="arrow">→</span></a>
+        <a class="btn btn-line magnet" href="tel:+4751623018">Ring 51 62 30 18</a><!-- PLASSHOLDER -->
+      </div>
+    </div>
+    <div class="today reveal-hero">
+      <span><i class="dot" aria-hidden="true"></i><span id="ledig">Ledig for nye oppdrag</span></span>
+      <span>Sandnes, Stavanger og Jæren</span><!-- PLASSHOLDER -->
+      <span>Svar innen neste arbeidsdag</span>
+    </div>
+  </div>
+</section>
+<div class="ruler" aria-hidden="true"></div>
+
+<!-- ===== SEKSJON: Løpebånd ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>Nytt bad</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span class="o">Kjøkken</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span>Tilbygg</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span class="o">Tak og fasade</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span>Vinduer</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span class="o">Terrasse</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+    </div>
+    <div class="marquee-group">
+      <span>Nytt bad</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span class="o">Kjøkken</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span>Tilbygg</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span class="o">Tak og fasade</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span>Vinduer</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+      <span class="o">Terrasse</span><svg viewBox="0 0 200 200"><use href="#hus-s"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEKSJON: Hilsen fra eieren ===== -->
+<section class="hello">
+  <div class="wrap">
+    <figure class="foto">
+      <!-- PLASSHOLDER: bytt .scene med <img src="" alt="Jon Haugland på et ferdig bad" style="width:100%;height:116%;object-fit:cover"> -->
+      <div class="scene"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-bad"/></svg></div>
+      <figcaption><span>Bad på Hinna, overlevert i mars</span><span>dag 21</span></figcaption>
+    </figure>
+    <div class="text">
+      <span class="kicker">Om oss</span>
+      <h2 class="h2">Hei, jeg er Jon.</h2><!-- PLASSHOLDER -->
+      <p class="up">Jeg tok svennebrev som tømrer i 1996 og startet for meg selv to år senere. I dag er vi åtte faste: seks tømrere, en lærling og Silje, som har styr på kontoret.</p>
+      <p class="up">Vi tar oppdrag fra Sandnes til Bryne, og de fleste kundene kommer fordi naboen anbefalte oss. Du får fast pris, vi rydder etter oss hver dag, og vi tar telefonen når du ringer.</p>
+      <p class="up">Lurer du på hva det koster å pusse opp badet, eller om det lønner seg å bygge på? Bestill en befaring. Den er gratis og helt uforpliktende.</p>
+      <span class="sign up">Jon Haugland, tømrermester
+        <svg viewBox="0 0 200 18" preserveAspectRatio="none" aria-hidden="true"><path id="sign-line" d="M2 12 C40 4 80 16 120 8 S180 6 198 10"/></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Tjenester (scroller sidelengs på store skjermer) ===== -->
+<section class="counter" id="tjenester">
+  <div class="track">
+    <div class="panel intro">
+      <span class="kicker">Tjenester</span>
+      <h2 class="h2" style="margin-top:1rem">Det vi bygger</h2>
+      <p class="lead">Seks ting vi gjør hver uke. Prisene er veiledende og inkluderer mva. Etter befaringen får du alltid fast pris.</p><!-- PLASSHOLDER -->
+      <p class="hint"><i></i>Scroll for å se mer</p>
+    </div>
+    <!-- PLASSHOLDER: priser og varighet -->
+    <article class="panel">
+      <div class="pic"><span class="when">3–4 uker</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-bad"/></svg></div>
+      <h3>Nytt bad <small>fra kr 260 000</small></h3>
+      <p>Komplett våtrom med rørlegger, elektriker og flis. Én kontaktperson hele veien.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">1–2 uker</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-kjokken"/></svg></div>
+      <h3>Kjøkken <small>montering fra kr 45 000</small></h3>
+      <p>Vi monterer kjøkken fra alle leverandører, og flytter vegger hvis det trengs.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">2–4 måneder</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-hus"/></svg></div>
+      <h3>Tilbygg <small>fra kr 650 000</small></h3>
+      <p>Vi tegner, søker kommunen og bygger. Til slutt får du ferdigattesten.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">1–2 uker</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-tak"/></svg></div>
+      <h3>Tak og fasade <small>etter befaring</small></h3>
+      <p>Omtekking, nye takrenner og etterisolering i samme runde, så du slipper stillas to ganger.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">2–5 dager</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-vindu"/></svg></div>
+      <h3>Vinduer og dører <small>fra kr 9 800</small></h3>
+      <p>Vi bytter vinduer og ytterdører, med lister og tetting inne og ute.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">1–2 uker</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-terrasse"/></svg></div>
+      <h3>Terrasse <small>fra kr 2 400 / m²</small></h3>
+      <p>Royalimpregnert, kebony eller kompositt. Vi støper fundamentene selv.</p>
+    </article>
+  </div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+</section>
+
+<!-- ===== SEKSJON: 21 dager (BRANSJEDETALJ, ekte rekkefølge for et bad) ===== -->
+<section class="process" id="prosess">
+  <div class="wrap">
+    <div class="clock">
+      <span class="kicker">Slik jobber vi</span>
+      <div class="hours" data-total="21" aria-label="21 dager fra befaring til ferdig bad"><span id="hrs">0</span><small>dager</small></div>
+      <div class="bar" aria-hidden="true"><i id="hrs-bar"></i></div>
+      <p>Så lang tid tar et vanlig bad hos oss, fra vi river det gamle til du kan dusje.</p>
+    </div>
+    <ol class="steps">
+      <li class="step"><span class="t">Før start</span><h3>Befaring og fast pris</h3><p>Jon måler opp, hører hva du ønsker deg, og sender et skriftlig tilbud med fast pris innen tre dager.</p></li>
+      <li class="step"><span class="t">Dag 1–3</span><h3>Riving og tildekking</h3><p>Vi dekker til gulv og trapp, river det gamle og kjører alt avfallet til gjenvinning.</p></li>
+      <li class="step"><span class="t">Dag 4–7</span><h3>Rør og elektrisk</h3><p>Rørleggeren og elektrikeren vi har brukt i over ti år kommer inn. Du trenger bare å ringe oss.</p></li>
+      <li class="step"><span class="t">Dag 8–18</span><h3>Membran og flis</h3><p>Tett membran etter våtromsnormen, med bilder av hvert lag før flisleggeren starter.</p></li>
+      <li class="step"><span class="t">Dag 21</span><h3>Overlevering</h3><p>Vi går gjennom alt sammen med deg. Du får FDV-perm, samsvarserklæringer og fem års reklamasjonsrett.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Småjobber (privat + borettslag/bedrift) ===== -->
+<section class="order" id="smajobber">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Småjobber og faste priser</span>
+      <h2 class="h2" style="margin-top:1rem">Ingen jobb er for liten</h2>
+      <p class="lead">Det meste du trenger hjelp med har en fast pris. Til høyre ser du hvor raskt vi normalt kan komme.</p>
+      <div class="cakes"><!-- PLASSHOLDER: priser og responstid -->
+        <div class="cake" data-cake="i-tumstokk"><b>Befaring og tilbud</b><span class="price">gratis</span><span class="meta">Vi måler opp og gir fast pris skriftlig</span><span class="when">innen 3 dager</span></div>
+        <div class="cake" data-cake="i-hammer"><b>Tømrer, timepris</b><span class="price">kr 890 / time</span><span class="meta">Inkl. mva. Kjøring på Jæren er med</span><span class="when">innen 2 uker</span></div>
+        <div class="cake" data-cake="i-drill"><b>Småjobbpakke, 4 timer</b><span class="price">kr 3 290</span><span class="meta">Lister, dører og hyller, samlet på én dag</span><span class="when">innen 2 uker</span></div>
+        <div class="cake" data-cake="i-vindu"><b>Nytt vindu, montert</b><span class="price">fra kr 9 800</span><span class="meta">Med lister og tetting, gamle vinduet kjøres bort</span><span class="when">4–6 uker</span></div>
+        <div class="cake" data-cake="i-tak"><b>Akutt etter storm eller lekkasje</b><span class="price">kr 1 450 utrykning</span><span class="meta">Vi tetter taket og sikrer skaden</span><span class="when">samme dag</span></div>
+      </div>
+      <p class="tip"><b>Nytt bad før jul?</b> Da må vi starte senest midt i november. Book befaringen i god tid.</p>
+    </div>
+
+    <aside class="biz">
+      <svg class="bg-stamp" viewBox="0 0 200 200" aria-hidden="true" style="color:var(--brand-ink)"><use href="#stempel"/></svg>
+      <span class="kicker" style="color:var(--sun)">Borettslag og næring</span>
+      <h3>Én avtale, én kontaktperson</h3>
+      <p>Vi har rammeavtaler med borettslag og gårdeiere fra Sola til Bryne.</p><!-- PLASSHOLDER -->
+      <ul>
+        <li>Vedlikeholdsplan for fem til ti år</li>
+        <li>Fast timepris og responstid i avtalen</li>
+        <li>Sentralt godkjent for utførelse</li><!-- PLASSHOLDER: bekreft godkjenning -->
+        <li>EHF-faktura med timeliste og bilder</li>
+      </ul>
+      <p>Send oss vedlikeholdsplanen eller en liste over det som må gjøres, så sender vi et forslag til avtale.</p>
+      <a class="btn btn-light magnet" href="#kontakt" data-kunde="borettslag">Be om rammeavtale <span class="arrow">→</span></a>
+    </aside>
+  </div>
+</section>
+<div class="preview" id="preview" aria-hidden="true"><svg viewBox="0 0 200 200"><use id="preview-use" href="#i-tumstokk"/></svg></div>
+
+<!-- ===== SEKSJON: Kundeuttalelse ===== -->
+<!-- PLASSHOLDER: sitatet er fiktivt. Bruk kun ekte uttalelser med samtykke. -->
+<section class="says">
+  <div class="wrap">
+    <figure>
+      <blockquote id="quote">«Vi fikk fast pris, de startet den dagen de sa, og hver ettermiddag var det støvsugd. Badet ble ferdig to dager før planen.»</blockquote>
+      <figcaption>Marte Eik, nytt bad på Hinna</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Kontakt ===== -->
+<section class="contact" id="kontakt">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Kontakt</span>
+      <h2 class="h2" style="margin-top:1rem">Bestill befaring</h2>
+      <p class="lead">Fyll ut skjemaet, gjerne med et par bilder, så ringer Silje deg innen neste arbeidsdag. Haster det, er det best å ringe.</p>
+      <div class="phone">
+        <a href="tel:+4751623018" id="tlf">51 62 30 18</a><!-- PLASSHOLDER -->
+        <button class="copy" type="button" data-copy="51 62 30 18">Kopier</button>
+      </div>
+      <p class="small">Kontoret er betjent hverdager 07.00–15.30. Ved akutt vannskade svarer vi hele døgnet.</p>
+      <span class="mail">post@hauglandbygg.no</span><!-- PLASSHOLDER -->
+    </div>
+
+    <form id="tilbud" novalidate>
+      <fieldset>
+        <legend>Hvem er du?</legend>
+        <div class="choice">
+          <input type="radio" name="kunde" id="k-privat" value="privat" checked><label for="k-privat">Privat</label>
+          <input type="radio" name="kunde" id="k-borettslag" value="borettslag"><label for="k-borettslag">Borettslag</label>
+          <input type="radio" name="kunde" id="k-bedrift" value="bedrift"><label for="k-bedrift">Bedrift</label>
+        </div>
+      </fieldset>
+      <div class="row">
+        <div class="field">
+          <label for="hva">Hva gjelder det?</label>
+          <select id="hva" name="hva">
+            <option>Nytt bad</option><option>Kjøkken</option><option>Tilbygg</option><option>Tak og fasade</option>
+            <option>Vinduer og dører</option><option>Terrasse</option><option>Småjobb</option><option>Rammeavtale</option><option>Noe annet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="oppstart">Ønsket oppstart</label>
+          <select id="oppstart" name="oppstart">
+            <option>Så snart som mulig</option><option>Innen tre måneder</option><option>Senere i år</option><option>Jeg planlegger bare</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="field"><label for="navn">Navn</label><input type="text" id="navn" name="navn" autocomplete="name" required></div>
+          <p class="err" id="err-navn" hidden>Skriv inn navnet ditt.</p>
+        </div>
+        <div>
+          <div class="field"><label for="telefon">Telefon</label><input type="tel" id="telefon" name="telefon" autocomplete="tel" required></div>
+          <p class="err" id="err-telefon" hidden>Skriv inn et nummer vi kan ringe deg på.</p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="adresse">Adresse for befaring <span class="opt">(valgfritt)</span></label>
+        <input type="text" id="adresse" name="adresse" autocomplete="street-address">
+      </div>
+      <div class="field" id="org-felt" hidden>
+        <label for="org">Borettslag eller firma <span class="opt">(valgfritt)</span></label>
+        <input type="text" id="org" name="org">
+      </div>
+      <div class="field">
+        <label for="melding">Fortell litt om jobben <span class="opt">(mål, ønsker, tidspunkt)</span></label>
+        <textarea id="melding" name="melding"></textarea>
+      </div>
+      <div>
+        <label for="bilder">Bilder <span class="opt">(valgfritt, sparer ofte en befaring)</span></label>
+        <input type="file" id="bilder" name="bilder" accept="image/*" multiple>
+      </div>
+      <div class="form-foot">
+        <small>Vi bruker opplysningene bare til å svare deg.</small>
+        <button class="btn btn-red magnet" type="submit">Send forespørsel <span class="arrow">→</span></button>
+      </div>
+      <div class="done" id="kvittering" hidden role="status">
+        <b>Takk! Forespørselen er fylt ut.</b>
+        <p>Dette er en eksempelside, så ingenting ble sendt.</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ===== SEKSJON: Bunn ===== -->
+<footer>
+  <div class="ruler" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="foot">
+      <div class="big-cta">
+        <h3>Skal du pusse opp?</h3>
+        <a class="btn btn-light magnet" href="#kontakt">Bestill befaring <span class="arrow">→</span></a>
+      </div>
+      <div>
+        <h4>Verkstedet</h4>
+        <p>Kvålsvegen 18<br>4313 Sandnes</p><!-- PLASSHOLDER -->
+        <p style="margin-top:.5rem"><a href="https://www.google.com/maps/search/?api=1&query=Sandnes">Vis i kart</a></p>
+      </div>
+      <div>
+        <h4>Kontortid</h4>
+        <dl><!-- PLASSHOLDER -->
+          <dt>Man–fre</dt><dd>07.00–15.30</dd>
+          <dt>Helg</dt><dd>Stengt</dd>
+          <dt>Vannskade</dt><dd>Hele døgnet</dd>
+        </dl>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <p>51 62 30 18<br>post@hauglandbygg.no</p><!-- PLASSHOLDER -->
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true"><span>H</span><span>a</span><span>u</span><span>g</span><span>l</span><span>a</span><span>n</span><span>d</span></div>
+    <div class="legal">
+      <span>Haugland Bygg AS · Org.nr. 999 999 999</span><!-- PLASSHOLDER -->
+      <span>Eksempelside. Firmaet er fiktivt.</span><!-- Fjern ved levering til ekte kunde -->
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn-out" href="tel:+4751623018">Ring</a>
+  <a class="btn btn-red" href="#kontakt">Befaring</a>
+</div>
+
+<!-- Strukturerte data. PLASSHOLDER: alle felter. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"GeneralContractor","name":"Haugland Bygg AS",
+ "telephone":"+47 51 62 30 18","email":"post@hauglandbygg.no",
+ "address":{"@type":"PostalAddress","streetAddress":"Kvålsvegen 18","postalCode":"4313","addressLocality":"Sandnes","addressCountry":"NO"},
+ "areaServed":["Sandnes","Stavanger","Sola","Klepp","Time"],
+ "openingHours":["Mo-Fr 07:00-15:30"]}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>

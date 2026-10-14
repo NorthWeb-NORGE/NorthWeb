@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="no">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NorthWeb – Nettsider for norske bedrifter</title>
+  <meta name="description"
+    content="NorthWeb lager raske, rene nettsider for små og mellomstore bedrifter. Fast pris, levert på to uker, og du eier alt.">
+  <meta name="theme-color" content="#050C1A">
+  <link rel="icon" href="assets/img/logo/png/favicon-lys/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/img/logo/svg/favicon-mork.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/logo/png/app-ikon-mork/app-ikon-mork-180x180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="check" viewBox="0 0 16 16">
+        <path d="m3 8.5 3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </symbol>
+      <symbol id="arrow" viewBox="0 0 14 14">
+        <path d="M3 11 11 3M5 3h6v6" fill="none" stroke="currentColor" stroke-width="1.8" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <a href="#" class="logo" aria-label="NorthWeb – til toppen"><img src="assets/img/logo/svg/logo-liggende-transparent-for-mork.svg" alt="NorthWeb" width="98" height="42"></a>
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="#arbeid">Arbeid</a>
+        <a href="#hvorfor">Hvorfor oss</a>
+        <a href="#prosess">Prosess</a>
+        <a href="#pakker">Pakker</a>
+        <a href="#om">Om oss</a>
+      </nav>
+      <a href="#kontakt" class="nav-cta">Start et prosjekt</a>
+      <button class="menu-btn" aria-label="Åpne meny" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="mobile-menu">
+    <a href="#arbeid">Arbeid</a><a href="#hvorfor">Hvorfor oss</a><a href="#prosess">Prosess</a><a
+      href="#pakker">Pakker</a><a href="#om">Om oss</a><a href="#kontakt">Start et prosjekt</a>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <canvas id="stars" aria-hidden="true"></canvas>
+      <div class="glow g1"></div>
+      <div class="glow g2"></div>
+      <div class="glow g3"></div>
+      <div class="wrap">
+        <div class="pill rv"><i>NYHET</i>Gratis utkast før du bestemmer deg</div>
+        <h1 class="rv d1">Krystallklart design. <span class="ice">Iskald presisjon.</span></h1>
+        <p class="lede rv d2">Vi designer og bygger raske, rene nettsider som får kundene til å ta kontakt. Fast pris,
+          ferdig på to uker.</p>
+        <div class="hero-ctas rv d3">
+          <a href="#kontakt" class="btn btn-primary">Få et gratis utkast</a>
+          <a href="#arbeid" class="btn btn-glass">Se arbeidet vårt</a>
+        </div>
+      </div>
+
+      <div class="showcase rv d3">
+        <div class="picker" role="tablist" aria-label="Velg eksempelside">
+          <button role="tab" aria-selected="true" data-src="maler/handverker/"
+            data-url="hauglandbygg.no">Håndverker</button>
+          <button role="tab" aria-selected="false" data-src="maler/frisor/" data-url="salonglys.no">Frisør</button>
+          <button role="tab" aria-selected="false" data-src="maler/bakeri/" data-url="brekkebakeri.no">Bakeri</button>
+          <button role="tab" aria-selected="false" data-src="maler/esport/" data-url="kvasiresport.no">Esport</button>
+        </div>
+        <div class="device">
+          <div class="browser">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span
+                class="url" id="heroUrl">hauglandbygg.no</span></div>
+            <div class="screen" data-w="1440" id="heroScreen">
+              <iframe id="heroFrame" src="maler/handverker/" title="Eksempel på nettside" tabindex="-1"
+                aria-hidden="true"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STRIP -->
+    <div class="strip" aria-label="Det du får">
+      <div class="wrap">
+        <div><svg>
+            <use href="#check" />
+          </svg><span><b>14 dager</b> fra start til lansering</span></div>
+        <div><svg>
+            <use href="#check" />
+          </svg><span><b>Fast pris</b> – ingen timer som tikker</span></div>
+        <div><svg>
+            <use href="#check" />
+          </svg><span><b>Du eier</b> domene og innhold</span></div>
+        <div><svg>
+            <use href="#check" />
+          </svg><span><b>Support</b> når du trenger det</span></div>
+      </div>
+    </div>
+
+    <!-- WORK -->
+    <section class="sec" id="arbeid">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow rv">Arbeid</span>
+            <h2 class="rv d1">Laget for akkurat <span class="dim">din bransje.</span></h2>
+            <p class="rv d2">Hver side tegnes fra bunnen av – med egen typografi, farger og tone. Ingen ferdigmaler,
+              ingen
+              kopier.</p>
+          </div>
+          <div class="work-grid">
+            <a class="work rv" href="maler/handverker/" target="_blank" rel="noopener">
+              <div class="frame">
+                <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span
+                    class="dot"></span><span class="url">hauglandbygg.no</span></div>
+                <div class="screen" data-w="1440"><iframe data-src="maler/handverker/" title="Haugland Bygg"
+                    tabindex="-1" aria-hidden="true"></iframe></div>
+              </div>
+              <div class="work-info">
+                <div><small>Håndverker · Jæren</small>
+                  <h3>Haugland Bygg</h3>
+                  <p>Tømrerfirma som får inn befaringer rett fra nettsiden.</p>
+                </div><span class="arrow"><svg>
+                    <use href="#arrow" />
+                  </svg></span>
+              </div>
+            </a>
+            <a class="work rv d1" href="maler/frisor/" target="_blank" rel="noopener">
+              <div class="frame">
+                <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span
+                    class="dot"></span><span class="url">salonglys.no</span></div>
+                <div class="screen" data-w="1440"><iframe data-src="maler/frisor/" title="Salong Lys" tabindex="-1"
+                    aria-hidden="true"></iframe></div>
+              </div>
+              <div class="work-info">
+                <div><small>Frisør · Trondheim</small>
+                  <h3>Salong Lys</h3>
+                  <p>Rolig, varm salongside med timebestilling på nett.</p>
+                </div><span class="arrow"><svg>
+                    <use href="#arrow" />
+                  </svg></span>
+              </div>
+            </a>
+            <a class="work rv" href="maler/bakeri/" target="_blank" rel="noopener">
+              <div class="frame">
+                <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span
+                    class="dot"></span><span class="url">brekkebakeri.no</span></div>
+                <div class="screen" data-w="1440"><iframe data-src="maler/bakeri/" title="Brekke Bakeri" tabindex="-1"
+                    aria-hidden="true"></iframe></div>
+              </div>
+              <div class="work-info">
+                <div><small>Bakeri · Osøyro</small>
+                  <h3>Brekke Bakeri</h3>
+                  <p>Familiebakeri med kakebestilling og levering til bedrifter.</p>
+                </div><span class="arrow"><svg>
+                    <use href="#arrow" />
+                  </svg></span>
+              </div>
+            </a>
+            <a class="work rv d1" href="maler/esport/" target="_blank" rel="noopener">
+              <div class="frame">
+                <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span
+                    class="dot"></span><span class="url">kvasiresport.no</span></div>
+                <div class="screen" data-w="1440"><iframe data-src="maler/esport/" title="Kvasir Esport" tabindex="-1"
+                    aria-hidden="true"></iframe></div>
+              </div>
+              <div class="work-info">
+                <div><small>Esport · Bergen</small>
+                  <h3>Kvasir Esport</h3>
+                  <p>Klubbside med tryouts, medlemskap og sponsorpakker.</p>
+                </div><span class="arrow"><svg>
+                    <use href="#arrow" />
+                  </svg></span>
+              </div>
+            </a>
+          </div>
+          <p class="work-note rv">Dette er eksempelsider på hva vi har evnen til å lage. Selskapene finnes ikke.</p>
+        </div>
+    </section>
+
+    <!-- PHOTO USP -->
+    <section class="sec dark photo">
+      <div class="glow g1"></div>
+      <div class="wrap photo-grid">
+        <div class="photo-text">
+          <span class="eyebrow rv">Eksklusiv fordel</span>
+          <h2 class="h2 rv d1">Vi tar bildene <span class="dim">for deg.</span></h2>
+          <p class="rv d2">Det som skiller en god nettside fra en fantastisk en, er bildene. Andre byråer ber deg sende
+            egne bilder eller bruker kjedelige stockfoto. Vi kommer ut til deg.</p>
+          <ul class="checks rv d3">
+            <li><span><svg>
+                  <use href="#check" />
+                </svg></span>Fotograf besøker bedriften din</li>
+            <li><span><svg>
+                  <use href="#check" />
+                </svg></span>Bilder skreddersydd til designet</li>
+            <li><span><svg>
+                  <use href="#check" />
+                </svg></span>Full bruksrett i sosiale medier og markedsføring</li>
+          </ul>
+        </div>
+        <div class="lens rv d2" aria-hidden="true">
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ticks"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="sec" id="hvorfor">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow rv">Hvorfor NorthWeb</span>
+          <h2 class="rv d1">Alt du trenger. <span class="dim">Ingenting du ikke trenger.</span></h2>
+          <p class="rv d2">En god nettside er ikke pynt. Den er den ansatte som jobber døgnet rundt.</p>
+        </div>
+        <div class="bento">
+          <div class="tile ink t-a rv">
+            <h3>Lynrask. Hver gang.</h3>
+            <p>Vi skriver koden selv, uten tunge byggeverktøy. Sidene laster før kunden rekker å blunke – og Google
+              elsker det.</p>
+            <div class="viz score" id="scores">
+              <div class="gauge"><svg viewBox="0 0 100 100">
+                  <circle class="bg" cx="50" cy="50" r="40" />
+                  <circle class="fg" cx="50" cy="50" r="40" /><text x="50" y="58" text-anchor="middle">100</text>
+                </svg>Ytelse</div>
+              <div class="gauge"><svg viewBox="0 0 100 100">
+                  <circle class="bg" cx="50" cy="50" r="40" />
+                  <circle class="fg" cx="50" cy="50" r="40" /><text x="50" y="58" text-anchor="middle">100</text>
+                </svg>Tilgjengelighet</div>
+              <div class="gauge"><svg viewBox="0 0 100 100">
+                  <circle class="bg" cx="50" cy="50" r="40" />
+                  <circle class="fg" cx="50" cy="50" r="40" /><text x="50" y="58" text-anchor="middle">100</text>
+                </svg>Beste praksis</div>
+              <div class="gauge"><svg viewBox="0 0 100 100">
+                  <circle class="bg" cx="50" cy="50" r="40" />
+                  <circle class="fg" cx="50" cy="50" r="40" /><text x="50" y="58" text-anchor="middle">100</text>
+                </svg>SEO</div>
+            </div>
+          </div>
+          <div class="tile icey t-b rv d1">
+            <h3>Først på mobil.</h3>
+            <p>Over 70 % av besøkene kommer fra telefonen.</p>
+            <div class="viz">
+              <div class="phone"><iframe data-src="maler/frisor/" title="Frisørside på mobil" tabindex="-1"
+                  aria-hidden="true"></iframe></div>
+            </div>
+          </div>
+          <div class="tile t-c rv">
+            <h3>Synlig på Google.</h3>
+            <p>Riktig struktur og lokal SEO fra dag én.</p>
+            <div class="viz">
+              <div class="search-mock">
+                <div class="q"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                    stroke-width="1.6">
+                    <circle cx="6" cy="6" r="4.5" />
+                    <path d="m9.5 9.5 3 3" />
+                  </svg>tømrer jæren</div>
+                <div class="r1">Haugland Bygg – Fast pris på bad og tilbygg</div>
+                <div class="r2">hauglandbygg.no</div>
+                <div class="r3">Gratis befaring på hele Jæren. Nytt bad, kjøkken…</div>
+              </div>
+            </div>
+          </div>
+          <div class="tile t-d rv d1">
+            <h3>Endringer på minutter.</h3>
+            <p>Send en melding, så fikser vi det. Ofte samme dag.</p>
+            <div class="viz">
+              <div class="big-num">&lt;24<small> timer</small></div>
+            </div>
+          </div>
+          <div class="tile t-e rv d2">
+            <h3>Alt på ett sted.</h3>
+            <p>Vi ordner det tekniske, så du slipper.</p>
+            <div class="viz chips">
+              <span>Domene</span><span>Hosting</span><span>SSL</span><span>E-post</span><span>Kontaktskjema</span><span>Google-profil</span><span>Analyse</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="sec" id="prosess" style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow rv">Prosess</span>
+          <h2 class="rv d1">Fra idé til nettside <span class="dim">på fire steg.</span></h2>
+        </div>
+        <div class="steps">
+          <div class="step rv">
+            <div class="n">01</div>
+            <h3>Prat</h3>
+            <p>Et uforpliktende møte om bedriften din, kundene og hva siden skal oppnå.</p><span class="when">Dag
+              1</span>
+          </div>
+          <div class="step rv d1">
+            <div class="n">02</div>
+            <h3>Gratis utkast</h3>
+            <p>Du ser designet før du bestemmer deg. Liker du det ikke, koster det ingenting.</p><span class="when">Dag
+              2–4</span>
+          </div>
+          <div class="step rv d2">
+            <div class="n">03</div>
+            <h3>Bygging</h3>
+            <p>Vi skriver tekst, tar bilder og bygger siden. Du følger med underveis.</p><span class="when">Dag
+              5–12</span>
+          </div>
+          <div class="step rv d3">
+            <div class="n">04</div>
+            <h3>Lansering</h3>
+            <p>Siden går live på ditt domene, og vi hjelper deg videre etterpå.</p><span class="when">Dag 14</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="sec dark" id="pakker">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow rv">Pakker</span>
+          <h2 class="rv d1">Enkle priser. <span class="dim">Ingen overraskelser.</span></h2>
+          <p class="rv d2">Engangspris for selve nettsiden. Drift og support for en fast, lav sum i måneden.</p>
+        </div>
+        <div class="plans">
+          <div class="plan rv">
+            <h3>Basic</h3>
+            <p class="desc">For små bedrifter som vil få kunder raskt.</p>
+            <div class="price">6 999 <small>kr</small></div>
+            <div class="vat">eks. mva · engangspris</div>
+            <ul>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Skreddersydd design</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Tilpasset mobil</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Hastighetsoptimalisering</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Kontaktskjema</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Grunnleggende SEO</li>
+            </ul>
+            <a href="#kontakt" class="btn btn-glass" data-pkg="Basic">Velg Basic</a>
+          </div>
+          <div class="plan feat rv d1">
+            <span class="tag">MEST POPULÆR</span>
+            <h3>Proff bilder</h3>
+            <p class="desc">Nettside og profesjonelle bilder som gjør at bedriften din skiller seg ut.</p>
+            <div class="price">9 999 <small>kr</small></div>
+            <div class="vat">eks. mva · engangspris</div>
+            <ul>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Alt i Basic</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Profesjonell fotografering</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>10 bilder i høy kvalitet</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Opptil 6 undersider</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Vi skriver tekstene</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Lokal SEO og Google-profil</li>
+            </ul>
+            <a href="#kontakt" class="btn btn-snow" data-pkg="Proff bilder">Velg Proff bilder</a>
+          </div>
+          <div class="plan rv d2">
+            <h3>Nettbutikk</h3>
+            <p class="desc">Selg produktene dine på nett med trygg betaling.</p>
+            <div class="price">17 999 <small>kr</small></div>
+            <div class="vat">eks. mva · engangspris</div>
+            <ul>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Alt i Proff bilder</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Produktkatalog</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Handlekurv og kasse</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Vipps og kortbetaling</li>
+              <li><svg>
+                  <use href="#check" />
+                </svg>Opplæring i å legge inn varer</li>
+            </ul>
+            <a href="#kontakt" class="btn btn-glass" data-pkg="Nettbutikk">Velg Nettbutikk</a>
+          </div>
+        </div>
+        <div class="addon rv">
+          <div><b>Drift og support</b> – hosting, sikkerhet, backup og små endringer.</div>
+          <div><b>499 kr</b> / mnd</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="sec" id="om">
+      <div class="wrap about-grid">
+        <div class="about-text">
+          <span class="eyebrow rv">Om oss</span>
+          <h2 class="h2 rv d1">To hoder. <span class="dim">Én visjon.</span></h2>
+          <p class="rv d2">NorthWeb ble startet av to venner med en felles lidenskap for koding og design. Vi så altfor
+            mange gode bedrifter med nettsider som ikke gjorde dem rettferdighet.</p>
+          <p class="rv d2">Hos oss snakker du direkte med de som bygger siden din. Ingen selgere, ingen mellomledd – og
+            vi svarer når du ringer.</p>
+          <div class="stats rv d3">
+            <div><b>100 %</b><span>Engasjert</span></div>
+            <div><b>24/7</b><span>Support</span></div>
+            <div><b>2 uker</b><span>Levering</span></div>
+          </div>
+        </div>
+        <div class="people">
+          <div class="person rv">
+            <div class="avatar">NE</div>
+            <h3>Noah Ekren</h3>
+            <p>Front-end utvikling og markedsføring</p>
+          </div>
+          <div class="person rv d1">
+            <div class="avatar">EB</div>
+            <h3>Emil Bhullar-Stokken</h3>
+            <p>Back-end utvikling og design</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec" style="padding-top:40px">
+      <div class="wrap">
+        <div class="sec-head"><span class="eyebrow rv">FAQ</span>
+          <h2 class="rv d1">Spørsmål og svar.</h2>
+        </div>
+        <div class="faq">
+          <details class="rv">
+            <summary>Hva koster det egentlig?</summary>
+            <p>Prisen står i pakken du velger – en fast engangspris. I tillegg kommer domene (ca. 150 kr i året) og
+              eventuelt drift og support til 199 kr i måneden. Ingen skjulte kostnader.</p>
+          </details>
+          <details class="rv">
+            <summary>Hva om jeg ikke liker utkastet?</summary>
+            <p>Da betaler du ingenting. Utkastet er gratis og uforpliktende – vi vil heller at du er helt sikker før vi
+              setter i gang.</p>
+          </details>
+          <details class="rv">
+            <summary>Kan jeg endre innholdet selv?</summary>
+            <p>Ja, vi kan sette opp et enkelt verktøy for tekst og bilder. De fleste foretrekker likevel å bare sende
+              oss en melding, så ordner vi det.</p>
+          </details>
+          <details class="rv">
+            <summary>Hvor tar dere bilder?</summary>
+            <p>Vi kommer ut til bedriften din. Fotograferingen er inkludert i Proff bilder og Nettbutikk, og kan legges
+              til i Basic.</p>
+          </details>
+          <details class="rv">
+            <summary>Jeg har allerede en nettside. Kan dere fornye den?</summary>
+            <p>Absolutt. Vi flytter innholdet du vil beholde, tar vare på plasseringen din på Google og setter opp
+              videresendinger så ingen lenker brytes.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="sec dark contact" id="kontakt">
+      <div class="glow g1"></div>
+      <div class="glow g3"></div>
+      <div class="wrap contact-grid">
+        <div>
+          <span class="eyebrow rv">Kontakt</span>
+          <h2 class="h2 rv d1">Klar for å fryse ut <span style="color:var(--ice)">konkurrentene?</span></h2>
+          <p class="lead rv d2">Fortell litt om bedriften din, så får du et gratis utkast innen tre dager.</p>
+          <div class="contact-lines rv d3">
+            <a href="mailto:kontakt@northweb.no"><span class="ic"><svg viewBox="0 0 20 20" fill="none"
+                  stroke="currentColor" stroke-width="1.6">
+                  <rect x="2.5" y="4.5" width="15" height="11" rx="2" />
+                  <path d="m3 6 7 5 7-5" />
+                </svg></span><span><small>E-post</small>kontakt@northweb.no</span></a>
+            <div><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M10 18s6-5.2 6-10A6 6 0 0 0 4 8c0 4.8 6 10 6 10Z" />
+                  <circle cx="10" cy="8" r="2" />
+                </svg></span><span><small>Lokasjon</small>Bergen, Norge</span></div>
+            <div><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <circle cx="10" cy="10" r="7.5" />
+                  <path d="M10 6v4l2.5 2" />
+                </svg></span><span><small>Svartid</small>Vanligvis innen noen timer</span></div>
+          </div>
+        </div>
+        <div class="form-card rv d2">
+          <form id="contactForm" novalidate>
+            <div class="row2">
+              <div class="field"><label for="f-name">Navn</label><input id="f-name" name="navn" autocomplete="name"
+                  required placeholder="Ola Nordmann"></div>
+              <div class="field"><label for="f-company">Bedrift</label><input id="f-company" name="bedrift"
+                  autocomplete="organization" placeholder="Valgfritt"></div>
+            </div>
+            <div class="field"><label for="f-email">E-post</label><input id="f-email" name="epost" type="email"
+                autocomplete="email" required placeholder="ola@bedrift.no"></div>
+            <div class="field"><span class="lbl">Pakke</span>
+              <div class="pkg" role="radiogroup" aria-label="Pakke">
+                <label><input type="radio" name="pakke" value="Basic"><span>Basic</span></label>
+                <label><input type="radio" name="pakke" value="Proff bilder" checked><span>Proff bilder</span></label>
+                <label><input type="radio" name="pakke" value="Nettbutikk"><span>Nettbutikk</span></label>
+                <label><input type="radio" name="pakke" value="Usikker"><span>Usikker</span></label>
+              </div>
+            </div>
+            <div class="field"><label for="f-msg">Fortell oss om prosjektet</label><textarea id="f-msg" name="melding"
+                placeholder="Hva gjør bedriften din, og hva ønsker du deg av en nettside?"></textarea></div>
+            <div class="hp" aria-hidden="true"><label for="f-web">Nettside</label><input id="f-web" name="website"
+                tabindex="-1" autocomplete="off"></div>
+            <p class="form-error" id="formError" role="alert"></p>
+            <button class="btn btn-primary" type="submit" id="formBtn">Send forespørsel</button>
+            <p class="form-note">Vi sender deg en kode på e-post for å bekrefte at det er deg.</p>
+          </form>
+          <form class="verify" id="verifyForm" novalidate>
+            <div class="verify-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.6">
+                <rect x="3" y="5" width="18" height="14" rx="2.5" />
+                <path d="m3.5 7 8.5 6 8.5-6" />
+              </svg></div>
+            <h3>Sjekk e-posten din</h3>
+            <p>Vi har sendt en 6-sifret kode til <b id="verifyEmail"></b>. Skriv den inn for å sende meldingen.</p>
+            <div class="code-boxes" id="codeBoxes" role="group" aria-label="Bekreftelseskode">
+              <input inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Siffer 1">
+              <input inputmode="numeric" pattern="[0-9]*" aria-label="Siffer 2">
+              <input inputmode="numeric" pattern="[0-9]*" aria-label="Siffer 3">
+              <input inputmode="numeric" pattern="[0-9]*" aria-label="Siffer 4">
+              <input inputmode="numeric" pattern="[0-9]*" aria-label="Siffer 5">
+              <input inputmode="numeric" pattern="[0-9]*" aria-label="Siffer 6">
+            </div>
+            <p class="form-error" id="verifyError" role="alert"></p>
+            <button class="btn btn-primary" type="submit" id="verifyBtn">Bekreft og send</button>
+            <div class="verify-links">
+              <button type="button" id="resendBtn">Send ny kode</button>
+              <span aria-hidden="true">·</span>
+              <button type="button" id="backBtn">Endre e-post</button>
+            </div>
+            <p class="form-note">Finner du den ikke? Sjekk søppelpost. Koden gjelder i 10 minutter.</p>
+          </form>
+          <div class="sent" id="sent" role="status">
+            <h3>Takk! 🐻‍❄️</h3>
+            <p>E-posten din er bekreftet og meldingen er sendt. Vi svarer så fort vi kan.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <a href="#" class="logo" aria-label="NorthWeb – til toppen"><img src="assets/img/logo/svg/logo-liggende-transparent-for-mork.svg" alt="NorthWeb" width="98" height="42"></a>
+      <nav aria-label="Bunnmeny"><a href="#arbeid">Arbeid</a><a href="#pakker">Pakker</a><a href="#om">Om oss</a><a
+          href="#kontakt">Kontakt</a></nav>
+      <span>© <span id="yr">2026</span> NorthWeb. Alle rettigheter reservert.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="nb">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kvasir Esport</title>
+<!--
+================================================================================
+  BRANSJEMAL v3 · ESPORT  (animert portefølje-versjon)
+
+  Søstermal til bakeri-mal.html. Samme oppbygging, klassenavn og animasjoner,
+  nytt innhold, nye farger og nye illustrasjoner.
+
+  BIBLIOTEKER (lastes fra CDN, siden fungerer uten dem):
+  - Lenis 1.1.13 ........ myk scrolling
+  - GSAP 3.12.5 + ScrollTrigger ... alle scroll-animasjoner
+  Respekterer «redusert bevegelse»: da slås all animasjon av.
+
+  GJENBRUK
+  1. Farger og skrift: tokenene i :root (og de to mørke blokkene).
+  2. PLASSHOLDER = fiktivt innhold som byttes med kundens.
+  3. Seksjoner er merket «SEKSJON: …».
+  4. BRANSJEDETALJ = esport-spesifikt (lag per spill, kampdag-nedtelling,
+     medlemskap og tryouts, sponsorpakker).
+  5. Illustrasjonene ligger som <symbol> øverst i body. Bytt med foto
+     ved å erstatte <svg><use></svg> med <img>.
+  6. Skjemaet sender ingenting. Koble til i sendSkjema().
+  7. Treningstider står to steder: i bunnen og i «trening» i scriptet.
+
+  FIKTIV KLUBB: Kvasir Esport, Bergen. Navn, adresse, telefon, e-post,
+  Discord, org.nr., priser, resultater og sitat er PLASSHOLDERE.
+================================================================================
+-->
+<meta name="description" content="Esportklubb i Bergen med lag i seks spill, eget klubbhus og akademi for unge. Tryouts, medlemskap, LAN-helger og sponsorpakker."><!-- PLASSHOLDER -->
+<meta property="og:title" content="Kvasir Esport, Bergen"><!-- PLASSHOLDER -->
+<meta property="og:locale" content="nb_NO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<canvas id="grain" aria-hidden="true"></canvas>
+
+<!-- ======================================================================
+     ILLUSTRASJONER (BRANSJEDETALJ). Brukes med <svg><use href="#id"/></svg>
+     ====================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A3450"/><stop offset="1" stop-color="#16131F"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE48A"/><stop offset=".55" stop-color="#F2B92E"/><stop offset="1" stop-color="#B07A12"/>
+    </linearGradient>
+    <linearGradient id="g-screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6B45FF"/><stop offset="1" stop-color="#2A0E8F"/>
+    </linearGradient>
+    <linearGradient id="g-card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7B5CFF"/><stop offset="1" stop-color="#3B16C9"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
+    <path id="sirkel" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" fill="none"/>
+
+    <!-- skjold med lyn. PLASSHOLDER: bytt med kundens logo -->
+    <g id="crest">
+      <path d="M100 50 L136 63 V96 C136 121 119 136 100 145 C81 136 64 121 64 96 V63 Z" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M107 70 L85 103 H99 L92 130 L117 93 H102 Z" fill="currentColor"/>
+    </g>
+    <symbol id="stempel" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="100" cy="100" r="87" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 5"/>
+      <text class="stamp" fill="currentColor"><textPath href="#sirkel">KVASIR ESPORT · BERGEN · SIDEN 2019 ·</textPath></text>
+      <circle cx="100" cy="100" r="58" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <use href="#crest"/>
+    </symbol>
+    <symbol id="spark" viewBox="0 0 200 200">
+      <path d="M100 10 C108 70 130 92 190 100 C130 108 108 130 100 190 C92 130 70 108 10 100 C70 92 92 70 100 10Z" fill="currentColor"/>
+    </symbol>
+
+    <!-- utstyr -->
+    <symbol id="i-kontroller" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="182" rx="74" ry="8" fill="#000" opacity=".18"/>
+      <ellipse cx="100" cy="150" rx="70" ry="14" fill="var(--neon)" opacity=".45" filter="url(#glow)"/>
+      <path d="M60 62 H140 C162 62 174 76 179 98 L188 140 C192 160 174 172 158 162 L132 140 H68 L42 162 C26 172 8 160 12 140 L21 98 C26 76 38 62 60 62Z" fill="url(#g-body)"/>
+      <path d="M72 64 H128" stroke="var(--neon)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M40 80 C50 70 70 68 84 70" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="3" stroke-linecap="round"/>
+      <g fill="#0E0C15"><rect x="52" y="74" width="14" height="36" rx="3"/><rect x="41" y="85" width="36" height="14" rx="3"/></g>
+      <circle cx="146" cy="78" r="7" fill="var(--neon)"/><circle cx="160" cy="92" r="7" fill="var(--hot)"/><circle cx="132" cy="92" r="7" fill="var(--cyan)"/><circle cx="146" cy="106" r="7" fill="#FFD23D"/>
+      <circle cx="84" cy="124" r="13" fill="#0E0C15"/><circle cx="84" cy="124" r="8" fill="#2C2740"/>
+      <circle cx="116" cy="124" r="13" fill="#0E0C15"/><circle cx="116" cy="124" r="8" fill="#2C2740"/>
+    </symbol>
+    <symbol id="i-tast" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="182" rx="66" ry="8" fill="#000" opacity=".18"/>
+      <rect x="34" y="150" width="132" height="22" rx="10" fill="var(--hot)" opacity=".7" filter="url(#glow)"/>
+      <rect x="34" y="40" width="132" height="132" rx="18" fill="#0E0C15"/>
+      <rect x="34" y="34" width="132" height="124" rx="18" fill="url(#g-body)"/>
+      <rect x="50" y="44" width="100" height="94" rx="12" fill="#2C2740"/>
+      <rect x="50" y="44" width="100" height="94" rx="12" fill="none" stroke="#fff" stroke-opacity=".1" stroke-width="2"/>
+      <text x="100" y="110" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="700" font-size="50" fill="var(--neon)">W</text>
+    </symbol>
+    <symbol id="i-mus" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="186" rx="50" ry="7" fill="#000" opacity=".18"/>
+      <ellipse cx="100" cy="168" rx="52" ry="12" fill="var(--cyan)" opacity=".55" filter="url(#glow)"/>
+      <path d="M100 22 C138 22 154 50 154 90 V124 C154 156 130 176 100 176 C70 176 46 156 46 124 V90 C46 50 62 22 100 22Z" fill="url(#g-body)"/>
+      <path d="M100 24 V84 M48 84 C70 92 130 92 152 84" fill="none" stroke="#0E0C15" stroke-width="3"/>
+      <rect x="93" y="40" width="14" height="28" rx="7" fill="#0E0C15"/><rect x="96" y="44" width="8" height="20" rx="4" fill="var(--neon)"/>
+      <path d="M62 140 C78 160 122 160 138 140" fill="none" stroke="var(--cyan)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M62 48 C68 38 78 32 88 30" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-headset" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="190" rx="70" ry="6" fill="#000" opacity=".18"/>
+      <path d="M42 118 V100 a58 58 0 0 1 116 0 V118" fill="none" stroke="#16131F" stroke-width="14" stroke-linecap="round"/>
+      <path d="M50 94 a50 50 0 0 1 100 0" fill="none" stroke="var(--hot)" stroke-width="3" stroke-linecap="round"/>
+      <rect x="22" y="104" width="44" height="64" rx="18" fill="url(#g-body)"/>
+      <rect x="134" y="104" width="44" height="64" rx="18" fill="url(#g-body)"/>
+      <rect x="30" y="114" width="28" height="44" rx="12" fill="none" stroke="var(--neon)" stroke-width="3"/>
+      <rect x="142" y="114" width="28" height="44" rx="12" fill="none" stroke="var(--neon)" stroke-width="3"/>
+      <path d="M46 166 C50 180 70 184 88 180" fill="none" stroke="#16131F" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="93" cy="179" r="7" fill="#16131F"/><circle cx="93" cy="179" r="3" fill="var(--hot)"/>
+    </symbol>
+    <symbol id="i-trofe" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="182" rx="60" ry="8" fill="#000" opacity=".18"/>
+      <path d="M62 48 C40 48 34 64 37 78 C41 96 58 104 72 104" fill="none" stroke="#E0A626" stroke-width="9" stroke-linecap="round"/>
+      <path d="M138 48 C160 48 166 64 163 78 C159 96 142 104 128 104" fill="none" stroke="#C98E1C" stroke-width="9" stroke-linecap="round"/>
+      <path d="M58 34 H142 V70 C142 104 122 124 100 124 C78 124 58 104 58 70Z" fill="url(#g-gold)"/>
+      <path d="M70 44 V70 C70 92 80 106 92 112" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="5" stroke-linecap="round"/>
+      <path d="M100 56 l6 12 13 2 -9.5 9 2.3 13 -11.8 -6.2 -11.8 6.2 2.3 -13 -9.5 -9 13 -2z" fill="#FFF3C4"/>
+      <rect x="90" y="122" width="20" height="22" fill="#C98E1C"/>
+      <rect x="66" y="142" width="68" height="14" rx="3" fill="url(#g-gold)"/>
+      <rect x="56" y="154" width="88" height="22" rx="4" fill="url(#g-body)"/>
+      <rect x="80" y="162" width="40" height="6" rx="2" fill="var(--neon)"/>
+    </symbol>
+    <symbol id="i-skjerm" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="182" rx="56" ry="7" fill="#000" opacity=".18"/>
+      <rect x="18" y="36" width="164" height="104" rx="8" fill="#16131F"/>
+      <rect x="26" y="44" width="148" height="88" rx="3" fill="url(#g-screen)"/>
+      <path d="M26 114 L60 94 L84 106 L120 76 L174 102 V132 H26Z" fill="#000" opacity=".2"/>
+      <g stroke="var(--neon)" stroke-width="3" stroke-linecap="round"><path d="M100 72 V80"/><path d="M100 96 V104"/><path d="M84 88 H92"/><path d="M108 88 H116"/></g>
+      <circle cx="100" cy="88" r="2" fill="var(--neon)"/>
+      <rect x="34" y="52" width="40" height="5" rx="2" fill="#fff" opacity=".55"/><rect x="34" y="61" width="24" height="5" rx="2" fill="var(--hot)"/>
+      <rect x="146" y="52" width="20" height="14" rx="2" fill="#000" opacity=".3"/>
+      <path d="M88 140 H112 L116 168 H84Z" fill="#2C2740"/>
+      <rect x="64" y="166" width="72" height="8" rx="4" fill="#16131F"/>
+    </symbol>
+    <symbol id="i-kort" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="172" rx="72" ry="9" fill="#000" opacity=".15"/>
+      <g transform="rotate(-8 100 100)">
+        <rect x="24" y="52" width="152" height="96" rx="10" fill="url(#g-card)"/>
+        <path d="M24 122 L176 78 V138 a10 10 0 0 1 -10 10 H34 a10 10 0 0 1 -10 -10Z" fill="#000" opacity=".15"/>
+        <rect x="38" y="68" width="26" height="20" rx="4" fill="#FFD23D"/>
+        <path d="M156 62 L142 84 H152 L147 102 L164 78 H154Z" fill="var(--neon)"/>
+        <rect x="38" y="110" width="70" height="7" rx="3" fill="#fff" opacity=".85"/>
+        <rect x="38" y="123" width="44" height="6" rx="3" fill="#fff" opacity=".5"/>
+        <text x="162" y="136" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="11" fill="#fff" opacity=".8">2026</text>
+      </g>
+    </symbol>
+    <symbol id="i-billett" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="166" rx="76" ry="9" fill="#000" opacity=".15"/>
+      <g transform="rotate(6 100 100)">
+        <path d="M22 60 H178 V86 a14 14 0 0 0 0 28 V140 H22 V114 a14 14 0 0 0 0 -28Z" fill="var(--hot)"/>
+        <path d="M140 66 V134" stroke="#fff" stroke-width="2.5" stroke-dasharray="5 5" opacity=".7"/>
+        <text x="82" y="106" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="700" font-size="28" fill="#fff">LAN</text>
+        <text x="82" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#fff" opacity=".9">48 TIMER · PLASS 23</text>
+        <g fill="#fff"><rect x="150" y="82" width="2" height="36"/><rect x="155" y="82" width="4" height="36"/><rect x="162" y="82" width="2" height="36"/><rect x="167" y="82" width="3" height="36"/></g>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== SEKSJON: Toppmeny ===== -->
+<header class="top" id="top-bar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Kvasir Esport, til forsiden">
+      <svg aria-hidden="true"><use href="#stempel"/></svg><b>Kvasir</b>
+    </a>
+    <nav class="nav" aria-label="Hovedmeny">
+      <a href="#lagene">Lagene</a>
+      <a href="#kampdag">Kampdag</a>
+      <a href="#bli-med">Bli med</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn btn-red" href="#kontakt">Bli med <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===== SEKSJON: Hero ===== -->
+<section class="hero">
+  <div class="stamp-wrap" aria-hidden="true"><div class="stamp-spin"><svg><use href="#stempel"/></svg></div></div>
+  <div class="float f1" data-speed="0.35" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-kontroller"/></svg></div></div>
+  <div class="float f2" data-speed="0.6" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-tast"/></svg></div></div>
+  <div class="float f3" data-speed="0.15" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-trofe"/></svg></div></div>
+
+  <div class="wrap">
+    <h1 aria-label="Fra rommet til scenen. Sammen."><!-- PLASSHOLDER -->
+      <span class="line" aria-hidden="true"><span class="li">Fra rommet</span></span>
+      <span class="line" aria-hidden="true"><span class="li">til scenen.</span></span>
+      <span class="line" aria-hidden="true"><span class="li soft">Sammen.</span></span>
+    </h1>
+    <div class="hero-row reveal-hero">
+      <p class="intro">Esportklubb i Bergen siden 2019. Seks lag, eget klubbhus og et akademi for deg mellom 13 og 17.</p>
+      <div class="actions">
+        <a class="btn btn-light magnet" href="#kontakt" data-kunde="spiller">Meld deg på tryouts <span class="arrow">→</span></a>
+        <a class="btn btn-line magnet" href="#bli-med">Bli sponsor</a>
+      </div>
+    </div>
+    <div class="today reveal-hero">
+      <span><i class="dot" id="live-dot" aria-hidden="true"></i><span id="status">Trening tirsdag og torsdag</span></span>
+      <span>Klubbhuset, Bergen</span><!-- PLASSHOLDER -->
+      <span>Tryouts CS2 åpne til 1. nov</span><!-- PLASSHOLDER -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Løpebånd ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>Counter-Strike 2</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span class="o">Valorant</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span>League of Legends</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span class="o">Rocket League</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span>EA Sports FC</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span class="o">LAN-helger</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+    </div>
+    <div class="marquee-group">
+      <span>Counter-Strike 2</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span class="o">Valorant</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span>League of Legends</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span class="o">Rocket League</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span>EA Sports FC</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+      <span class="o">LAN-helger</span><svg viewBox="0 0 200 200"><use href="#spark"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEKSJON: Hilsen fra styret ===== -->
+<section class="hello">
+  <div class="wrap">
+    <figure class="foto">
+      <!-- PLASSHOLDER: bytt .scene med <img src="" alt="Laget samlet i klubbhuset" style="width:100%;height:116%;object-fit:cover"> -->
+      <div class="scene"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-headset"/></svg></div>
+      <figcaption><span>Klubbhuset før kamp</span><span>lør 18.45</span></figcaption>
+    </figure>
+    <div class="text">
+      <span class="kicker">Om oss</span>
+      <h2 class="h2">Hei, vi er Kvasir.</h2><!-- PLASSHOLDER -->
+      <p class="up">Vi startet som en vennegjeng med en Discord-server i 2019. I dag er vi over 140 medlemmer, seks lag og et eget klubbhus med 24 maskiner midt i Bergen.</p>
+      <p class="up">Vi tror gaming blir bedre med folk rundt seg: faste treningstider, en trener som bryr seg, og noen å feire med når det går bra. Alle trenerne våre har politiattest.</p>
+      <p class="up">Vil du prøve deg på tryouts, melde inn barnet ditt eller sponse et lag? Send oss en melding, så tar vi en prat.</p>
+      <span class="sign up">Sander &amp; Amira, styret
+        <svg viewBox="0 0 200 18" preserveAspectRatio="none" aria-hidden="true"><path id="sign-line" d="M2 12 C40 4 80 16 120 8 S180 6 198 10"/></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Lagene (scroller sidelengs på store skjermer) ===== -->
+<section class="counter" id="lagene">
+  <div class="track">
+    <div class="panel intro">
+      <span class="kicker">Lagene</span>
+      <h2 class="h2" style="margin-top:1rem">Seks lag, ett klubbhus</h2>
+      <p class="lead">Fra akademiet for 13-åringer til rosteret som jakter opprykk. Alle trener på klubbhuset.</p><!-- PLASSHOLDER -->
+      <p class="hint"><i></i>Scroll for å se mer</p>
+    </div>
+    <!-- PLASSHOLDER: lag, divisjoner og treningstider -->
+    <article class="panel">
+      <div class="pic"><span class="when">Tir + tor 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-mus"/></svg></div>
+      <h3>Counter-Strike 2 <small>1. div</small></h3>
+      <p>Fem spillere og to reserver. Topp fire i fjor, nå jakter vi opprykk.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Man + ons 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-skjerm"/></svg></div>
+      <h3>League of Legends <small>1. div</small></h3>
+      <p>Klubbens eldste lag. Tre av spillerne har vært med siden starten.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Scrims søndag</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-tast"/></svg></div>
+      <h3>Valorant <small>2. div</small></h3>
+      <p>Nytt lag fra i høst. Vi ser etter en sentinel og en lagkaptein.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Onsdag 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-kontroller"/></svg></div>
+      <h3>Rocket League <small>Elite</small></h3>
+      <p>Tre mot tre, og kanskje de raskeste hendene på Vestlandet.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Torsdag 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-trofe"/></svg></div>
+      <h3>EA Sports FC <small>1 mot 1</small></h3>
+      <p>Fire spillere i solo-ligaen. Vant regionsmesterskapet i vår.</p>
+    </article>
+    <article class="panel">
+      <div class="pic"><span class="when">Tir + tor 17–18.30</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-headset"/></svg></div>
+      <h3>Akademiet <small>13–17 år</small></h3>
+      <p>Lagspill, kommunikasjon og sunn skjermbruk, med egen trener.</p>
+    </article>
+  </div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+</section>
+
+<!-- ===== SEKSJON: Kampdag (BRANSJEDETALJ, nedtelling før kampstart) ===== -->
+<section class="process" id="kampdag">
+  <div class="wrap">
+    <div class="clock">
+      <span class="kicker">Kampdag</span>
+      <div class="hours" data-total="90" aria-label="90 minutter fra oppmøte til kampstart"><span id="hrs">0</span><small>min</small></div>
+      <div class="bar" aria-hidden="true"><i id="hrs-bar"></i></div>
+      <p>Så lang tid bruker laget på å gjøre seg klar, fra de kommer til klubbhuset til første runde starter.</p>
+    </div>
+    <ol class="steps">
+      <li class="step"><span class="t">T–90 min</span><h3>Oppmøte og oppsett</h3><p>Spillerne logger inn på egne maskiner, sjekker utstyr, innstillinger og ping.</p></li>
+      <li class="step"><span class="t">T–70 min</span><h3>Aim og oppvarming</h3><p>Tjue minutter med deathmatch og aim-trening. Ingen prat, bare fokus.</p></li>
+      <li class="step"><span class="t">T–45 min</span><h3>VOD og taktikk</h3><p>Treneren går gjennom motstanderens siste kamper. Vi velger kart og legger planen.</p></li>
+      <li class="step"><span class="t">T–15 min</span><h3>Lås inn</h3><p>Telefonene i kurven, headsettet på, vann og mat ved pulten.</p></li>
+      <li class="step"><span class="t">T–0</span><h3>Live på stream</h3><p>Kampen starter. Kommentatorene våre sender direkte på Twitch fra klubbhuset.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Bli med (spiller + sponsor/bedrift) ===== -->
+<section class="order" id="bli-med">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Bli med</span>
+      <h2 class="h2" style="margin-top:1rem">Finn din plass i klubben</h2>
+      <p class="lead">Du trenger ikke være best for å bli med. Her er det vi tilbyr, og fristene som gjelder.</p>
+      <div class="cakes"><!-- PLASSHOLDER: priser og frister -->
+        <div class="cake" data-cake="i-kort"><b>Medlemskap, junior</b><span class="price">kr 450 / år</span><span class="meta">13–17 år, plass i akademiet</span><span class="when">løpende</span></div>
+        <div class="cake" data-cake="i-skjerm"><b>Medlemskap, senior</b><span class="price">kr 750 / år</span><span class="meta">Tilgang til klubbhuset og klubbkvelder</span><span class="when">løpende</span></div>
+        <div class="cake" data-cake="i-mus"><b>Tryouts, CS2 og Valorant</b><span class="price">gratis</span><span class="meta">To kvelder med scrims og en prat med trener</span><span class="when">frist 1. nov</span></div>
+        <div class="cake" data-cake="i-billett"><b>LAN-helg på klubbhuset</b><span class="price">kr 350</span><span class="meta">48 timer, 60 plasser, pizza inkludert</span><span class="when">2 uker før</span></div>
+        <div class="cake" data-cake="i-headset"><b>Sommercamp</b><span class="price">kr 2 400</span><span class="meta">Fem dager for 12–16 år, med mat og aktiviteter ute</span><span class="when">frist 1. mai</span></div>
+      </div>
+      <p class="tip"><b>Forelder og usikker?</b> Kom på åpen foreldrekveld første mandag i måneden og se hvordan en trening foregår.</p>
+    </div>
+
+    <aside class="biz">
+      <svg class="bg-stamp" viewBox="0 0 200 200" aria-hidden="true" style="color:var(--brand-ink)"><use href="#stempel"/></svg>
+      <span class="kicker" style="color:var(--neon)">Sponsor og bedrift</span>
+      <h3>Bli synlig der publikummet er</h3>
+      <p>Strømmene våre ses av rundt 3 000 unge i Vestland hver måned.</p><!-- PLASSHOLDER -->
+      <ul>
+        <li>Logo på drakter og i stream-overlay</li>
+        <li>Stand på LAN-helgene</li>
+        <li>Bedriftsturnering for de ansatte, med oss som arrangør</li>
+        <li>Månedlig rapport med seertall</li>
+      </ul>
+      <p>Fortell oss litt om bedriften, så sender vi en sponsorpakke.</p>
+      <a class="btn btn-light magnet" href="#kontakt" data-kunde="sponsor">Be om sponsorpakke <span class="arrow">→</span></a>
+    </aside>
+  </div>
+</section>
+<div class="preview" id="preview" aria-hidden="true"><svg viewBox="0 0 200 200"><use id="preview-use" href="#i-kort"/></svg></div>
+
+<!-- ===== SEKSJON: Uttalelse ===== -->
+<!-- PLASSHOLDER: sitatet er fiktivt. Bruk kun ekte uttalelser med samtykke. -->
+<section class="says">
+  <div class="wrap">
+    <figure>
+      <blockquote id="quote">«Sønnen min gikk fra å game alene på rommet til å ha et lag, en trener og faste tider. Nå har han venner i hele byen, og han legger seg før midnatt.»</blockquote>
+      <figcaption>Hilde Rasmussen, forelder i akademiet</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== SEKSJON: Kontakt ===== -->
+<section class="contact" id="kontakt">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Kontakt</span>
+      <h2 class="h2" style="margin-top:1rem">Si hei til oss</h2>
+      <p class="lead">Fyll ut skjemaet, så svarer noen fra styret innen to dager. Raskest svar får du på Discord.</p>
+      <div class="phone">
+        <span class="big" id="tlf">discord.gg/kvasir</span><!-- PLASSHOLDER -->
+        <button class="copy" type="button" data-copy="discord.gg/kvasir">Kopier</button>
+      </div>
+      <p class="small">Foreldre kan også ringe oss på hverdager 16–20.</p>
+      <a class="tel" href="tel:+4755123456">55 12 34 56</a><!-- PLASSHOLDER -->
+      <span class="mail">hei@kvasiresport.no</span><!-- PLASSHOLDER -->
+    </div>
+
+    <form id="tilbud" novalidate>
+      <fieldset>
+        <legend>Hvem er du?</legend>
+        <div class="choice">
+          <input type="radio" name="kunde" id="k-spiller" value="spiller" checked><label for="k-spiller">Spiller</label>
+          <input type="radio" name="kunde" id="k-forelder" value="forelder"><label for="k-forelder">Forelder</label>
+          <input type="radio" name="kunde" id="k-sponsor" value="sponsor"><label for="k-sponsor">Sponsor</label>
+        </div>
+      </fieldset>
+      <div class="row">
+        <div class="field">
+          <label for="hva">Hva gjelder det?</label>
+          <select id="hva" name="hva">
+            <option>Tryouts</option><option>Medlemskap</option><option>LAN-helg</option><option>Sommercamp</option>
+            <option>Sponsorat</option><option>Bedriftsturnering</option><option>Noe annet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="spill">Spill</label>
+          <select id="spill" name="spill">
+            <option>Vet ikke ennå</option><option>Counter-Strike 2</option><option>League of Legends</option><option>Valorant</option><option>Rocket League</option><option>EA Sports FC</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="field"><label for="navn">Navn</label><input type="text" id="navn" name="navn" autocomplete="name" required></div>
+          <p class="err" id="err-navn" hidden>Skriv inn navnet ditt.</p>
+        </div>
+        <div>
+          <div class="field"><label for="telefon">Telefon eller e-post</label><input type="text" id="telefon" name="telefon" autocomplete="email" required></div>
+          <p class="err" id="err-telefon" hidden>Skriv inn noe vi kan svare deg på.</p>
+        </div>
+      </div>
+      <div class="field" id="discord-felt">
+        <label for="discord">Discord-brukernavn <span class="opt">(valgfritt)</span></label>
+        <input type="text" id="discord" name="discord">
+      </div>
+      <div class="field" id="org-felt" hidden>
+        <label for="org">Bedrift <span class="opt">(valgfritt)</span></label>
+        <input type="text" id="org" name="org">
+      </div>
+      <div class="field">
+        <label for="melding">Fortell litt mer <span class="opt">(alder, rank, rolle, erfaring)</span></label>
+        <textarea id="melding" name="melding"></textarea>
+      </div>
+      <div class="form-foot">
+        <small>Vi bruker opplysningene bare til å svare deg.</small>
+        <button class="btn btn-red magnet" type="submit">Send melding <span class="arrow">→</span></button>
+      </div>
+      <div class="done" id="kvittering" hidden role="status">
+        <b>Takk! Meldingen er fylt ut.</b>
+        <p>Dette er en eksempelside, så ingenting ble sendt.</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ===== SEKSJON: Bunn ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="big-cta">
+        <h3>Klar for neste runde?</h3>
+        <a class="btn btn-light magnet" href="#kontakt">Bli med <span class="arrow">→</span></a>
+      </div>
+      <div>
+        <h4>Klubbhuset</h4>
+        <p>Strandkaien 7<br>5013 Bergen</p><!-- PLASSHOLDER -->
+        <p style="margin-top:.5rem"><a href="https://www.google.com/maps/search/?api=1&query=Bergen">Vis i kart</a></p>
+      </div>
+      <div>
+        <h4>Trening</h4>
+        <dl><!-- PLASSHOLDER, samme som «trening» i scriptet -->
+          <dt>Man / ons</dt><dd>18.00–21.00</dd>
+          <dt>Tir / tor</dt><dd>17.00–21.00</dd>
+          <dt>Lørdag</dt><dd>Kampdag</dd>
+        </dl>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <p>55 12 34 56<br>hei@kvasiresport.no</p><!-- PLASSHOLDER -->
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true"><span>K</span><span>v</span><span>a</span><span>s</span><span>i</span><span>r</span></div>
+    <div class="legal">
+      <span>Kvasir Esport · Org.nr. 999 999 999</span><!-- PLASSHOLDER -->
+      <span>Eksempelside. Klubben er fiktiv.</span><!-- Fjern ved levering til ekte kunde -->
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn-out" href="#lagene">Lagene</a>
+  <a class="btn btn-red" href="#kontakt">Bli med</a>
+</div>
+
+<!-- Strukturerte data. PLASSHOLDER: alle felter. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SportsOrganization","name":"Kvasir Esport","sport":"Esport",
+ "telephone":"+47 55 12 34 56","email":"hei@kvasiresport.no",
+ "address":{"@type":"PostalAddress","streetAddress":"Strandkaien 7","postalCode":"5013","addressLocality":"Bergen","addressCountry":"NO"}}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>
