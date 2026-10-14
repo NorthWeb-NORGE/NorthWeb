@@ -1,0 +1,139 @@
+/* ==========================================================================
+   VARIABLER – hele merkevaren bor i denne fila.
+   Bytt farger, fonter og kurver her, så følger resten av siden etter.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     GYLLENT SNITT
+     φ = 1,618 styrer fire ting på siden:
+       1. typografiskalaen  (hele trinn × φ, halvtrinn × √φ)
+       2. avstandsskalaen   (ren φ-rekke: hvert trinn er forrige × 1,618)
+       3. kolonneforhold    (1,618fr : 1fr)
+       4. linjehøyde        (1,618 i brødtekst)
+     Den røde tråden tegnes dessuten ned til 61,8 % (1/φ) av skjermhøyden.
+     ------------------------------------------------------------------------ */
+  --phi: 1.618;
+  --sqrt-phi: 1.272;
+
+  /* ------------------------------------------------------------------------
+     FARGER – hentet fra verkstedets egne materialer, ikke fra bilreklame.
+     Bevisst unngått: racing-rødt, karbonsvart, krom-gradienter og oransje.
+
+       støpejern   #1d2220  bremseskive og motorblokk. Mørkeste flate + tekst.
+       maskingrønn #26433c  den grønne lakken på gamle dreiebenker, søylebor
+                            og verktøyskap. Brukes på mørke seksjoner.
+       papir       #f3efe6  arbeidsordre og tegnepapir. Sidens bakgrunn.
+       messing     #9e7828  rørnipler, lufteskruer og koblinger. AKSENT –
+                            brukes bare på den røde tråden (bremserøret),
+                            og små detaljer som hører til den.
+       varselrød   #b23b2a  SIGNAL – kun det som haster: akuttstripa,
+                            røde varsellamper og feilmeldinger.
+
+     Kontrast (WCAG 2, regnet ut med et lite skript da paletten ble satt.
+     Bytter du farger: sjekk på nytt, f.eks. med webaim.org/resources/
+     contrastchecker):
+       støpejern på papir        14,1 : 1   AAA
+       dempet tekst på papir      6,0 : 1   AA  (5,4 på mørkere papir)
+       messing-blekk på papir     5,7 : 1   AA  (messing som tekst)
+       messing på papir           3,5 : 1   kun strek/grafikk, krav 3 : 1
+                                            (3,2 på mørkere papir)
+       varselrød på papir         5,2 : 1   AA
+       papir på maskingrønn       9,4 : 1   AAA
+       lys messing på maskingrønn 5,5 : 1   AA
+       papir på støpejern        14,1 : 1   AAA
+     ------------------------------------------------------------------------ */
+  --c-iron: #1d2220;
+  --c-green: #26433c;
+  --c-paper: #f3efe6;
+  --c-paper-2: #e9e3d6;      /* litt mørkere papir, til annenhver seksjon */
+  --c-sheet: #fbf9f4;        /* lysest: skjema og «ark» som ligger oppå */
+  --c-brass: #9e7828;
+  --c-brass-ink: #76591a;    /* messing mørk nok til å være tekst på papir */
+  --c-brass-light: #d6b56e;  /* messing på mørk bakgrunn */
+  --c-signal: #b23b2a;
+  --c-signal-light: #f0a08f; /* signal på mørk bakgrunn */
+  --c-muted: #535c58;        /* dempet tekst på papir */
+  --c-muted-dark: #c2ccc5;   /* dempet tekst på mørk bakgrunn */
+  --c-line: #cdc6b6;         /* hårstrek på papir */
+  --c-line-dark: #4a655e;    /* hårstrek på mørk bakgrunn */
+
+  /* Semantiske navn. Komponentene bruker BARE disse, så en seksjon kan
+     bytte tone ved å sette data-tone="dark" / "iron" (se layout.css). */
+  --bg: var(--c-paper);
+  --fg: var(--c-iron);
+  --fg-muted: var(--c-muted);
+  --line: var(--c-line);
+  --accent: var(--c-brass);
+  --accent-ink: var(--c-brass-ink);
+  --signal: var(--c-signal);
+  --surface: var(--c-sheet);
+
+  /* ------------------------------------------------------------------------
+     FONTER
+     Besley: en Clarendon – skrifttypen fra emaljeskilt, bilskilter og gamle
+     verkstedfasader. Tung nok til å bære en overskrift, og med en ekte
+     kursiv vi bruker på ett–to ord per overskrift.
+     IBM Plex Sans: tegnet for teknisk dokumentasjon, rolig i lange avsnitt,
+     tydelige æ, ø og å.
+     IBM Plex Mono: KUN påskrift i tegninger og tittelfelt.
+     ------------------------------------------------------------------------ */
+  --font-display: "Besley", "Clarendon", "Georgia", serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Consolas", ui-monospace, monospace;
+
+  /* Typografiskala: 1rem × √φ for halvtrinn, × φ for hele trinn. */
+  --step--1: 0.786rem;  /* 1 / √φ  */
+  --step-0: 1rem;       /* grunntrinn */
+  --step-h: 1.272rem;   /* √φ      */
+  --step-1: 1.618rem;   /* φ       */
+  --step-1h: 2.058rem;  /* φ × √φ  */
+  --step-2: 2.618rem;   /* φ²      */
+  --step-2h: 3.33rem;   /* φ² × √φ */
+  --step-3: 4.236rem;   /* φ³      */
+
+  --leading: 1.618;     /* brødtekst */
+  --leading-tight: 1.1; /* store overskrifter */
+  --measure: 61.8ch;    /* maks linjelengde – ja, også den */
+
+  /* Avstandsskala: ren φ-rekke rundt 1rem. */
+  --s-1: 0.236rem;
+  --s-2: 0.382rem;
+  --s-3: 0.618rem;
+  --s-4: 1rem;
+  --s-5: 1.618rem;
+  --s-6: 2.618rem;
+  --s-7: 4.236rem;
+  --s-8: 6.854rem;
+  --s-9: 11.09rem;
+
+  /* Layout */
+  --container: 72rem;
+  /* Margen er også «røret» til den røde tråden. Minst 1,618rem, så
+     påskriften får plass på en 360 px-skjerm. */
+  --gutter: clamp(var(--s-5), 5vw, var(--s-7));
+  --section-pad: clamp(var(--s-7), 10vw, var(--s-8));
+  --cols-golden: 1.618fr 1fr;
+  --cols-golden-rev: 1fr 1.618fr;
+
+  /* Form: teknisk og kantet. To små radier, ingenting «pillerundt». */
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --stroke: 1.5px;        /* standardstrek i tegninger og rammer */
+  --stroke-thread: 2.5px; /* bremserøret */
+
+  /* ------------------------------------------------------------------------
+     BEVEGELSE
+     Én kurve for alt som kommer inn: rask start, lang myk landing.
+     (Løkker som viser «liv» går lineært – de skal ikke lande noe sted.)
+     Varighetene følger også φ: 0,382 → 0,618 → 1 → 1,618 s.
+     ------------------------------------------------------------------------ */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 0.382s;
+  --dur-2: 0.618s;
+  --dur-3: 1s;
+  --dur-draw: 1.618s;
+  --stagger: 70ms; /* forsinkelse mellom ord / listeelementer */
+
+  --header-h: 4.236rem;
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personvern – Damsgård Bil &amp; Bremse</title>
+  <meta name="description" content="Slik behandler Damsgård Bil &amp; Bremse personopplysninger.">
+  <meta name="theme-color" content="#f3efe6">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Samme sikring som på forsiden: .js settes her, og fjernes av et
+       tidsur hvis modulene ikke starter. -->
+  <script>
+    (function (d, w) {
+      var h = d.documentElement;
+      h.classList.add('js');
+      w.__failsafe = setTimeout(function () { h.classList.remove('js'); }, 4000);
+    })(document, window);
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/index.css">
+  <script type="module" src="../js/index.js"></script>
+</head>
+
+<body>
+  <a class="skip" href="#innhold">Hopp til innholdet</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="logo-mark" viewBox="0 0 44 56">
+      <circle class="logo-stroke" cx="19" cy="36" r="14"/>
+      <circle class="logo-stroke" cx="19" cy="36" r="3.5"/>
+      <path class="logo-caliper" d="M32.4 25.5A17 17 0 0 1 32.4 46.5"/>
+      <path class="logo-stroke" d="M36 50V4M32 4h8"/>
+    </symbol>
+  </svg>
+
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="logo" href="../index.html" aria-label="Damsgård Bil og Bremse – til forsiden">
+        <svg class="logo__mark" aria-hidden="true"><use href="#logo-mark"/></svg>
+        <span class="logo__text">
+          <span class="logo__name">Damsgård</span>
+          <span class="logo__sub">Bil &amp; Bremse</span>
+        </span>
+      </a>
+      <div class="header__side">
+        <a class="btn btn--small" href="../index.html#kontakt" data-label="Be om tilbud">Be om tilbud</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+    <!-- PLASSHOLDER: hele teksten er et eksempel. En ekte kunde må få
+         erklæringen tilpasset det de faktisk samler inn, og hvem som er
+         databehandlere (skjematjeneste, e-post, verkstedsystem). -->
+    <article class="legal">
+      <div class="container">
+        <div class="legal__body">
+          <a class="link legal__back" href="../index.html">Tilbake til forsiden</a>
+          <h1 data-split>Personvern&shy;erklæring</h1>
+          <p class="lead">Kort fortalt: vi samler inn det vi trenger for å svare deg og gjøre jobben på bilen din, og ikke mer.</p>
+
+          <h2>Hvem er ansvarlig?</h2>
+          <p>Damsgård Bil &amp; Bremse AS (org.nr. 000 000 000) er behandlingsansvarlig. Spørsmål om personvern sender du til <a class="link" href="mailto:post@damsgardbil.example">post@damsgardbil.example</a>.</p>
+
+          <h2>Hva vi lagrer</h2>
+          <ul>
+            <li>Navn, telefonnummer og e-postadresse når du tar kontakt</li>
+            <li>Registreringsnummer og det du forteller om bilen</li>
+            <li>Arbeidsordre, faktura og servicehistorikk når vi har gjort en jobb</li>
+          </ul>
+
+          <h2>Hvorfor</h2>
+          <p>For å svare på henvendelsen din, gi tilbud, utføre arbeidet og oppfylle bokføringsloven. Vi bruker ikke opplysningene til markedsføring uten at du har bedt om det, og vi selger dem aldri videre.</p>
+
+          <h2>Hvor lenge</h2>
+          <p>Henvendelser som ikke blir til en jobb, slettes etter tolv måneder. Fakturaer oppbevares i fem år, slik bokføringsloven krever. Servicehistorikk oppbevares så lenge bilen er kunde hos oss.</p>
+
+          <h2>Informasjonskapsler og skrifter</h2>
+          <p>Nettsiden bruker ingen informasjonskapsler til sporing eller statistikk. Vi lagrer ett lite merke i nettleserøkten din for å huske at åpningsanimasjonen er vist; det forsvinner når du lukker fanen.</p>
+          <p>Skriftene hentes fra Google Fonts. Det betyr at nettleseren din kobler seg til Googles servere, og at IP-adressen din blir synlig for dem.</p>
+
+          <h2>Rettighetene dine</h2>
+          <p>Du kan be om innsyn i, retting av og sletting av opplysningene vi har om deg. Mener du at vi behandler opplysningene feil, kan du klage til Datatilsynet.</p>
+
+          <p class="small muted" style="margin-top: var(--s-6)">Demoside – bedriften er oppdiktet, og kontaktskjemaet på forsiden sender eller lagrer ingenting.</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom" style="border-top: 0; padding-top: 0">
+        <!-- PLASSHOLDER: org.nr. -->
+        <p>© 2026 Damsgård Bil &amp; Bremse AS · Org.nr. 000 000 000 MVA</p>
+        <p class="footer__demo">Demoside – bedriften er oppdiktet og finnes ikke.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

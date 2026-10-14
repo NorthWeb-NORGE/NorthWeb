@@ -1,0 +1,143 @@
+/* Interaktiv tegning: varsellampene i instrumentpanelet.
+   Uten JavaScript vises alle forklaringene under hverandre. Med JavaScript
+   blir lampene knapper og bare den valgte forklaringen vises. */
+
+.lamps {
+  border: var(--stroke) solid var(--fg);
+  background: var(--surface);
+}
+
+.lamps__panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: var(--stroke) solid var(--fg);
+}
+
+.lamp {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+  padding: var(--s-4) var(--s-2);
+  background: var(--surface);
+  text-align: center;
+  line-height: 1.25;
+  font-size: var(--step--1);
+  font-weight: 500;
+  min-height: 6.2rem;
+}
+
+.lamp svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--dur-1) var(--ease);
+}
+
+.lamp:hover svg {
+  transform: scale(1.1);
+}
+
+/* Rød lampe = stopp. Gul lampe = få det sjekket. Her er signalfargen på
+   hjemmebane: den betyr faktisk «haster». */
+.lamp[data-level="stopp"] svg {
+  color: var(--c-signal);
+}
+
+.lamp[data-level="sjekk"] svg {
+  color: var(--c-brass-ink);
+}
+
+/* Valgt lampe: streken under vokser ut, som menylenkene. */
+.lamp::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--fg);
+  transform: scaleX(0);
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.lamp[aria-pressed="true"]::after {
+  transform: scaleX(1);
+}
+
+.lamps__out {
+  padding: var(--s-5);
+  min-height: 14rem;
+}
+
+.lamp-info + .lamp-info {
+  margin-top: var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+}
+
+/* Med JavaScript vises bare én om gangen – da trengs ingen skillelinje. */
+.js .lamp-info + .lamp-info {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.lamp-info__level {
+  display: inline-block;
+  margin-bottom: var(--s-3);
+  color: var(--c-brass-ink);
+}
+
+.lamp-info[data-level="stopp"] .lamp-info__level {
+  color: var(--c-signal);
+}
+
+.lamp-info h4 {
+  font-size: var(--step-h);
+  margin-bottom: var(--s-3);
+}
+
+.lamp-info p + p {
+  margin-top: var(--s-3);
+}
+
+.lamps__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-5);
+  border-top: 1px solid var(--line);
+  color: var(--fg-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .lamp-info.is-swap {
+    animation: lamp-in var(--dur-2) var(--ease) both;
+  }
+
+  @keyframes lamp-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--s-3));
+    }
+  }
+}
+
+@media (min-width: 30em) {
+  .lamps__panel {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (min-width: 56em) and (max-width: 70em) {
+  .lamps__panel {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

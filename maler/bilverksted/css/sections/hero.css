@@ -1,0 +1,88 @@
+/* Hero: tekst i den brede kolonnen (1,618fr), signaturtegningen i den smale.
+   Nederst i seksjonen er det satt av luft til bremserøret, som går vannrett
+   under teksten før det svinger ned i margen (se thread.js). */
+
+.hero {
+  padding-block: var(--s-6) calc(var(--s-7) + var(--s-5));
+  background: var(--bg);
+}
+
+.hero__grid {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.hero__title {
+  margin-bottom: var(--s-5);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+
+/* Tre løfter: en enkel liste med hårstreker, ikke tre kort. */
+.promises {
+  margin-top: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+
+.promises li {
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--line);
+  line-height: 1.45;
+  color: var(--fg-muted);
+  font-size: 0.95rem;
+}
+
+.promises strong {
+  display: block;
+  color: var(--fg);
+  font-weight: 600;
+  font-size: var(--step-0);
+}
+
+.hero__figure {
+  width: 100%;
+  max-width: 30rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 40em) {
+  .promises {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .promises li {
+    border-bottom: 0;
+    padding-inline: var(--s-4);
+  }
+
+  .promises li:first-child {
+    padding-left: 0;
+  }
+
+  .promises li + li {
+    border-left: 1px solid var(--line);
+  }
+}
+
+@media (min-width: 56em) {
+  .hero {
+    padding-top: var(--s-7);
+  }
+
+  .hero__grid {
+    grid-template-columns: var(--cols-golden);
+    gap: var(--s-6);
+    align-items: center;
+  }
+
+  .hero__figure {
+    max-width: none;
+  }
+}

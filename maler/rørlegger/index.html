@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="nb">
+<!--
+  ==========================================================================
+  DEMO / MAL – RØRLEGGER
+  Alt som gjelder bedriften er PLASSHOLDERE og må byttes før en ekte kunde
+  bruker siden. Søk etter «PLASSHOLDER» i denne filen for å finne dem.
+
+  - Firmanavn «Straumsnes Rør AS», etableringsår, adresse, org.nr.
+  - Telefon 55 00 00 00 og vakttelefon 900 00 000 (ikke ekte numre)
+  - E-post og domene straumsnesror.no
+  - Dekningsområde, åpningstider, responstider og alle løfter om frister
+  - Prosjektene (sted, år, omfang) er oppdiktet
+  - INGEN godkjenninger, sertifiseringer eller forsikringer er ekte.
+    Sentral godkjenning, GVK/våtromsnorm og ansvarsforsikring må bare stå
+    der hvis kunden faktisk har dem.
+  - Siden har bevisst ingen kundeanmeldelser. Legg bare inn ekte.
+  ==========================================================================
+-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Straumsnes Rør AS – rørlegger i Bergen | Bad, bereder og vannlekkasje</title>
+  <meta name="description" content="Rørlegger i Bergen og omegn. Baderomsrehabilitering, bytte av varmtvannsbereder, rørfornying og døgnvakt ved vannlekkasje. Fast pris og bildedokumentasjon.">
+  <meta name="theme-color" content="#f2efe8">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:title" content="Straumsnes Rør AS – rørlegger i Bergen">
+  <meta property="og:description" content="Bad, bereder, rørfornying og døgnvakt ved vannlekkasje. Fast pris og bildedokumentasjon.">
+
+  <link rel="icon" href="assets/svg/favicon.svg" type="image/svg+xml">
+
+  <!-- Fonter. For ekte kunder: vurder å legge fontfilene i assets/fonts/ (se README). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/index.css">
+
+  <!-- Kjører før siden tegnes:
+       .js            = CSS vet at animasjonene kan skjule ting til de skal vises
+       .intro-pending = dekker siden til åpningsanimasjonen tar over (kun første besøk)
+       Tidsuret til slutt er en sikring: feiler JS-modulene, vises siden likevel. -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add("js");
+      try {
+        var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!calm && !sessionStorage.getItem("intro")) d.classList.add("intro-pending");
+      } catch (e) {}
+      setTimeout(function () {
+        d.classList.add("is-loaded");
+        d.classList.remove("intro-pending");
+      }, 3500);
+    })();
+  </script>
+  <script type="module" src="js/index.js"></script>
+
+  <!-- Strukturerte data for Google. PLASSHOLDER: alle verdier. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Plumber",
+    "name": "Straumsnes Rør AS",
+    "telephone": "+4755000000",
+    "email": "post@straumsnesror.no",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Verkstedveien 0",
+      "postalCode": "5000",
+      "addressLocality": "Bergen",
+      "addressCountry": "NO"
+    },
+    "areaServed": ["Bergen", "Askøy", "Øygarden", "Bjørnafjorden"],
+    "openingHours": "Mo-Fr 07:00-15:30"
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#innhold">Hopp til innholdet</a>
+
+  <!-- ====================== AKUTTSTRIPE ====================== -->
+  <div class="alertbar">
+    <div class="container alertbar__inner">
+      <p class="alertbar__urgent">
+        <span>Akutt vannlekkasje?</span>
+        <!-- PLASSHOLDER: vakttelefon -->
+        <a class="tel" href="tel:+4790000000">Ring vakt 900 00 000</a>
+        <span class="alertbar__extra">– hele døgnet</span>
+      </p>
+      <!-- PLASSHOLDER: åpningstid og område -->
+      <p class="alertbar__meta">Man–fre 07.00–15.30 · Bergen, Askøy, Øygarden og Bjørnafjorden</p>
+    </div>
+  </div>
+
+  <!-- ====================== HEADER ====================== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <!-- Logoen er en S formet som en vannlås (S-bend). PLASSHOLDER: navn. -->
+      <a class="logo" href="#topp" aria-label="Straumsnes Rør AS – til toppen">
+        <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <path class="logo__pipe" d="M31 10H17a5 5 0 0 0 0 10h6a5 5 0 0 1 0 10H9"/>
+          <path class="logo__bore" d="M31 10H17a5 5 0 0 0 0 10h6a5 5 0 0 1 0 10H9"/>
+          <path class="logo__muffe" d="M30 5.5h3.5v9H30zM6.5 25.5H10v9H6.5z"/>
+        </svg>
+        <span class="logo__text">
+          <span class="logo__name">Straumsnes</span>
+          <span class="logo__tag">Rør · siden 1987</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="hovedmeny" aria-label="Hovedmeny">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#tjenester">Tjenester</a></li>
+          <li><a class="nav__link" href="#prosess">Slik jobber vi</a></li>
+          <li><a class="nav__link" href="#prosjekter">Prosjekter</a></li>
+          <li><a class="nav__link" href="#trygghet">Trygghet</a></li>
+          <li><a class="nav__link" href="#sporsmal">Spørsmål</a></li>
+          <li><a class="nav__link" href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <a class="header-phone tel" href="tel:+4755000000">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+          55 00 00 00
+        </a>
+        <a class="btn btn--primary btn--sm site-header__cta" href="#kontakt">Be om tilbud</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hovedmeny">
+          <span class="nav-toggle__icon" aria-hidden="true"></span>
+          Meny
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+
+    <!-- ====================== HERO ====================== -->
+    <section class="hero" id="topp">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="eyebrow" data-load>Rørlegger i Bergen og omegn</p>
+          <h1 data-split data-load>Tett bak flisene.<br><em>Ryddig</em> foran dem.</h1>
+          <p class="lead" data-load style="--d: 520ms">
+            Vi rehabiliterer bad, bytter beredere og fornyer rør i boliger, borettslag og næringsbygg.
+            Du får fast pris før vi starter, og bilder av alt som blir skjult når vi er ferdige.
+          </p>
+          <div class="hero__actions" data-load style="--d: 680ms">
+            <a class="btn btn--primary" href="#kontakt">Be om tilbud<svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+            <a class="btn btn--ghost" href="#tjenester">Se hva vi gjør</a>
+          </div>
+        </div>
+
+        <!-- Signaturtegning: isometrisk rørføring i et bad. Ren SVG, ingen bildefil.
+             Rørene (klasse dr-pipe) tegnes opp ved lasting, se css/sections/hero.css. -->
+        <figure class="hero__figure">
+          <svg class="hero-drawing" viewBox="70 126 460 438" role="img" aria-labelledby="tegn-tittel tegn-besk">
+            <title id="tegn-tittel">Isometrisk tegning av røropplegget i et bad</title>
+            <desc id="tegn-besk">Kaldt og varmt vann kommer opp gjennom stigeledninger, går til et fordelerskap på veggen og videre til servant og dusj. Avløpet går med fall fra sluk og toalett til stammen.</desc>
+
+            <!-- Gulv og vegger -->
+            <polygon class="dr-floor" points="260,300 470,420 295,520 85,400"/>
+            <polygon points="260,300 85,400 85,240 260,140" style="fill: var(--c-kalk)"/>
+            <polygon points="260,300 470,420 470,260 260,140" style="fill: var(--c-kalk)"/>
+            <path class="dr-tile" d="M225 320 435 440M190 340 400 460M155 360 365 480M120 380 330 500M295 320 120 420M330 340 155 440M365 360 190 460M400 380 225 480M435 400 260 500"/>
+            <polygon class="dr-zone" points="386,372 456,412 372,460 302,420"/>
+            <g class="dr-struct">
+              <polygon points="260,300 470,420 295,520 85,400"/>
+              <polyline points="85,400 85,240 260,140 470,260 470,420"/>
+              <line x1="260" y1="140" x2="260" y2="300"/>
+            </g>
+
+            <!-- Avløp: bred, lys strek med senterlinje -->
+            <g class="dr-fade" style="--d: 1500ms">
+              <path class="dr-drain" d="M162 388 344 492V540M361.5 422 291.5 462"/>
+              <path class="dr-drain-axis" d="M162 388 344 492V540M361.5 422 291.5 462"/>
+              <ellipse class="dr-part" cx="361.5" cy="422" rx="10" ry="5.8"/>
+              <ellipse class="dr-part" cx="162" cy="388" rx="12" ry="7"/>
+            </g>
+
+            <!-- Stigeledninger: kommer opp nedenfra og går langs veggen til fordelerskapet.
+                 De to linjene fortsetter ut av tegningen og nedover hele siden (js/modules/pagepipe.js),
+                 så x-verdiene 459.5 og 464.75 og y=564 må stemme med det som står der. -->
+            <path class="dr-pipe dr-kv" pathLength="1" d="M464.75 564V263L295 166V224"/>
+            <path class="dr-pipe dr-vv" pathLength="1" d="M459.5 564V266L302 176V244" style="--d: 120ms"/>
+
+            <!-- Fordelerskap -->
+            <polygon class="dr-part" points="281,248 323,272 323,224 281,200"/>
+            <path class="dr-pipe dr-kv" pathLength="1" d="M286.25 219 317.75 237" style="--d: 500ms"/>
+            <path class="dr-pipe dr-vv" pathLength="1" d="M286.25 235 317.75 253" style="--d: 600ms"/>
+
+            <!-- Rør-i-rør fra skap til servant og dusj -->
+            <path class="dr-pipe dr-kv" pathLength="1" d="M295 224V320L207.5 370 172.5 350V294" style="--d: 800ms"/>
+            <path class="dr-pipe dr-vv" pathLength="1" d="M302 244V324L207.5 378 165.5 354V298" style="--d: 950ms"/>
+            <path class="dr-pipe dr-kv" pathLength="1" d="M309 232V328L288 340 396.5 402 417.5 390V286" style="--d: 1100ms"/>
+            <path class="dr-pipe dr-vv" pathLength="1" d="M316 252V332L288 348 396.5 410 424.5 394V290" style="--d: 1250ms"/>
+
+            <!-- Utstyr -->
+            <g class="dr-fade" style="--d: 2000ms">
+              <polygon class="dr-part" points="186.5,282 151.5,302 151.5,308 179.5,324 214.5,304 214.5,298"/>
+              <polyline class="dr-struct" points="151.5,302 179.5,318 214.5,298" style="opacity: 1"/>
+              <line class="dr-struct" x1="179.5" y1="318" x2="179.5" y2="324" style="opacity: 1"/>
+              <path class="dr-solid" d="M417.5 286 424.5 290"/>
+              <path class="dr-struct" d="M421 288V256L403.5 266" style="opacity: 1; stroke-width: 1.6"/>
+              <ellipse class="dr-part" cx="402" cy="268" rx="8" ry="4.6"/>
+            </g>
+
+            <!-- Påskrift -->
+            <g class="dr-label dr-fade" style="--d: 2300ms">
+              <text x="330" y="251">FORDELERSKAP</text>
+              <text x="104" y="286">SERVANT</text>
+              <text x="430" y="284">DUSJ</text>
+              <text x="376" y="430">SLUK</text>
+              <text x="122" y="393">WC</text>
+              <text transform="translate(190 428) rotate(29.74)">AVLØP Ø110 · FALL 1:60</text>
+              <text x="334" y="540" text-anchor="end">TIL STAMME</text>
+            </g>
+
+            <!-- Tittelfelt, som på en arbeidstegning -->
+            <g class="dr-fade" style="--d: 2300ms">
+              <rect class="dr-titleblock" x="78" y="496" width="118" height="54"/>
+              <path class="dr-struct" d="M78 514H196M78 532H196" style="opacity: 1; stroke-width: 0.8"/>
+              <g class="dr-label">
+                <text x="85" y="509">BAD 2. ETG</text>
+                <text x="85" y="527">RØRFØRING · ISO</text>
+                <text x="85" y="545">TEGN. 014 · M 1:20</text>
+              </g>
+            </g>
+          </svg>
+          <figcaption class="hero__legend" data-load style="--d: 2400ms">
+            <span><i style="--key: var(--c-irr)"></i>Kaldt vann</span>
+            <span><i style="--key: var(--c-messing)"></i>Varmt vann</span>
+            <span><i style="--key: var(--c-irr-lys)"></i>Avløp</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="container">
+        <!-- PLASSHOLDER: løftene under må stemme med kundens faktiske praksis -->
+        <dl class="hero__facts" data-load style="--d: 900ms">
+          <div>
+            <dt>Befaring innen tre virkedager</dt>
+            <dd>Gratis og uforpliktende på bad og større jobber.</dd>
+          </div>
+          <div>
+            <dt>Fast pris, skriftlig</dt>
+            <dd>Du vet hva som er med og hva som ikke er det.</dd>
+          </div>
+          <div>
+            <dt>Vakttelefon hele døgnet</dt>
+            <dd>Rørlegger på vei når en lekkasje ikke kan vente.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ====================== TJENESTER ====================== -->
+    <section class="section section--alt" id="tjenester" data-pipe-label="Tjenester">
+      <div class="container">
+        <header class="section-head">
+          <div>
+            <h2 data-split>Fra dryppende kran til nye stammer i <em>hele blokka</em></h2>
+          </div>
+          <p class="lead" data-reveal style="--reveal-delay: 200ms">
+            Sju fagområder, ett firma. De fleste jobbene våre starter med et bad eller en bereder,
+            og ender med at vi blir husets faste rørlegger.
+          </p>
+        </header>
+
+        <div class="services__features">
+          <!-- 1) Baderom: stort felt med snitt-tegning -->
+          <article class="feature feature--bath" data-reveal>
+            <figure class="feature__drawing">
+              <svg viewBox="0 0 420 140" role="img" aria-label="Snitt gjennom et baderomsgulv: flis, membran ført ned i sluket, påstøp med fall, betongdekke og avløpsrør.">
+                <defs>
+                  <pattern id="skravur" width="7" height="7" patternUnits="userSpaceOnUse">
+                    <path d="M0 7 7 0" stroke="#1f2527" stroke-width="0.6" opacity="0.45"/>
+                  </pattern>
+                </defs>
+                <!-- betongdekke -->
+                <rect class="sx-slab" x="10" y="88" width="400" height="42" fill="url(#skravur)"/>
+                <!-- påstøp med fall mot sluk -->
+                <polygon class="sx-screed" points="10,44 232,52 232,88 10,88"/>
+                <polygon class="sx-screed" points="268,52 410,47 410,88 268,88"/>
+                <!-- sluk og avløpsrør -->
+                <polygon class="sx-pipe" points="268,84 410,92 410,108 268,100"/>
+                <polygon class="sx-pipe" points="232,42 268,42 268,106 232,106"/>
+                <!-- membran: ligger under flisene og går ned i sluket -->
+                <polyline class="sx-membrane" pathLength="1" points="10,43.5 232,51.5 238,51.5 238,64"/>
+                <polyline class="sx-membrane" pathLength="1" points="410,46.5 268,51.5 262,51.5 262,64"/>
+                <!-- fliser -->
+                <polygon class="sx-tile" points="10,34 232,42 232,49 10,41"/>
+                <polygon class="sx-tile" points="268,42 410,37 410,44 268,49"/>
+                <path class="sx-thin" d="M65 36v7M120 38v7M175 40v7M315 40.3v7M362 38.7v7" style="opacity: 1"/>
+                <path class="sx-line" d="M237 42h26" stroke-dasharray="3 2" style="stroke-width: 2.4"/>
+                <!-- påskrift -->
+                <path class="sx-thin" d="M48 24v11M150 24v25M286 18h-22l-12 24"/>
+                <g class="dr-label">
+                  <text x="34" y="20">FLIS</text>
+                  <text x="112" y="20">MEMBRAN NED I SLUK</text>
+                  <text x="290" y="21">SLUK MED KLEMRING</text>
+                  <text x="34" y="74">PÅSTØP MED FALL 1:50</text>
+                  <text transform="translate(300 98) rotate(3.2)">AVLØP Ø75</text>
+                </g>
+              </svg>
+              <figcaption>Snitt: slik skal overgangen mellom gulv og sluk være bygget opp.</figcaption>
+            </figure>
+
+            <h3>Baderomsrehabilitering</h3>
+            <p>
+              Vi tar rørleggerdelen fra riving til ferdig montert utstyr, og samkjører oss med murer,
+              membranlegger og elektriker så du slipper å være byggeleder. Nye vannrør legges som
+              rør-i-rør til et fordelerskap. Skulle et rør ryke om tjue år, renner vannet til sluk
+              og ikke inn i veggen.
+            </p>
+            <ul class="feature__list">
+              <li>Nytt sluk og avløp tilpasset membranen</li>
+              <li>Rør-i-rør og fordelerskap med drenering</li>
+              <li>Innbyggingssisterne og vegghengt toalett</li>
+              <li>Tetthetsprøving før veggene lukkes</li>
+              <li>Bilder av alle skjulte rør og koblinger</li>
+              <li>Montering av servant, dusj og armaturer</li>
+            </ul>
+            <!-- PLASSHOLDER: varigheter -->
+            <dl class="feature__meta">
+              <div><dt>Hele badet</dt><dd>3–5 uker</dd></div>
+              <div><dt>Rørlegger på stedet</dt><dd>4–6 arbeidsdager</dd></div>
+            </dl>
+          </article>
+
+          <!-- 2) Lekkasje: mørkt akuttfelt -->
+          <article class="feature feature--urgent" data-reveal style="--reveal-delay: 120ms">
+            <h3>Vannlekkasje og skadeservice</h3>
+            <p>
+              Vi stopper lekkasjen, finner årsaken og skriver en skaderapport som
+              forsikringsselskapet kan bruke direkte.
+            </p>
+            <ol class="urgent-steps" aria-label="Gjør dette mens du venter på oss">
+              <li>Steng hovedstoppekranen.</li>
+              <li>Har vannet nådd stikkontakter eller lamper? Slå av kursen i sikringsskapet, men bare hvis du kommer tørt til.</li>
+              <li>Ta bilder før du tørker opp.</li>
+            </ol>
+            <div class="feature__call">
+              <small>Vakttelefon, hele døgnet</small>
+              <!-- PLASSHOLDER: vakttelefon -->
+              <a class="btn btn--urgent btn--block tel" href="tel:+4790000000">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+                900 00 000
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- 3) Øvrige tjenester som linjert liste -->
+        <ul class="service-list">
+          <li class="service-row" data-reveal>
+            <h3>Varmtvannsbereder</h3>
+            <p>
+              Bytte, service og feilsøking. Vi dimensjonerer etter hvor mange som dusjer om morgenen,
+              monterer ny sikkerhets- og blandeventil, og tar med den gamle berederen til godkjent mottak.
+              Et vanlig bytte er ferdig samme dag.
+            </p>
+          </li>
+          <li class="service-row" data-reveal>
+            <h3>Sanitærinstallasjon i nybygg og rehabilitering</h3>
+            <p>
+              Komplett røropplegg for eneboliger, tilbygg og leilighetsprosjekter. Vi leser tegningene
+              tidlig og sier fra om løsninger som blir vanskelige å komme til senere, mens det
+              fortsatt er billig å endre dem.
+            </p>
+          </li>
+          <li class="service-row" data-reveal>
+            <h3>Vannbåren varme og varmepumpe</h3>
+            <p>
+              Gulvvarme, radiatorer og fordelere, og rørteknisk tilkobling av luft-vann- og
+              væske-vann-varmepumper. Vi innregulerer anlegget og går gjennom styringen med deg
+              før vi drar, så du vet hva du skal skru på og hva du skal la være.
+            </p>
+          </li>
+          <li class="service-row" data-reveal>
+            <h3>Avløp og rørfornying</h3>
+            <p>
+              Staking, spyling og rørinspeksjon med kamera. Når gamle støpejernsrør nærmer seg slutten,
+              ser vi på videoen sammen og vurderer om strømpefornying holder, eller om rørene bør
+              skiftes helt.
+            </p>
+          </li>
+          <li class="service-row" data-reveal>
+            <h3>Servicekontrakter</h3>
+            <p>
+              Fast årlig kontroll av stoppekraner, sluk, beredere og tekniske rom i borettslag,
+              sameier og næringsbygg. Avtalt responstid, én fast kontaktperson og en tilstandsrapport
+              styret kan legge rett inn i vedlikeholdsplanen.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====================== SLIK JOBBER VI ====================== -->
+    <section class="section" id="prosess" data-pipe-label="Slik jobber vi">
+      <div class="container">
+        <header class="section-head">
+          <div>
+            <h2 data-split>Fem steg, <em>ingen</em> overraskelser</h2>
+          </div>
+          <p class="lead" data-reveal style="--reveal-delay: 200ms">
+            Det er sjelden selve rørene folk er misfornøyde med. Det er uklare priser,
+            folk som ikke møter og støv i hele huset. Derfor gjør vi det slik.
+          </p>
+        </header>
+
+        <!-- PLASSHOLDER: svartider og betingelser i stegene -->
+        <ol class="process__list">
+          <li class="step">
+            <span class="step__num"></span>
+            <h3>Henvendelse</h3>
+            <p>Ring eller send skjemaet. En rørlegger svarer deg innen én virkedag, og stiller de spørsmålene som trengs for å forstå jobben.</p>
+          </li>
+          <li class="step">
+            <span class="step__num"></span>
+            <h3>Befaring</h3>
+            <p>Vi måler opp og sjekker det som ikke synes: stoppekraner, sluk, fall på gulvet og alderen på rørene.</p>
+          </li>
+          <li class="step">
+            <span class="step__num"></span>
+            <h3>Skriftlig tilbud</h3>
+            <p>Fast pris på avgrenset arbeid, med hva som er inkludert. Finner vi noe uforutsett bak veggen, stopper vi og avtaler pris før vi går videre.</p>
+          </li>
+          <li class="step">
+            <span class="step__num"></span>
+            <h3>Utførelse</h3>
+            <p>Avtalt oppstart, tildekkede gulv og ryddet arbeidsplass hver ettermiddag. Samme rørlegger følger jobben fra start til slutt.</p>
+          </li>
+          <li class="step">
+            <span class="step__num"></span>
+            <h3>Dokumentasjon</h3>
+            <p>Tetthetsprøving, bilder av skjulte rør og signert egenkontroll samles i én mappe på e-post. Nyttig ved salg og forsikringssaker.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ====================== PROSJEKTER ====================== -->
+    <section class="section section--alt" id="prosjekter" data-pipe-label="Prosjekter">
+      <div class="container">
+        <header class="section-head">
+          <div>
+            <h2 data-split>Jobber vi <em>gjerne</em> viser frem</h2>
+          </div>
+          <p class="lead" data-reveal style="--reveal-delay: 200ms">Tre oppdrag av ulik størrelse, fra ett enkelt bad til 48 leiligheter.</p>
+        </header>
+
+        <!-- Fugemønstrene som brukes i bildeplassene under -->
+        <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
+          <defs>
+            <pattern id="flis-smaa" width="26" height="26" patternUnits="userSpaceOnUse">
+              <path class="tile-line" d="M0 .75H26M.75 0V26"/>
+            </pattern>
+            <pattern id="flis-storformat" width="150" height="75" patternUnits="userSpaceOnUse">
+              <path class="tile-line" d="M0 .75H150M.75 0V75"/>
+            </pattern>
+            <pattern id="flis-halvforband" width="90" height="60" patternUnits="userSpaceOnUse">
+              <path class="tile-line" d="M0 .75H90M0 30.75H90M.75 0V30M45.75 30V60"/>
+            </pattern>
+            <pattern id="flis-diagonal" width="56" height="56" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <path class="tile-line" d="M0 .75H56M.75 0V56"/>
+            </pattern>
+          </defs>
+        </svg>
+
+        <!--
+          PLASSHOLDER: alle prosjektene er oppdiktet.
+          BILDER: bytt hele <svg>…</svg> inni .placeholder med f.eks.
+            <img src="assets/img/bad-fana-etter.jpg" alt="Beskriv bildet"
+                 width="800" height="1000" loading="lazy">
+          og slett <span class="placeholder__label">. Rammen holder størrelsesforholdet.
+        -->
+        <article class="project project--large" data-reveal>
+          <div class="project__pair">
+            <figure class="placeholder placeholder--4x5" data-reveal="curtain">
+              <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect class="tile-bg--sand" width="400" height="500"/>
+                <rect width="400" height="500" fill="url(#flis-smaa)"/>
+              </svg>
+              <span class="placeholder__label">Bildeplass 4:5 · Før</span>
+            </figure>
+            <figure class="placeholder placeholder--4x5" data-reveal="curtain">
+              <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect class="tile-bg--kalk" width="400" height="500"/>
+                <rect width="400" height="500" fill="url(#flis-storformat)"/>
+              </svg>
+              <span class="placeholder__label">Bildeplass 4:5 · Etter</span>
+            </figure>
+          </div>
+          <div class="project__body">
+            <p class="project__kicker">Baderom · Enebolig i Fana</p>
+            <h3>Fra 1984 til i dag, på fire uker</h3>
+            <p>
+              Originalt bad med støpejernssluk og kobberrør innstøpt i gulvet. Vi byttet soilrøret til
+              plast, senket nytt sluk i betongdekket og la rør-i-rør til servant, dusj og vegghengt
+              toalett. Fordelerskapet står i boden ved siden av, lett å komme til.
+            </p>
+            <dl class="project__meta">
+              <div><dt>Omfang</dt><dd>Bad på 6 m²</dd></div>
+              <div><dt>Varighet</dt><dd>4 uker</dd></div>
+              <div><dt>Ferdig</dt><dd>2024</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <!-- To mindre prosjekter i forholdet 1 : φ. Bildene får lik høyde via subgrid. -->
+        <div class="projects__row">
+          <article class="project" data-reveal>
+            <figure class="placeholder" data-reveal="curtain">
+              <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect class="tile-bg--irr" width="800" height="600"/>
+                <rect width="800" height="600" fill="url(#flis-halvforband)"/>
+              </svg>
+              <span class="placeholder__label">Bildeplass 4:3</span>
+            </figure>
+            <div class="project__body">
+              <p class="project__kicker">Varme · Tomannsbolig på Askøy</p>
+              <h3>Elkjelen ut, luft-vann-varmepumpe inn</h3>
+              <p>
+                Radiatorene i andre etasje ble beholdt og innregulert på nytt. Første etasje fikk
+                vannbåren gulvvarme med egen fordeler og romstyring.
+              </p>
+              <dl class="project__meta">
+                <div><dt>Omfang</dt><dd>2 boenheter</dd></div>
+                <div><dt>Varighet</dt><dd>9 arbeidsdager</dd></div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="project project--wide" data-reveal style="--reveal-delay: 120ms">
+            <figure class="placeholder" data-reveal="curtain">
+              <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect class="tile-bg--kalk" width="800" height="600"/>
+                <rect width="800" height="600" fill="url(#flis-diagonal)"/>
+              </svg>
+              <span class="placeholder__label">Bildeplass, liggende (ca. 2:1)</span>
+            </figure>
+            <div class="project__body">
+              <p class="project__kicker">Rørfornying · Borettslag på Landås</p>
+              <h3>Nye stigeledninger i fire oppganger</h3>
+              <p>
+                Stammer for vann og avløp byttet oppgang for oppgang. Beboerne fikk fremdriftsplan
+                per leilighet og sanitærbrakke i gårdsrommet mens badene var stengt.
+              </p>
+              <dl class="project__meta">
+                <div><dt>Omfang</dt><dd>48 leiligheter</dd></div>
+                <div><dt>Varighet</dt><dd>7 måneder</dd></div>
+                <div><dt>Ferdig</dt><dd>2023</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== TRYGGHET ====================== -->
+    <!--
+      PLASSHOLDER – VIKTIG: Ingen av godkjenningene under er ekte.
+      Begrepene er reelle norske ordninger, men de må bare stå her dersom
+      kunden faktisk har dem. Sjekk før publisering:
+        - Sentral godkjenning: sgregister.dibk.no
+        - Våtrom: Fagrådet for våtrom (GVK / godkjent våtromsbedrift)
+        - Ansvarsforsikring: be om forsikringsbevis
+      Ikke legg inn logoer/merker uten at kunden har rett til å bruke dem.
+    -->
+    <section class="section trust" id="trygghet" data-pipe-label="Trygghet" data-pipe-dark>
+      <div class="container trust__grid">
+        <div class="trust__intro">
+          <h2 data-split>Papirene i orden, også de du <em>aldri</em> ber om</h2>
+          <p data-reveal style="--reveal-delay: 200ms">
+            Rørleggerarbeid skjules bak fliser og plater. Da må du kunne stole på at det ble
+            gjort riktig, og kunne bevise det den dagen du selger eller får en vannskade.
+          </p>
+
+          <!-- Illustrasjon tegnet i CSS: et eksempel på egenkontrollskjema -->
+          <div class="sheet" data-reveal role="img" aria-label="Eksempel på egenkontrollskjema for våtrom, med seks avkryssede kontrollpunkter.">
+            <div class="sheet__head" aria-hidden="true">
+              <span>Egenkontroll våtrom</span>
+              <span>Eksempel</span>
+            </div>
+            <ul class="sheet__list" data-index aria-hidden="true">
+              <li>Sluk fastmontert og kontrollert i vater</li>
+              <li>Membran klemt i sluk, klemring montert</li>
+              <li>Varerør ført ubrutt til fordelerskap</li>
+              <li>Skap drenert til rom med sluk</li>
+              <li>Anlegget tetthetsprøvd før lukking</li>
+              <li>Skjulte føringer fotografert</li>
+            </ul>
+            <div class="sheet__sign" aria-hidden="true">
+              <span>Kontrollert av</span>
+              <span>Dato</span>
+            </div>
+          </div>
+        </div>
+
+        <ul class="trust__list" data-reveal="stagger">
+          <li>
+            <h3>Sentral godkjenning</h3>
+            <p>Foretaket har sentral godkjenning for ansvarsrett for utførelse av sanitærinstallasjoner. Det betyr at kompetanse, kvalitetssystem og skatteforhold er kontrollert av Direktoratet for byggkvalitet.</p>
+          </li>
+          <li>
+            <h3>Våtromsnormen</h3>
+            <p>Vi bygger etter Byggebransjens våtromsnorm, og rørleggerne våre har GVK-sertifikat fra Fagrådet for våtrom. Normen er strengere enn minstekravet i byggteknisk forskrift.</p>
+          </li>
+          <li>
+            <h3>Dokumentasjon og egenkontroll</h3>
+            <p>Hver jobb avsluttes med utfylt sjekkliste, tetthetsprøving og bilder. Du får alt samlet, sammen med produktdatablad for det som er montert.</p>
+          </li>
+          <li>
+            <h3>Ansvarsforsikring</h3>
+            <p>Forsikringen dekker skade på bygning og innbo som følge av arbeidet vårt. Si fra om du vil ha forsikringsbeviset lagt ved tilbudet.</p>
+          </li>
+          <li>
+            <h3>Fem års reklamasjonsrett</h3>
+            <p>Som forbruker har du etter håndverkertjenesteloven fem års reklamasjonsrett på arbeid på fast eiendom. Vi tar telefonen i år fem også.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====================== SPØRSMÅL ====================== -->
+    <!-- Svarene er skrevet for å være faglig forsvarlige, men bør leses
+         gjennom av kundens fagansvarlige før publisering. -->
+    <section class="section" id="sporsmal" data-pipe-label="Spørsmål">
+      <div class="container split split--reverse">
+        <div class="faq__aside">
+          <h2 data-split>Det folk lurer på <em>før</em> de ringer</h2>
+          <p data-reveal style="--reveal-delay: 200ms">Finner du ikke svaret? Ring <a class="tel" href="tel:+4755000000">55 00 00 00</a>, så svarer en rørlegger.</p>
+          <!-- Liten interaktiv tegning: en kuleventil sett ovenfra. Klikk for å stenge/åpne.
+               Logikken ligger i js/modules/valve.js, utseendet i css/components/valve.css. -->
+          <figure class="valve" data-reveal style="--reveal-delay: 320ms">
+            <button class="valve__button" type="button" aria-pressed="false" aria-describedby="valve-status">
+              <span class="visually-hidden">Steng eller åpne stoppekranen</span>
+              <svg viewBox="0 -34 240 124" aria-hidden="true">
+                <path class="valve__flow valve__flow--in" d="M0 60H88"/>
+                <path class="valve__flow valve__flow--out" d="M152 60H240"/>
+                <path class="valve__pipe" d="M0 52H82M0 68H82M158 52H240M158 68H240"/>
+                <path class="valve__muffe" d="M80 46h12v28H80zM148 46h12v28h-12z"/>
+                <rect class="valve__body" x="92" y="42" width="56" height="36" rx="3"/>
+                <g class="valve__lever">
+                  <rect x="112" y="54" width="86" height="12" rx="6"/>
+                </g>
+                <circle class="valve__stem" cx="120" cy="60" r="4"/>
+              </svg>
+            </button>
+            <figcaption>
+              <span class="valve__status" id="valve-status" aria-live="polite">Åpen. Trykk på kranen for å stenge.</span>
+              Hendelen på tvers av røret betyr stengt. Finn din egen før du trenger den.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="faq__list" data-reveal="stagger">
+          <details class="faq__item">
+            <summary>Hva gjør jeg ved vannlekkasje?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><div>
+              <ol>
+                <li>Steng hovedstoppekranen. Den sitter som regel der vannet kommer inn i boligen: i kjeller, bod, under kjøkkenbenken eller i fordelerskapet. I blokk kan den sitte i en sjakt i oppgangen.</li>
+                <li>Har vannet nådd stikkontakter, lamper eller skjøteledninger, slår du av strømmen til rommet i sikringsskapet. Gjør det bare hvis du kommer til skapet uten å stå i vann.</li>
+                <li>Ta bilder, tørk opp det du kan, og flytt møbler og tepper.</li>
+                <li>Ring vakttelefonen vår på <a class="tel" href="tel:+4790000000">900 00 000</a>, og meld skaden til forsikringsselskapet ditt.</li>
+              </ol>
+              <p>Finn stoppekranen i dag, og sjekk at den lar seg skru igjen. Det er det billigste forsikringstiltaket du kan gjøre.</p>
+            </div></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Hvor lenge holder en varmtvannsbereder?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><div>
+              <p>Regn med 15 til 25 år. Vannkvaliteten, hvor hardt den brukes og om sikkerhetsventilen har vært stelt, avgjør hvor i det spennet du havner.</p>
+              <p>Tegn på at den synger på siste verset: rust eller fukt rundt bunnen, sikkerhetsventilen drypper hele tiden, vannet blir fortere kaldt enn før, eller sikringen går. En bereder som lekker fra selve tanken kan ikke repareres og bør byttes med en gang.</p>
+              <p>Rørleggeren kobler vannet. Den elektriske tilkoblingen skal gjøres av elektriker, og nye beredere skal normalt ha fast tilkobling i stedet for stikkontakt.</p>
+            </div></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Hvor lang tid tar en baderomsrehabilitering?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><div>
+              <p>Tre til fem uker for et vanlig bad, fra riving til du kan dusje igjen. Selve rørleggerarbeidet er fire til seks dager, fordelt på tre besøk: riving og nye rør, kontroll før lukking, og montering av utstyr til slutt.</p>
+              <p>Resten av tiden går til påstøp som må tørke, membran, flislegging og elektriker. Det som oftest forlenger jobben er flytting av sluk, råte som dukker opp bak veggen, og fliser med lang leveringstid. De to første ser vi etter på befaringen.</p>
+            </div></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Må jeg bruke autorisert rørlegger på våtrom?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><div>
+              <p>Rørleggere har ikke en lovfestet autorisasjon slik elektrikere har, men i praksis er svaret ja for alt som har med røropplegget å gjøre. Kommunens sanitærreglement krever normalt at arbeid på vann- og avløpsanlegg utføres av fagfolk, og våtrommet skal oppfylle kravene i byggteknisk forskrift.</p>
+              <p>Like viktig: forsikringsselskapet kan kutte i erstatningen etter en vannskade hvis arbeidet ikke er fagmessig utført eller ikke kan dokumenteres.</p>
+              <p>Det du trygt kan gjøre selv er å bytte dusjhode og dusjslange, servantbatteri på eksisterende kraner, og toalettsete. Alt som ligger skjult i vegg og gulv bør du overlate til rørlegger.</p>
+            </div></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Får jeg fast pris?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><div>
+              <p>Ja, på jobber vi kan se omfanget av: bad, berederbytte, nytt kjøkken, varmeanlegg. Tilbudet er skriftlig og viser hva som er med.</p>
+              <p>Feilsøking og akutte lekkasjer går på timepris, fordi ingen vet hva som skjuler seg før vi har åpnet. Da får du timesatsen og et anslag før vi begynner, og beskjed med en gang anslaget ser ut til å sprekke.</p>
+            </div></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Tar dere små jobber?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><div>
+              <p>Ja. En kran som drypper, et toalett som renner eller en oppvaskmaskin som skal kobles til, er helt vanlige oppdrag. Har du flere småting, lønner det seg å samle dem til ett besøk, så betaler du oppmøte bare én gang.</p>
+            </div></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== KONTAKT ====================== -->
+    <section class="section section--alt" id="kontakt" data-pipe-label="Kontakt">
+      <div class="container">
+        <div class="contact__intro">
+          <h2 data-pipe-end data-split>Fortell oss hva som <em>skal gjøres</em></h2>
+          <p class="lead" data-reveal style="--reveal-delay: 200ms">Jo mer du skriver, jo bedre forberedt kommer vi. Du hører fra en rørlegger innen én virkedag.</p>
+        </div>
+
+        <div class="split">
+          <div data-reveal>
+            <!-- Skjemaet er en frontend-demo. Se js/modules/form.js for å koble på ekte innsending. -->
+            <form class="form" id="tilbudsskjema" novalidate>
+              <div class="form__row">
+                <div class="field">
+                  <label for="f-navn">Navn</label>
+                  <input type="text" id="f-navn" name="navn" autocomplete="name" required aria-describedby="f-navn-feil">
+                  <p class="field__error" id="f-navn-feil" hidden></p>
+                </div>
+                <div class="field">
+                  <label for="f-telefon">Telefon</label>
+                  <input type="tel" id="f-telefon" name="telefon" autocomplete="tel" inputmode="tel" required aria-describedby="f-telefon-feil">
+                  <p class="field__error" id="f-telefon-feil" hidden></p>
+                </div>
+              </div>
+
+              <div class="form__row">
+                <div class="field">
+                  <label for="f-epost">E-post <span class="field__optional">(valgfritt)</span></label>
+                  <input type="email" id="f-epost" name="epost" autocomplete="email" aria-describedby="f-epost-feil">
+                  <p class="field__error" id="f-epost-feil" hidden></p>
+                </div>
+                <div class="field">
+                  <label for="f-oppdrag">Hva gjelder det?</label>
+                  <select id="f-oppdrag" name="oppdrag" required aria-describedby="f-oppdrag-feil">
+                    <option value="">Velg …</option>
+                    <option>Baderomsrehabilitering</option>
+                    <option>Varmtvannsbereder</option>
+                    <option>Kjøkken eller vaskerom</option>
+                    <option>Nybygg eller rehabilitering</option>
+                    <option>Vannbåren varme eller varmepumpe</option>
+                    <option>Avløp eller rørfornying</option>
+                    <option>Servicekontrakt</option>
+                    <option>Noe annet</option>
+                  </select>
+                  <p class="field__error" id="f-oppdrag-feil" hidden></p>
+                </div>
+              </div>
+
+              <fieldset class="field">
+                <legend>Jeg er</legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="kundetype" value="privat" checked><span>Privatperson</span></label>
+                  <label class="choice"><input type="radio" name="kundetype" value="borettslag"><span>Borettslag eller sameie</span></label>
+                  <label class="choice"><input type="radio" name="kundetype" value="naering"><span>Bedrift</span></label>
+                </div>
+              </fieldset>
+
+              <div class="field">
+                <label for="f-melding">Beskriv jobben</label>
+                <textarea id="f-melding" name="melding" rows="5" required aria-describedby="f-melding-hint f-melding-feil"></textarea>
+                <p class="field__hint" id="f-melding-hint">For eksempel: adresse, omtrent hvor gammelt badet er, og når du ønsker oppstart.</p>
+                <p class="field__error" id="f-melding-feil" hidden></p>
+              </div>
+
+              <div class="form__footer">
+                <button class="btn btn--primary" type="submit">Send forespørsel<svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></button>
+                <p class="form__note">
+                  Pågår det en lekkasje nå? Ikke bruk skjemaet. Ring <a class="tel" href="tel:+4790000000">900 00 000</a>.
+                  Vi bruker opplysningene bare til å svare deg. Les <a href="pages/personvern.html">personvernerklæringen</a>.
+                </p>
+              </div>
+            </form>
+
+            <div class="form-success" id="skjema-kvittering" role="status" tabindex="-1" hidden>
+              <h3>Takk, <span data-name></span>. Vi har fått forespørselen din.</h3>
+              <p>En rørlegger ringer deg innen én virkedag for å avtale befaring eller gi deg et prisoverslag.</p>
+              <p class="form-success__demo">Dette er en demoside. Ingenting ble sendt eller lagret.</p>
+              <button class="btn btn--ghost" type="button" data-reset>Send en ny forespørsel</button>
+            </div>
+          </div>
+
+          <!-- PLASSHOLDER: all kontaktinformasjon -->
+          <aside class="contact__info" aria-label="Kontaktinformasjon" data-reveal style="--reveal-delay: 120ms">
+            <div class="info-block info-block--urgent">
+              <h3>Akutt vannlekkasje</h3>
+              <p>Vakttelefonen er bemannet hele døgnet, hele året.</p>
+              <a class="btn btn--urgent btn--block tel" href="tel:+4790000000">Ring 900 00 000</a>
+            </div>
+
+            <div class="info-block">
+              <h3>Telefon</h3>
+              <a class="info-block__big tel" href="tel:+4755000000">55 00 00 00</a>
+            </div>
+
+            <div class="info-block">
+              <h3>E-post og adresse</h3>
+              <address>
+                <p><a href="mailto:post@straumsnesror.no">post@straumsnesror.no</a></p>
+                <p>Verkstedveien 0, 5000 Bergen</p>
+              </address>
+            </div>
+
+            <div class="info-block">
+              <h3>Åpningstider</h3>
+              <table class="hours">
+                <tbody>
+                  <tr><th scope="row">Mandag–fredag</th><td>07.00–15.30</td></tr>
+                  <tr><th scope="row">Lørdag og søndag</th><td>Stengt</td></tr>
+                  <tr><th scope="row">Vakttelefon</th><td>Hele døgnet</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer class="site-footer">
+    <!-- Løpende stripe med dekningsområdet. Farten følger rullingen (js/modules/marquee.js).
+         PLASSHOLDER: stedsnavn. Skjult for skjermlesere, de samme stedene står i teksten under. -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Bergen</span><span>Askøy</span><span>Øygarden</span><span>Bjørnafjorden</span><span>Fana</span><span>Åsane</span><span>Laksevåg</span><span>Arna</span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="logo" href="#topp" aria-label="Straumsnes Rør AS – til toppen">
+            <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <path class="logo__pipe" d="M31 10H17a5 5 0 0 0 0 10h6a5 5 0 0 1 0 10H9"/>
+          <path class="logo__bore" d="M31 10H17a5 5 0 0 0 0 10h6a5 5 0 0 1 0 10H9"/>
+          <path class="logo__muffe" d="M30 5.5h3.5v9H30zM6.5 25.5H10v9H6.5z"/>
+        </svg>
+            <span class="logo__text">
+              <span class="logo__name">Straumsnes</span>
+              <span class="logo__tag">Rør · siden 1987</span>
+            </span>
+          </a>
+          <p class="site-footer__about">
+            Rørleggerfirma med verksted i Bergen. Vi jobber for private, borettslag og
+            næringskunder i Bergen, Askøy, Øygarden og Bjørnafjorden.
+          </p>
+        </div>
+
+        <nav aria-label="Snarveier">
+          <h2>Snarveier</h2>
+          <ul class="site-footer__links">
+            <li><a href="#tjenester">Tjenester</a></li>
+            <li><a href="#prosjekter">Prosjekter</a></li>
+            <li><a href="#sporsmal">Vanlige spørsmål</a></li>
+            <li><a href="pages/personvern.html">Personvern</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2>Kontakt</h2>
+          <ul class="site-footer__links">
+            <li><a class="tel" href="tel:+4755000000">55 00 00 00</a></li>
+            <li>Vakt: <a class="tel" href="tel:+4790000000">900 00 000</a></li>
+            <li><a href="mailto:post@straumsnesror.no">post@straumsnesror.no</a></li>
+            <li>Verkstedveien 0, 5000 Bergen</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <!-- PLASSHOLDER: organisasjonsnummer -->
+        <p>© <span data-year>2026</span> Straumsnes Rør AS · Org.nr. 000 000 000 MVA</p>
+        <p>Demoside. Bedriften, prosjektene og godkjenningene er oppdiktet.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fast handlingslinje på mobil -->
+  <div class="mobilebar">
+    <a class="btn btn--ghost btn--sm tel" href="tel:+4755000000">Ring oss</a>
+    <a class="btn btn--primary btn--sm" href="#kontakt">Be om tilbud</a>
+  </div>
+</body>
+</html>

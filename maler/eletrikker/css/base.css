@@ -1,0 +1,250 @@
+/* ==========================================================================
+   BASE – nullstilling, typografi og små hjelpeklasser
+   Gjelder alle sider. Ingenting her er spesifikt for elektriker-malen.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Ankerlenker skal ikke havne bak den faste toppmenyen */
+  scroll-padding-top: calc(var(--topp-hoyde) + var(--rom-4));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--farge-papir);
+  color: var(--farge-tekst);
+  font-family: var(--font-tekst);
+  font-size: var(--tekst-0);
+  line-height: var(--linjehoyde-tekst);
+  overflow-wrap: break-word;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* --- Overskrifter -------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--farge-blekk);
+  font-family: var(--font-overskrift);
+  font-weight: 700;
+  line-height: var(--linjehoyde-overskrift);
+  letter-spacing: -0.02em;
+  /* Norske sammensatte ord er lange – la nettleseren dele dem på smal skjerm */
+  hyphens: auto;
+  text-wrap: balance;
+}
+
+.pa-mork :is(h1, h2, h3, h4) {
+  color: var(--farge-tekst-lys);
+}
+
+h1 {
+  font-size: clamp(var(--tekst-3), 1rem + 5.5vw, var(--tekst-6));
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+h2 {
+  font-size: clamp(var(--tekst-2), 1rem + 3vw, var(--tekst-4));
+}
+
+h3 {
+  font-size: var(--tekst-1);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+p {
+  margin: 0;
+  max-width: var(--maks-linjelengde);
+}
+
+p + p {
+  margin-top: var(--rom-4);
+}
+
+:is(h2, h3) + p {
+  margin-top: var(--rom-3);
+}
+
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Lenker og fokus ----------------------------------------------------- */
+
+a {
+  color: var(--farge-stal);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.pa-mork a {
+  color: var(--farge-tekst-lys);
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--farge-fokus);
+  outline-offset: 3px;
+  border-radius: var(--radius-1);
+}
+
+/* --- Hjelpeklasser ------------------------------------------------------- */
+
+/* Sentrert innholdsbredde med faste sidemarger */
+.ramme {
+  width: 100%;
+  max-width: calc(var(--maks-bredde) + 2 * var(--sidemarg));
+  margin-inline: auto;
+  padding-inline: var(--sidemarg);
+}
+
+.seksjon {
+  padding-block: var(--seksjon-luft);
+}
+
+.seksjon--mork {
+  background: var(--farge-blekk);
+}
+
+.seksjon--dempet {
+  background: var(--farge-papir-mork);
+}
+
+/* To kolonner i gyllent snitt. --omvendt legger den smale kolonnen først. */
+.gyllen {
+  display: grid;
+  gap: var(--rom-6);
+}
+
+/* Uten denne kan et langt ord eller en SVG presse kolonnen bredere enn
+   skjermen (rutenettceller krymper ellers aldri under innholdet sitt). */
+.gyllen > * {
+  min-width: 0;
+}
+
+@media (min-width: 56em) {
+  .gyllen {
+    grid-template-columns: var(--kol-stor) var(--kol-liten);
+    gap: var(--rom-7);
+  }
+
+  .gyllen--omvendt {
+    grid-template-columns: var(--kol-liten) var(--kol-stor);
+  }
+}
+
+/* Liten etikett i monospace over overskrifter – som påskrift på en tegning */
+.etikett {
+  display: block;
+  margin-bottom: var(--rom-4);
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.ingress {
+  font-size: var(--tekst-1);
+  line-height: 1.5;
+}
+
+.dempet {
+  color: var(--farge-tekst-dempet);
+}
+
+/* Skjult for øyet, men lest av skjermlesere */
+.kun-skjermleser {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* «Hopp til innhold» – vises først når man tabber inn på siden */
+.hopp {
+  position: absolute;
+  top: var(--rom-3);
+  left: var(--rom-3);
+  z-index: 100;
+  padding: var(--rom-3) var(--rom-4);
+  background: var(--farge-blekk);
+  color: var(--farge-tekst-lys);
+  transform: translateY(-200%);
+}
+
+.hopp:focus {
+  transform: none;
+}
+
+/* --- Inntoning ved rulling ------------------------------------------------
+   Elementer med data-vis tones inn én gang når de kommer inn i bildet.
+   Klassen .js settes av js/index.js – uten JavaScript er alt synlig.      */
+
+.js [data-vis] {
+  opacity: 0;
+  transform: translateY(var(--rom-6));
+  transition:
+    opacity var(--tid-lang) var(--kurve),
+    transform var(--tid-lang) var(--kurve);
+  /* --forsinkelse settes av js/index.js, slik at elementer som kommer inn
+     samtidig tones inn etter tur i stedet for i klump */
+  transition-delay: var(--forsinkelse, 0ms);
+}
+
+.js [data-vis].er-synlig {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Redusert bevegelse ---------------------------------------------------
+   Brukere som har bedt systemet om mindre bevegelse får ingen animasjoner.
+   Alt hopper rett til sluttilstanden.                                      */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .js [data-vis] {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,32 @@
+/* Inngangsfil: importerer bare. Rekkefølgen betyr noe –
+   variabler først, deretter generelt → spesifikt. */
+
+/* 1. Grunnlag */
+@import url("base/variables.css");
+@import url("base/reset.css");
+@import url("base/typography.css");
+@import url("base/layout.css");
+
+/* 2. Komponenter (gjenbrukes på tvers av seksjoner) */
+@import url("components/button.css");
+@import url("components/alertbar.css");
+@import url("components/header.css");
+@import url("components/placeholder.css");
+@import url("components/faq.css");
+@import url("components/form.css");
+@import url("components/mobilebar.css");
+@import url("components/reveal.css");
+@import url("components/pagepipe.css");
+@import url("components/intro.css");
+@import url("components/valve.css");
+@import url("components/marquee.css");
+
+/* 3. Seksjoner (i samme rekkefølge som på siden) */
+@import url("sections/hero.css");
+@import url("sections/services.css");
+@import url("sections/process.css");
+@import url("sections/projects.css");
+@import url("sections/trust.css");
+@import url("sections/contact.css");
+@import url("sections/footer.css");
+@import url("sections/legal.css");

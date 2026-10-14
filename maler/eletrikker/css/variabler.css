@@ -1,0 +1,121 @@
+/* ==========================================================================
+   VARIABLER – merkevaren på ett sted
+   --------------------------------------------------------------------------
+   Skal malen brukes for et annet yrke (rørlegger, snekker, maler …),
+   er det denne fila du endrer. Resten av CSS-en leser bare herfra.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     FARGER
+     Begrunnelse: Paletten er hentet fra selve sikringsskapet. Grafitt er
+     de svarte vernene, stål er skapet og DIN-skinnene, og messing er
+     samleskinna som fører strømmen. Messing er eneste «farge» og brukes
+     KUN på det som er «på»: vipper, ledere og hovedknappen på mørk bunn.
+     Alt annet er nøytralt, slik at aksenten får stå alene.
+     Bakgrunnen er varm papirhvit i stedet for kritthvit – da ligner siden
+     en teknisk tegning og ikke en app.
+     Vi unngår bevisst lynblått, neongult og oransje – det er bransjeklisjeene.
+     ------------------------------------------------------------------------ */
+  --farge-blekk: #15171a;          /* grafitt: mørkeste flate + overskrifter */
+  --farge-stal: #2b3038;           /* mørkt stål: lenker, detaljer, én seksjon */
+  --farge-messing: #d4a437;        /* aksent – bruk sparsomt */
+  --farge-messing-mork: #b88a22;   /* hover på aksent */
+
+  --farge-papir: #f2f0eb;          /* standard bakgrunn */
+  --farge-papir-mork: #e5e2db;     /* vekslende seksjonsbakgrunn (lys stålplate) */
+  --farge-hvit: #fbfaf8;           /* paneler som skal løftes litt fram */
+
+  --farge-tekst: #1b1d20;          /* brødtekst på lys bunn */
+  --farge-tekst-dempet: #5b6068;   /* sekundær tekst (kontrast 5,6:1 mot papir) */
+  --farge-tekst-lys: #f2f0eb;      /* tekst på mørk bunn */
+  --farge-tekst-lys-dempet: #a9aeb5;
+
+  --farge-linje: #d3cfc6;          /* skillelinjer på lys bunn */
+  --farge-linje-sterk: #7c8087;    /* kant på skjemafelt (3:1 mot papir) */
+  --farge-linje-mork: #343a41;     /* skillelinjer på mørk bunn */
+  --farge-feil: #9b2c1f;           /* kun feilmeldinger i skjema */
+
+  --farge-fokus: var(--farge-stal); /* byttes automatisk til messing på mørk bunn */
+
+  /* DIN-skinna som skiller «radene» i skapet */
+  --din-metall: #c6c3bb;
+  --din-hull: rgb(0 0 0 / 0.3);
+
+  /* ------------------------------------------------------------------------
+     FONTER
+     Schibsted Grotesk (norsk opphav, stram og litt kantete) til overskrifter,
+     IBM Plex Sans til brødtekst (laget for teknisk dokumentasjon, svært
+     lesbar), IBM Plex Mono til små etiketter, tall og mål – det som på en
+     tegning ville stått med sjablongskrift.
+     ------------------------------------------------------------------------ */
+  --font-overskrift: "Schibsted Grotesk", "Arial Narrow", Arial, sans-serif;
+  --font-tekst: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  /* ------------------------------------------------------------------------
+     GYLLENT SNITT  φ = 1,618
+     Hele skalaen under er bygget på φ. Hvert «helt» trinn er forrige × 1,618.
+     For skrift blir det for store hopp, så der bruker vi halve trinn:
+     √φ = 1,272 (to halve trinn = ett helt).
+     ------------------------------------------------------------------------ */
+  --phi: 1.618;
+
+  /* Typografiskala – trinn på √φ (1,272). Annethvert trinn er et rent φ-hopp:
+     1 → 1,618 → 2,618 → 4,236                                                */
+  --tekst--1: 0.786rem;  /* 1 ÷ 1,272  – etiketter, småtekst */
+  --tekst-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* brødtekst */
+  --tekst-1: 1.272rem;   /* ingress, h3 */
+  --tekst-2: 1.618rem;   /* φ¹ */
+  --tekst-3: 2.058rem;
+  --tekst-4: 2.618rem;   /* φ² – h2 på stor skjerm */
+  --tekst-5: 3.33rem;
+  --tekst-6: 4.236rem;   /* φ³ – h1 på stor skjerm */
+
+  --linjehoyde-tekst: 1.618;   /* φ */
+  --linjehoyde-overskrift: 1.1;
+  --maks-linjelengde: 38rem;   /* ca. 62 tegn – 61,8 % av 100 */
+
+  /* Avstander – hvert trinn er forrige × φ. Bruk KUN disse, aldri løse tall. */
+  --rom-1: 0.236rem;   /* φ⁻³ */
+  --rom-2: 0.382rem;   /* φ⁻² */
+  --rom-3: 0.618rem;   /* φ⁻¹ */
+  --rom-4: 1rem;       /* φ⁰  */
+  --rom-5: 1.618rem;   /* φ¹  */
+  --rom-6: 2.618rem;   /* φ²  */
+  --rom-7: 4.236rem;   /* φ³  */
+  --rom-8: 6.854rem;   /* φ⁴  */
+  --rom-9: 11.09rem;   /* φ⁵  */
+
+  /* Layout – to kolonner i forholdet 1,618 : 1 (61,8 % / 38,2 %).
+     Brukes i hero, prosess, trygghet, FAQ og kontakt.                        */
+  --kol-stor: 1.618fr;
+  --kol-liten: 1fr;
+  --maks-bredde: 76rem;
+  --sidemarg: clamp(1.25rem, 5vw, var(--rom-6));
+  --seksjon-luft: clamp(var(--rom-7), 10vw, var(--rom-8));
+  --topp-hoyde: var(--rom-7);
+
+  /* Hjørner – også disse følger φ: 0,618 → 1 → 1,618 rem.
+     Knapper og små merker er helt avrundet («pille»).                        */
+  --radius-1: 0.618rem;  /* skjemafelt, små flater */
+  --radius-2: 1rem;      /* kort og paneler */
+  --radius-3: 1.618rem;  /* store flater */
+  --radius-pille: 999px;
+
+  /* Bevegelse – lang, myk utløpskurve gir en rolig og «dyr» følelse */
+  --tid-kort: 200ms;
+  --tid-middels: 500ms;
+  --tid-lang: 1000ms;
+  --kurve: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Alt som ligger på mørk bunn får lys tekst og messingfarget fokusring. */
+.pa-mork {
+  --farge-fokus: var(--farge-messing);
+  --farge-linje: var(--farge-linje-mork);
+  --farge-tekst-dempet: var(--farge-tekst-lys-dempet);
+  --din-metall: #3a4047;
+  --din-hull: rgb(0 0 0 / 0.55);
+  color: var(--farge-tekst-lys);
+}

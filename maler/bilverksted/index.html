@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- PLASSHOLDER: firmanavn, sted og beskrivelse er oppdiktet. Bytt før bruk. -->
+  <title>Damsgård Bil &amp; Bremse – bilverksted i Bergen</title>
+  <meta name="description" content="Bilverksted i Damsgårdsveien i Bergen. Service og oljeskift, bremser, feilsøking, EU-kontroll, registerreim og dekk – for alle bilmerker. Pris før vi starter.">
+  <meta name="theme-color" content="#f3efe6">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:title" content="Damsgård Bil &amp; Bremse – bilverksted i Bergen">
+  <meta property="og:description" content="Fra oljeskift til bremser. Pris før vi løfter bilen, og ingenting ekstra uten at du har sagt ja.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!--
+    Dette lille skriptet MÅ ligge i <head>, før CSS-en tegner noe:
+    1. Setter .js på <html>. Alle «skjult før animasjon»-regler i CSS-en
+       starter med .js, så uten JavaScript er alt synlig.
+    2. Slår på åpningsanimasjonen første besøk i økten.
+    3. Tidsur som sikring: har ikke modulene meldt seg innen 4 sekunder
+       (nettverksfeil, gammel nettleser, file://), fjernes .js igjen og
+       alt innhold vises.
+  -->
+  <script>
+    (function (d, w) {
+      var h = d.documentElement;
+      h.classList.add('js');
+      try {
+        var calm = w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!calm && !w.sessionStorage.getItem('dbb-intro')) h.classList.add('has-intro');
+      } catch (e) {}
+      w.__failsafe = setTimeout(function () {
+        h.classList.remove('js', 'has-intro');
+      }, 4000);
+    })(document, window);
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/index.css">
+  <script type="module" src="js/index.js"></script>
+</head>
+
+<body>
+  <a class="skip" href="#innhold">Hopp til innholdet</a>
+
+  <!-- Logomerket defineres én gang og gjenbrukes med <use>. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="logo-mark" viewBox="0 0 44 56">
+      <circle class="logo-stroke" cx="19" cy="36" r="14"/>
+      <circle class="logo-stroke" cx="19" cy="36" r="3.5"/>
+      <path class="logo-caliper" d="M32.4 25.5A17 17 0 0 1 32.4 46.5"/>
+      <path class="logo-stroke" d="M36 50V4M32 4h8"/>
+    </symbol>
+  </svg>
+
+  <!-- ÅPNINGSANIMASJON – vises bare når <html> har .has-intro -->
+  <div class="intro" data-intro aria-hidden="true">
+    <svg class="intro__mark" viewBox="0 0 44 56">
+      <circle class="logo-stroke draw" pathLength="1" cx="19" cy="36" r="14"/>
+      <circle class="logo-stroke draw" style="--d:.15s" pathLength="1" cx="19" cy="36" r="3.5"/>
+      <path class="logo-caliper draw" style="--d:.3s" pathLength="1" d="M32.4 25.5A17 17 0 0 1 32.4 46.5"/>
+      <path class="logo-stroke draw" style="--d:.45s" pathLength="1" d="M36 50V4"/>
+      <path class="logo-stroke draw" style="--d:.7s" pathLength="1" d="M32 4h8"/>
+    </svg>
+  </div>
+
+  <!-- 1. AKUTTSTRIPE -->
+  <div class="topstrip">
+    <div class="container topstrip__inner">
+      <span class="topstrip__dot" aria-hidden="true"></span>
+      <!-- PLASSHOLDER: telefon og åpningstid -->
+      <p>Rød varsellampe eller bremser som ikke kjennes riktige? Ring <a href="tel:+4755000000">55 00 00 00</a><span class="topstrip__long"> – vi svarer hverdager fra 07.00, og sier ærlig fra om bilen bør stå.</span></p>
+    </div>
+  </div>
+
+  <!-- 2. HEADER -->
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="logo" href="#topp" aria-label="Damsgård Bil og Bremse – til toppen">
+        <svg class="logo__mark" aria-hidden="true"><use href="#logo-mark"/></svg>
+        <!-- PLASSHOLDER: firmanavn -->
+        <span class="logo__text">
+          <span class="logo__name">Damsgård</span>
+          <span class="logo__sub">Bil &amp; Bremse</span>
+        </span>
+      </a>
+
+      <nav class="header__nav" aria-label="Hovedmeny">
+        <ul>
+          <li><a class="nav-link" href="#tjenester">Tjenester</a></li>
+          <li><a class="nav-link" href="#prosess">Slik jobber vi</a></li>
+          <li><a class="nav-link" href="#jobber">Jobber</a></li>
+          <li><a class="nav-link" href="#trygghet">Trygghet</a></li>
+          <li><a class="nav-link" href="#sporsmal">Spørsmål</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__side">
+        <!-- PLASSHOLDER: telefon -->
+        <a class="header__phone nav-link" href="tel:+4755000000">55 00 00 00</a>
+        <a class="btn btn--small header__cta" href="#kontakt" data-label="Be om tilbud">Be om tilbud</a>
+        <button class="menu-btn" type="button" data-menu-btn aria-expanded="false" aria-controls="mobilmeny">
+          <span class="menu-btn__icon" aria-hidden="true"></span>
+          <span>Meny</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="mobile-nav" id="mobilmeny" data-menu aria-label="Mobilmeny">
+      <ul class="container">
+        <li style="--i:0"><a href="#tjenester">Tjenester</a></li>
+        <li style="--i:1"><a href="#prosess">Slik jobber vi</a></li>
+        <li style="--i:2"><a href="#jobber">Jobber</a></li>
+        <li style="--i:3"><a href="#lamper">Varsellamper</a></li>
+        <li style="--i:4"><a href="#trygghet">Trygghet</a></li>
+        <li style="--i:5"><a href="#sporsmal">Spørsmål</a></li>
+        <li style="--i:6"><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="innhold" data-thread-root>
+
+    <!-- 3. HERO ========================================================== -->
+    <section class="hero" id="topp">
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <h1 class="hero__title" data-split data-hero>Skrudd til med riktig <em>moment.</em> Hver gang.</h1>
+          <p class="lead" data-reveal data-hero style="--delay:.5s">Bilverksted i Damsgårdsveien for alle merker – fra oljeskift og service til bremser, registerreim og feilsøking. Du får pris før vi løfter bilen, og vi bytter ingenting du ikke har sagt ja til.</p>
+
+          <div class="hero__actions" data-reveal data-hero style="--delay:.65s">
+            <a class="btn" href="#kontakt" data-label="Be om tilbud">Be om tilbud</a>
+            <!-- PLASSHOLDER: telefon -->
+            <a class="btn btn--ghost" href="tel:+4755000000" data-label="Ring 55 00 00 00">Ring 55 00 00 00</a>
+          </div>
+
+          <ul class="promises" data-reveal="stagger" data-hero style="--delay:.8s">
+            <li><strong>Pris før vi starter</strong> Fast pris på avgrensede jobber, avtalt ramme på feilsøking.</li>
+            <li><strong>Ingen ekstraarbeid uten ditt ja</strong> Finner vi mer, ringer vi – med bilde.</li>
+            <li><strong>De gamle delene får du se</strong> Vi legger dem i en eske til du henter bilen.</li>
+          </ul>
+        </div>
+
+        <!-- SIGNATURTEGNINGEN
+             Skivebrems sett forfra. Bremserøret (class="pipe") går ut nederst
+             til venstre – der sitter data-thread-anchor, og derfra tar
+             js/modules/thread.js over og fører røret nedover hele siden.
+             Mål og betegnelser er illustrasjon, ikke et ekte datablad. -->
+        <figure class="hero__figure">
+          <svg class="dwg" data-hero style="--delay:.7s" viewBox="0 0 520 620" role="img" aria-labelledby="hero-t hero-d">
+            <title id="hero-t">Teknisk tegning av en skivebrems</title>
+            <desc id="hero-d">Ventilert bremseskive med flytende kaliper, sett forfra. Et bremserør går fra kaliperen, rundt skiva og ut av tegningen nede til venstre.</desc>
+
+            <path class="thin fade" d="M8 28V8h20M492 8h20v20M512 592v20h-20"/>
+            <path class="center-line fade" style="--d:.3s" d="M52 255h386M245 62v386"/>
+
+            <!-- Skive -->
+            <circle class="draw heavy" pathLength="1" cx="245" cy="255" r="165"/>
+            <circle class="draw thin" style="--d:.1s" pathLength="1" cx="245" cy="255" r="158"/>
+            <circle class="draw" style="--d:.2s" pathLength="1" cx="245" cy="255" r="100"/>
+            <circle class="draw" style="--d:.3s" pathLength="1" cx="245" cy="255" r="74"/>
+            <circle class="draw" style="--d:.4s" pathLength="1" cx="245" cy="255" r="28"/>
+            <!-- Boltsirkel: løkka .loop-turn får skiva til å «gå rundt» -->
+            <circle class="thin fade loop-turn" style="--d:1s" cx="245" cy="255" r="50" stroke-dasharray="4 6"/>
+            <g style="--d:.55s">
+              <circle class="draw solid" pathLength="1" cx="245" cy="205" r="7.5"/>
+              <circle class="draw solid" pathLength="1" cx="292.6" cy="239.5" r="7.5"/>
+              <circle class="draw solid" pathLength="1" cx="274.4" cy="295.5" r="7.5"/>
+              <circle class="draw solid" pathLength="1" cx="215.6" cy="295.5" r="7.5"/>
+              <circle class="draw solid" pathLength="1" cx="197.4" cy="239.5" r="7.5"/>
+            </g>
+
+            <!-- Kaliper -->
+            <g style="--d:.8s">
+              <path class="draw solid heavy" pathLength="1" d="M308.6 80.2A186 186 0 0 1 428.2 222.7L335.6 239A92 92 0 0 0 276.5 168.5Z"/>
+              <path class="draw" pathLength="1" d="M287.3 160A104 104 0 0 1 345.9 229.8"/>
+              <circle class="draw" pathLength="1" cx="313.1" cy="121.3" r="7"/>
+              <circle class="draw" pathLength="1" cx="388.4" cy="211.1" r="7"/>
+              <path class="draw" pathLength="1" d="M351.7 102.6l8.6-12.3"/>
+              <circle class="draw solid" pathLength="1" cx="362.5" cy="87" r="3.5"/>
+              <circle class="draw solid" pathLength="1" cx="421" cy="173" r="8"/>
+            </g>
+            <circle class="hidden-line fade" style="--d:1.1s" cx="351.5" cy="165.7" r="26"/>
+
+            <!-- Bremserøret: herfra går den røde tråden -->
+            <path class="draw pipe" style="--d:1.2s" pathLength="1" d="M429 170C470 150 486 200 486 250V430C486 480 450 500 400 500H110C70 500 40 520 40 560V620"/>
+            <path class="pipe-glint loop-pulse" pathLength="1" d="M429 170C470 150 486 200 486 250V430C486 480 450 500 400 500H110C70 500 40 520 40 560V620"/>
+            <rect class="solid fade" style="--d:2s" x="479" y="334" width="14" height="10" rx="1"/>
+            <rect class="solid fade" style="--d:2.1s" x="246" y="493" width="10" height="14" rx="1"/>
+            <circle data-thread-anchor cx="40" cy="620" r="1" stroke="none"/>
+
+            <!-- Påskrift -->
+            <g class="fade" style="--d:1.6s">
+              <path class="thin" d="M318 88l-28-40h-92"/>
+              <text x="198" y="42">KALIPER · FLYTENDE</text>
+              <path class="thin" d="M365 84l24-34h72"/>
+              <text x="392" y="44">LUFTESKRUE</text>
+              <path class="thin" d="M193 234l-70-84H40"/>
+              <text x="40" y="144">5 × 112</text>
+              <path class="thin" d="M102 338l-36 60"/>
+              <text x="24" y="414">SKIVE Ø312 × 25</text>
+              <text class="text-muted" x="24" y="429">VENTILERT · MIN. 22,0</text>
+              <text x="122" y="490">BREMSERØR → HOVEDSYLINDER</text>
+            </g>
+
+            <!-- Tittelfelt. PLASSHOLDER: firmanavn og tegningsnummer -->
+            <g class="fade" style="--d:1.9s">
+              <path class="thin" d="M292 540h208v62H292zM292 562h208M292 582h208M400 562v40"/>
+              <text x="300" y="555">DAMSGÅRD BIL &amp; BREMSE</text>
+              <text class="text-muted" x="300" y="576">BREMS FORAN</text>
+              <text class="text-muted" x="408" y="576">NR. DB-001</text>
+              <text class="text-muted" x="300" y="596">M 1 : 2</text>
+              <text class="text-muted" x="408" y="596">BLAD 1/1</text>
+            </g>
+          </svg>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 4. TJENESTER ====================================================== -->
+    <!-- data-thread = påskriften tråden får i margen der seksjonen starter -->
+    <section class="section" id="tjenester" data-thread="Tjenester">
+      <div class="container">
+        <header class="section__head section__head--split">
+          <h2 data-split>Det meste en bil trenger mellom to <em>EU-kontroller.</em></h2>
+          <p data-reveal>Vi er et allmennverksted. Det betyr service og slitedeler på alle vanlige merker – og at vi sier fra når noe bør gjøres hos merkeforhandler i stedet.</p>
+        </header>
+
+        <!-- PLASSHOLDER: alle priser nedenfor er eksempler -->
+        <article class="feature">
+          <div class="feature__body" data-reveal>
+            <h3>Service og oljeskift</h3>
+            <p>Vi følger serviceprogrammet til bilprodusenten, ikke en egen sjekkliste. Oljen velges etter godkjenningen motoren krever – ikke bare viskositeten på kanna – og bunnpluggen får ny pakning og riktig moment.</p>
+            <ul class="includes">
+              <li>Motorolje med riktig produsentgodkjenning og nytt oljefilter</li>
+              <li>Ny pakning på bunnpluggen, trukket med momentnøkkel</li>
+              <li>Kontroll av bremser, dekk, lys, væskenivåer og understell</li>
+              <li>Serviceindikator nullstilt og servicehistorikken ført</li>
+            </ul>
+            <p class="price">Oljeskift fra 1 490 kr · service fra 3 490 kr <small>Inkl. mva. Endelig pris får du når vi har registreringsnummeret.</small></p>
+          </div>
+
+          <figure class="figure feature__figure">
+            <svg class="dwg" viewBox="0 0 360 230" role="img" aria-label="Snittegning av bunnpanne med oljenivå, peilepinne og bunnplugg">
+              <text class="fade" x="30" y="34">SNITT A–A · BUNNPANNE</text>
+              <path class="draw heavy" pathLength="1" d="M30 50H330"/>
+              <path class="tint fade" style="--d:.6s" d="M98 120H300V150Q300 164 286 164H164Q150 164 150 150V134Z"/>
+              <path class="draw" style="--d:.2s" pathLength="1" d="M60 50V96Q60 110 76 114L150 134V150Q150 164 164 164H286Q300 164 300 150V50"/>
+              <path class="draw thin" style="--d:.7s" pathLength="1" d="M98 120H300"/>
+              <!-- Peilepinne -->
+              <circle class="draw solid" style="--d:.8s" pathLength="1" cx="262" cy="14" r="5"/>
+              <path class="draw" style="--d:.8s" pathLength="1" d="M262 19V146"/>
+              <path class="draw thin" style="--d:1s" pathLength="1" d="M262 108h10M262 132h10"/>
+              <g class="fade" style="--d:1.1s">
+                <text x="277" y="111.5">MAKS</text>
+                <text x="277" y="135.5">MIN</text>
+              </g>
+              <!-- Bunnplugg -->
+              <g style="--d:1.1s">
+                <path class="draw solid" pathLength="1" d="M219 164h12v8h-12z"/>
+                <path class="draw pipe" pathLength="1" d="M212 172.5h26"/>
+                <path class="draw solid" pathLength="1" d="M215 174h20v9h-20z"/>
+              </g>
+              <g class="fade" style="--d:1.4s">
+                <path class="thin" d="M225 187v15h-50"/>
+                <text x="170" y="199" text-anchor="end">BUNNPLUGG</text>
+                <text class="text-muted" x="170" y="213" text-anchor="end">NY PAKNING HVER GANG</text>
+              </g>
+            </svg>
+          </figure>
+        </article>
+
+        <article class="feature feature--rev">
+          <div class="feature__body" data-reveal>
+            <h3>Bremser</h3>
+            <p>Vi måler før vi bytter. Du får oppgitt tykkelsen på klosser og skiver i millimeter, så ser du selv hvor mye som er igjen. Når vi bytter, rengjør og smører vi føringer og anleggsflater – det er oftest der skjev slitasje og hyling kommer fra.</p>
+            <ul class="includes">
+              <li>Måling av klosser og skiver mot produsentens minstemål</li>
+              <li>Klosser og skiver byttes akselvis – alltid begge sider</li>
+              <li>Navflaten rengjøres, føringsboltene smøres</li>
+              <li>Bremsevæske skiftes hvert annet år – den trekker til seg fukt</li>
+            </ul>
+            <p class="price">Klosser foran fra 2 290 kr <small>Inkl. mva. og deler. Skiver og bremsevæske prises for seg.</small></p>
+          </div>
+
+          <figure class="figure feature__figure">
+            <svg class="dwg" viewBox="0 0 360 230" role="img" aria-label="Snittegning av bremseskive med en ny og en utslitt bremsekloss">
+              <text class="fade" x="30" y="34">SNITT B–B · KLOSS OG SKIVE</text>
+              <path class="center-line fade" d="M180 44v170"/>
+              <!-- Skive, ventilert -->
+              <path class="draw heavy" pathLength="1" d="M166 50h10v150h-10z"/>
+              <path class="draw heavy" style="--d:.1s" pathLength="1" d="M184 50h10v150h-10z"/>
+              <path class="draw thin" style="--d:.3s" pathLength="1" d="M176 70h8M176 95h8M176 120h8M176 145h8M176 170h8"/>
+              <!-- Ny kloss -->
+              <path class="tint fade" style="--d:.6s" d="M140 80h26v90h-26z"/>
+              <path class="draw" style="--d:.5s" pathLength="1" d="M140 80h26v90h-26z"/>
+              <path class="draw heavy" style="--d:.6s" pathLength="1" d="M132 76h8v98h-8z"/>
+              <!-- Utslitt kloss -->
+              <path class="tint fade" style="--d:.9s" d="M194 80h7v90h-7z"/>
+              <path class="draw" style="--d:.8s" pathLength="1" d="M194 80h7v90h-7z"/>
+              <path class="draw heavy" style="--d:.9s" pathLength="1" d="M201 76h8v98h-8z"/>
+              <path class="hidden-line fade" style="--d:1.1s" d="M209 95h44v60h-44"/>
+              <g class="fade" style="--d:1.3s">
+                <path class="thin" d="M140 186v14M166 186v14M140 193h26"/>
+                <text x="130" y="197" text-anchor="end">NY · 12 mm</text>
+                <path class="thin" d="M201 205v14M194 205v14M194 212h7"/>
+                <text x="211" y="216">BYTTES · 3 mm</text>
+                <text class="text-muted" x="262" y="129">STEMPEL</text>
+              </g>
+            </svg>
+          </figure>
+        </article>
+
+        <div class="ledger-wrap">
+          <h3 data-reveal>Ellers på arbeidsordren</h3>
+          <ul class="ledger" data-reveal="stagger">
+            <li class="ledger__row">
+              <h3>Feilsøking og diagnose</h3>
+              <p>Varsellampe, ulyd eller noe som bare skjer når det regner. Vi leser feilkodene, men stopper ikke der – koden sier hvor vi skal lete, ikke hva som er galt.</p>
+              <p class="ledger__price">1 190 kr første time</p>
+            </li>
+            <li class="ledger__row">
+              <!-- BEKREFT: periodisk kjøretøykontroll krever godkjenning som kontrollorgan fra Statens vegvesen. -->
+              <h3>EU-kontroll og utbedring</h3>
+              <p>Periodisk kontroll annethvert år fra bilen er fire år. Får bilen mangler, gir vi pris på utbedringen før vi gjør noe, og tar etterkontrollen når den er klar.</p>
+              <p class="ledger__price">fra 890 kr</p>
+            </li>
+            <li class="ledger__row">
+              <h3>Registerreim og clutch</h3>
+              <p>Reima byttes på intervall – kilometer eller år, det som kommer først. Vi bytter strammer, løpehjul og vannpumpe samtidig når pumpa drives av reima.</p>
+              <p class="ledger__price">pris etter bilmodell</p>
+            </li>
+            <li class="ledger__row">
+              <h3>Understell og hjulstilling</h3>
+              <p>Støtdempere, fjærer, bærekuler, foringer og hjullager. Firehjulsmåling etter bytte av styredeler, med utskrift av verdiene før og etter.</p>
+              <p class="ledger__price">måling fra 1 890 kr</p>
+            </li>
+            <li class="ledger__row">
+              <h3>Dekk og dekkhotell</h3>
+              <p>Omlegging, avbalansering og sesongskift. Vi måler mønsterdybden og sier fra i god tid – lovens minstekrav er 1,6 mm sommer og 3 mm vinter, men grepet på våt asfalt svekkes lenge før.</p>
+              <p class="ledger__price">fra 1 190 kr per sesong</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- LØPENDE STRIPE: dekningsområde. PLASSHOLDER: stedsnavn -->
+        <div class="marquee services__marquee" data-marquee>
+          <p class="visually-hidden">Kundene våre kommer fra hele Bergensområdet:</p>
+          <div class="marquee__track">
+            <ul class="marquee__group">
+              <li>Laksevåg</li>
+              <li>Fyllingsdalen</li>
+              <li>Sentrum</li>
+              <li>Årstad</li>
+              <li>Sandviken</li>
+              <li>Loddefjord</li>
+              <li>Åsane</li>
+              <li>Fana</li>
+              <li>Askøy</li>
+              <li>Sotra</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SLIK JOBBER VI ================================================= -->
+    <section class="section" id="prosess" data-thread="Slik jobber vi" data-tone="dark">
+      <div class="container golden golden--rev">
+        <div class="process__intro">
+          <h2 data-split>Fra første telefon til du <em>henter nøkkelen.</em></h2>
+          <p class="muted" data-reveal>Fem ledd, i samme rekkefølge hver gang. Det er ikke noe du trenger å huske – men du skal vite hvor bilen din er i løpet.</p>
+        </div>
+
+        <!-- data-process: js/modules/process.js fyller røret (--p) og
+             tenner stegene (.is-on) etter hvert som du ruller. -->
+        <ol class="steps" data-process>
+          <li class="step">
+            <span class="note step__when">Henvendelse</span>
+            <h3>Du forteller hva som feiler</h3>
+            <p>Ring, send skjemaet eller stikk innom. Registreringsnummeret er nok til at vi finner riktige deler og hva serviceprogrammet sier.</p>
+          </li>
+          <li class="step">
+            <span class="note step__when">Tilbud</span>
+            <h3>Du får pris før vi starter</h3>
+            <p>Fast pris på service, bremser og andre avgrensede jobber. Ved feilsøking avtaler vi en ramme, så vet du hva det koster å finne feilen.</p>
+          </li>
+          <li class="step">
+            <span class="note step__when">Innlevering</span>
+            <h3>Bilen leveres – også utenom åpningstid</h3>
+            <p>Nøkkelinnkast ved porten. Vi noterer kilometerstand og fotograferer bilen før den går på løftebukken.</p>
+          </li>
+          <li class="step">
+            <span class="note step__when">Underveis</span>
+            <h3>Finner vi mer, ringer vi</h3>
+            <p>Du får bilde av det vi ser, pris på utbedringen, og en ærlig sortering: hva som haster, og hva som kan vente til neste service. Du bestemmer.</p>
+          </li>
+          <li class="step">
+            <span class="note step__when">Utlevering</span>
+            <h3>Du henter bilen og papirene</h3>
+            <p>Spesifisert faktura med delenummer, ført servicehistorikk, og de gamle delene i en eske om du vil se dem.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6. UTVALGTE JOBBER ================================================ -->
+    <!-- PLASSHOLDER: alle tre jobbene er oppdiktede eksempler. Bytt med ekte
+         jobber og bilder (samme --ratio) før siden brukes av en kunde. -->
+    <section class="section" id="jobber" data-thread="Utvalgte jobber">
+      <div class="container">
+        <header class="section__head">
+          <h2 data-split>Tre jobber fra <em>løftebukken.</em></h2>
+          <p data-reveal>Ikke de største, men typiske: en feil kunden kjente, en vi tok før den kostet en motor, og en EU-kontrollen fant.</p>
+        </header>
+
+        <div class="jobs">
+          <article class="job">
+            <div class="job__media curtain" data-curtain>
+              <div class="ph" style="--ratio: 16 / 10" role="img" aria-label="Bildeplass: fastrustet bremsekaliper på bakhjul">
+                <span class="ph__label note">Bildeplass 16:10 · kaliper bak, før</span>
+              </div>
+            </div>
+            <div class="job__body" data-reveal>
+              <p class="note job__car">Stasjonsvogn 2012 · 214 000 km</p>
+              <h3>Bilen dro til venstre ved bremsing</h3>
+              <p>Høyre kaliper bak hadde satt seg fast, så klossen lå an hele tiden og skiva var blå av varme. Vi byttet kaliperen, og skiver og klosser på hele bakakselen, og skiftet bremsevæsken.</p>
+              <dl class="job__facts">
+                <dt>Arbeidstid</dt><dd>3,5 timer</dd>
+                <dt>Funnet ved</dt><dd>Prøvekjøring og temperaturmåling på skivene</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="job job--portrait">
+            <div class="job__media curtain" data-curtain>
+              <div class="ph" style="--ratio: 4 / 5" role="img" aria-label="Bildeplass: gammel og ny registerreim side om side">
+                <span class="ph__label note">Bildeplass 4:5 · gammel og ny reim</span>
+              </div>
+            </div>
+            <div class="job__body" data-reveal>
+              <p class="note job__car">Kombi diesel 2014 · 178 000 km</p>
+              <h3>Registerreim byttet på alder, ikke kilometer</h3>
+              <p>Bilen hadde gått kortere enn intervallet, men reima var ti år gammel og sprukket i ryggen. Vi byttet reim, strammer, løpehjul og vannpumpe i samme operasjon – ryker reima, er motoren som regel ødelagt.</p>
+              <dl class="job__facts">
+                <dt>Arbeidstid</dt><dd>4 timer</dd>
+                <dt>Funnet ved</dt><dd>Gjennomgang av servicehistorikken ved vanlig service</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="job job--inset">
+            <div class="job__media curtain" data-curtain>
+              <div class="ph" style="--ratio: 1.618 / 1" role="img" aria-label="Bildeplass: nye bremserør klamret langs bakakselen">
+                <span class="ph__label note">Bildeplass 1,618:1 · nye bremserør</span>
+              </div>
+            </div>
+            <div class="job__body" data-reveal>
+              <p class="note job__car">Sedan 2010 · 196 000 km</p>
+              <h3>Mangel på EU-kontrollen: korroderte bremserør</h3>
+              <p>Rørene over bakakselen var rustet så kraftig at de ikke kunne godkjennes. Vi bøyde og kraget nye rør i kobber-nikkel, klamret dem i de originale festene, luftet systemet og tok etterkontrollen.</p>
+              <dl class="job__facts">
+                <dt>Arbeidstid</dt><dd>3 timer</dd>
+                <dt>Funnet ved</dt><dd>Periodisk kjøretøykontroll</dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERAKTIV TEGNING: varsellampene ================================= -->
+    <section class="section" id="lamper" data-thread="Varsellamper" data-tone="paper-2">
+      <div class="container lampsec__grid">
+        <div class="lampsec__text">
+          <h2 data-split>Lyser det i <em>dashbordet?</em></h2>
+          <p class="muted" data-reveal>Trykk på lampa du ser. Rødt betyr stopp, gult betyr at bilen bør sjekkes snart. Symbolene varierer litt mellom merker – instruksjonsboka til bilen din har fasiten.</p>
+          <p data-reveal><a class="link" href="tel:+4755000000">Usikker? Ring 55 00 00 00</a></p>
+        </div>
+
+        <!-- Forklaringene ligger i HTML-en. Uten JavaScript vises alle seks;
+             med JavaScript styrer knappene hvilken som vises
+             (js/modules/lamps.js). Rådene er generelle – BEKREFT mot
+             fagansvarlig før en ekte kunde bruker dem. -->
+        <div class="lamps" data-lamps data-reveal>
+          <div class="lamps__panel" role="group" aria-label="Velg varsellampe">
+            <button class="lamp" type="button" data-lamp="olje" data-level="stopp" aria-pressed="false">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 17h13l7-5h3M8 17v7h12v-7M5 17l-2-4h4M28.5 15.5c1 1.6 1 2.6 0 3.5"/></svg>
+              Oljetrykk
+            </button>
+            <button class="lamp" type="button" data-lamp="temp" data-level="stopp" aria-pressed="false">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 5v13M16 8h5M16 12h5M6 27c2-2 4 2 6 0s4-2 6 0 4 2 6 0"/><circle cx="16" cy="21" r="3"/></svg>
+              Motor&shy;temperatur
+            </button>
+            <button class="lamp" type="button" data-lamp="brems" data-level="stopp" aria-pressed="false">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="8"/><path d="M16 11.5v5M16 20v.5M5.5 8a13 13 0 0 0 0 16M26.5 8a13 13 0 0 1 0 16"/></svg>
+              Bremser
+            </button>
+            <button class="lamp" type="button" data-lamp="lading" data-level="stopp" aria-pressed="false">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 11h22v14H5zM9 11V8h4v3M19 11V8h4v3M9 18h4M11 16v4M19 18h4"/></svg>
+              Lading
+            </button>
+            <button class="lamp" type="button" data-lamp="motor" data-level="sjekk" aria-pressed="false">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 12h4V9h7v3h3l2 3h3v7h-3l-2 3H12l-3-3H5v-7h4zM13 9h7M3 15v7"/></svg>
+              Motorlampe
+            </button>
+            <button class="lamp" type="button" data-lamp="dekk" data-level="sjekk" aria-pressed="false">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 6c-5 5-5 13 0 19h12c5-6 5-14 0-19M16 10.5v7M16 21v.5M9 28.5h2M13 28.5h2M17 28.5h2M21 28.5h2"/></svg>
+              Dekktrykk
+            </button>
+          </div>
+
+          <div class="lamps__out" data-lamps-out aria-live="polite">
+            <p class="muted" data-lamps-empty hidden>Velg en lampe over for å se hva den betyr og hva du bør gjøre.</p>
+
+            <div class="lamp-info" data-lamp-info="olje" data-level="stopp">
+              <span class="note lamp-info__level">Rød · stopp bilen</span>
+              <h4>Oljetrykk</h4>
+              <p>Stopp så snart det er trygt, og slå av motoren. Uten oljetrykk smøres ikke lagrene, og motoren kan bli ødelagt på få minutter.</p>
+              <p>Sjekk nivået på peilepinnen når motoren har stått litt. Ikke kjør videre selv om nivået ser riktig ut – lampa måler trykk, ikke nivå. Ring oss eller veihjelp.</p>
+            </div>
+            <div class="lamp-info" data-lamp-info="temp" data-level="stopp">
+              <span class="note lamp-info__level">Rød · stopp bilen</span>
+              <h4>Motortemperatur</h4>
+              <p>Motoren er for varm. Stopp trygt, slå av og la den kjøle seg ned. Kjører du videre, risikerer du skade på topplokk og pakning.</p>
+              <p>Ikke åpne lokket på ekspansjonstanken mens motoren er varm – kjølesystemet står under trykk, og væsken kan skålde.</p>
+            </div>
+            <div class="lamp-info" data-lamp-info="brems" data-level="stopp">
+              <span class="note lamp-info__level">Rød · ikke kjør før det er sjekket</span>
+              <h4>Bremser</h4>
+              <p>Sjekk først at parkeringsbremsen er helt av. Lyser lampa fortsatt, er bremsevæskenivået lavt eller det er en feil i bremsesystemet.</p>
+              <p>Kjennes pedalen myk, eller går den lenger inn enn før, skal bilen ikke kjøres. Lavt nivå betyr enten slitte klosser eller lekkasje – ingen av delene løses ved å etterfylle.</p>
+            </div>
+            <div class="lamp-info" data-lamp-info="lading" data-level="stopp">
+              <span class="note lamp-info__level">Rød · kjør rett til verksted</span>
+              <h4>Lading</h4>
+              <p>Batteriet lades ikke. Bilen går på strømmen som er igjen, og stopper når den er brukt opp. Slå av setevarme og annet som trekker strøm, og unngå å stoppe motoren underveis.</p>
+              <p>Følg med på temperaturen: på mange biler driver samme reim både dynamo og vannpumpe. Stiger temperaturen, må du stoppe.</p>
+            </div>
+            <div class="lamp-info" data-lamp-info="motor" data-level="sjekk">
+              <span class="note lamp-info__level">Gul · få det sjekket snart</span>
+              <h4>Motorlampe</h4>
+              <p>Fast lys betyr at motorstyringen har registrert en feil, ofte i tenning eller avgassrensing. Du kan vanligvis kjøre rolig videre, men få lest av feilkoden innen kort tid.</p>
+              <p>Blinker lampa, feiltenner motoren. Slipp gassen og stopp når det er trygt – uforbrent drivstoff kan ødelegge katalysatoren.</p>
+            </div>
+            <div class="lamp-info" data-lamp-info="dekk" data-level="sjekk">
+              <span class="note lamp-info__level">Gul · sjekk i dag</span>
+              <h4>Dekktrykk</h4>
+              <p>Minst ett dekk har lavere trykk enn det skal. Fyll til trykket som står på merket i dørstolpen eller tanklokket, og nullstill systemet slik instruksjonsboka beskriver.</p>
+              <p>Kommer lampa tilbake etter noen dager, har dekket en langsom lekkasje. Det lar seg ofte reparere hvis du ikke har kjørt på det flatt.</p>
+            </div>
+          </div>
+
+          <div class="lamps__foot note">
+            <span>Instrumentpanel · utsnitt</span>
+            <span>Generelle råd</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. TRYGGHET ======================================================= -->
+    <!-- BEKREFT ALT I DENNE SEKSJONEN før en ekte kunde bruker siden:
+         - at verkstedet faktisk er godkjent av Statens vegvesen, og for hva
+         - at ansvarsforsikring finnes, og hos hvem
+         - lovhenvisninger og frister (håndverkertjenesteloven) mot lovdata.no
+         Ingenting her er ekte godkjenninger – bedriften er oppdiktet. -->
+    <section class="section" id="trygghet" data-thread="Trygghet">
+      <div class="container">
+        <header class="section__head section__head--split">
+          <h2 data-split>Det som skal være i orden <em>før</em> vi løsner et hjul.</h2>
+          <p data-reveal>Ingen merker og medaljer her. Bare det du har krav på å vite om verkstedet du leverer bilen til.</p>
+        </header>
+
+        <dl class="spec" data-reveal="stagger">
+          <div class="spec__row">
+            <dt>Godkjent bilverksted</dt>
+            <dd>Verksteder som reparerer biler mot betaling skal være godkjent av <strong>Statens vegvesen</strong>. Godkjenningen stiller krav til utstyr, lokaler og en teknisk leder med fagbrev. Vårt godkjenningsnummer står på fakturaen.</dd>
+          </div>
+          <div class="spec__row">
+            <dt>Nybilgarantien består</dt>
+            <dd>Du kan ta service hos et uavhengig verksted uten å miste garantien, så lenge servicen følger <strong>produsentens program</strong> og delene holder tilsvarende kvalitet. Vi dokumenterer begge deler.</dd>
+          </div>
+          <div class="spec__row">
+            <dt>Pris du kan stole på</dt>
+            <dd>Fast pris er fast. Har du fått et prisoverslag, sier loven at det ikke kan overskrides med mer enn <strong>15 prosent</strong> – og vi ringer lenge før vi er der.</dd>
+          </div>
+          <div class="spec__row">
+            <dt>Dokumentasjon</dt>
+            <dd>Spesifisert faktura med delenummer og oljespesifikasjon, servicehistorikk ført digitalt eller stemplet i heftet, og måleverdier for bremser og hjulstilling på papir. Det er verdt penger den dagen bilen skal selges.</dd>
+          </div>
+          <div class="spec__row">
+            <dt>Reklamasjonsrett</dt>
+            <dd>Arbeidet vårt følger <strong>håndverkertjenesteloven</strong>. Er noe ikke som avtalt, sier du fra innen rimelig tid, og vi retter det uten kostnad for deg. Fristen er to år – fem år for arbeid som er ment å vare vesentlig lenger.</dd>
+          </div>
+          <div class="spec__row">
+            <dt>Ansvarsforsikring</dt>
+            <dd>Bilen er forsikret mens den står hos oss og når vi prøvekjører den. Vi oppgir forsikringsselskap og polisenummer hvis du spør.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 8. VANLIGE SPØRSMÅL =============================================== -->
+    <!-- Svarene er skrevet for å være faglig forsvarlige, men BEKREFT
+         frister og regelverk mot vegvesen.no og lovdata.no før bruk. -->
+    <section class="section" id="sporsmal" data-thread="Spørsmål" data-tone="paper-2">
+      <div class="container golden golden--rev">
+        <div class="stack">
+          <h2 data-split>Det folk spør om <em>i luka.</em></h2>
+          <p class="muted" data-reveal>Finner du ikke svaret, er det raskest å ringe. Vi svarer heller på ett spørsmål for mye.</p>
+        </div>
+
+        <div class="faq" data-reveal="stagger">
+          <details>
+            <summary>Hvor ofte bør jeg skifte olje?</summary>
+            <div class="faq__a">
+              <p>Følg intervallet bilprodusenten oppgir – som regel mellom 15 000 og 30 000 km, eller hvert til annethvert år, det som kommer først.</p>
+              <p>Kjører du mest korte turer med kald motor, slik mange gjør i Bergen, er det lurt å holde seg til den korte enden. Oljen eldes også når bilen står.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Hvordan merker jeg at bremsene må byttes?</summary>
+            <div class="faq__a">
+              <p>Skrapelyd eller hyling ved bremsing, vibrasjon i pedalen eller rattet, pedal som går lenger inn, eller at bilen drar til en side. Mange biler har også en slitasjevarsler som tenner en lampe.</p>
+              <p>Vi bytter klosser når det er rundt tre millimeter belegg igjen. Skivene har et minstemål stemplet i godset – er de tynnere enn det, byttes de.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Bilen fikk mangler på EU-kontrollen. Hva nå?</summary>
+            <div class="faq__a">
+              <p>Mangler som må utbedres, skal rettes og godkjennes på etterkontroll innen fristen som står på kontrollseddelen. Er feilen så alvorlig at bilen får kjøreforbud, kan den ikke brukes før den er reparert.</p>
+              <p>Ta med kontrollseddelen. Da ser vi nøyaktig hva som er anmerket, og kan gi pris før vi begynner.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Mister jeg garantien hvis jeg ikke bruker merkeverksted?</summary>
+            <div class="faq__a">
+              <p>Nei. Garantien gjelder så lenge servicen er utført etter produsentens program, til riktig tid, og med deler og olje av tilsvarende kvalitet. Ta vare på fakturaene.</p>
+              <p>Selve garantireparasjonene må fortsatt gjøres hos merkeforhandler, og det samme gjelder tilbakekallinger.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Kan jeg ta med egne deler?</summary>
+            <div class="faq__a">
+              <p>Ja, på de fleste jobber. Da har du reklamasjonsrett på arbeidet vårt, men ikke på delen – feiler den, må jobben betales en gang til.</p>
+              <p>Bremsedeler og andre sikkerhetskritiske deler uten kjent opphav monterer vi ikke.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Hva koster det å finne en feil?</summary>
+            <div class="faq__a">
+              <!-- PLASSHOLDER: pris -->
+              <p>Første time med feilsøking har fast pris. Etter den timen vet vi som regel enten hva som er galt, eller hva som må undersøkes videre – og da ringer vi før vi bruker mer tid.</p>
+              <p>Du betaler for feilsøkingen også om du velger å ikke reparere. Til gjengjeld får du med deg det vi fant, skriftlig.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Tar dere elbil og hybrid?</summary>
+            <div class="faq__a">
+              <!-- BEKREFT: arbeid på høyvoltanlegg krever dokumentert opplæring. -->
+              <p>Ja – bremser, bremsevæske, understell, hjulstilling, kupéfilter og dekk er likt som på andre biler. Elbiler bruker bremsene mindre, så skiver og kalipere ruster fortere og bør rengjøres og kontrolleres jevnlig.</p>
+              <p>Feil i batteri og høyvoltanlegg henviser vi videre til verksted med den kompetansen.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. KONTAKT ======================================================== -->
+    <section class="section" id="kontakt" data-thread="Kontakt" data-thread-end data-tone="iron">
+      <div class="container contact__grid">
+        <div>
+          <div class="contact__head">
+            <h2 data-split data-thread-stop>Si hva bilen gjør, så sier vi <em>hva det koster.</em></h2>
+            <p class="muted" data-reveal>Vi svarer på skjemaet innen neste arbeidsdag. Haster det, er telefonen raskere.</p>
+          </div>
+
+          <!-- SKJEMA – ren frontend-demo. Ingenting sendes noe sted.
+               Kobles til f.eks. Formspree, Netlify Forms eller eget
+               endepunkt i js/modules/form.js (se README). -->
+          <div class="sheet" data-reveal style="margin-top: var(--s-6)">
+            <div class="sheet__title note">
+              <span>Arbeidsordre · forespørsel</span>
+              <span>Demo</span>
+            </div>
+
+            <form class="form" data-form action="#kontakt" method="post">
+              <noscript><p class="form__summary">Skjemaet trenger JavaScript. Ring oss på 55 00 00 00 i stedet.</p></noscript>
+              <div class="form__summary" data-form-summary role="alert" tabindex="-1" hidden></div>
+
+              <div class="form__row">
+                <div class="field">
+                  <label for="f-navn">Navn</label>
+                  <input id="f-navn" name="navn" type="text" autocomplete="name" required aria-describedby="e-navn">
+                  <p class="field__error" id="e-navn"></p>
+                </div>
+                <div class="field">
+                  <label for="f-tlf">Telefon</label>
+                  <input id="f-tlf" name="telefon" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="e-tlf">
+                  <p class="field__error" id="e-tlf"></p>
+                </div>
+              </div>
+
+              <div class="form__row">
+                <div class="field">
+                  <label for="f-epost">E-post <span class="field__hint">(valgfritt)</span></label>
+                  <input id="f-epost" name="epost" type="email" autocomplete="email" aria-describedby="e-epost">
+                  <p class="field__error" id="e-epost"></p>
+                </div>
+                <div class="field">
+                  <label for="f-reg">Reg.nr. <span class="field__hint">(valgfritt)</span></label>
+                  <input id="f-reg" name="regnr" type="text" autocomplete="off" autocapitalize="characters" placeholder="AB 12345" aria-describedby="e-reg">
+                  <p class="field__error" id="e-reg"></p>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="f-hva">Hva gjelder det?</label>
+                <select id="f-hva" name="tjeneste" required aria-describedby="e-hva">
+                  <option value="">Velg …</option>
+                  <option>Service eller oljeskift</option>
+                  <option>Bremser</option>
+                  <option>Feilsøking / varsellampe</option>
+                  <option>EU-kontroll eller utbedring</option>
+                  <option>Registerreim eller clutch</option>
+                  <option>Understell eller hjulstilling</option>
+                  <option>Dekk eller dekkhotell</option>
+                  <option>Noe annet</option>
+                </select>
+                <p class="field__error" id="e-hva"></p>
+              </div>
+
+              <div class="field">
+                <label for="f-melding">Hva har du merket?</label>
+                <textarea id="f-melding" name="melding" rows="5" required aria-describedby="e-melding h-melding"></textarea>
+                <p class="field__hint small" id="h-melding">Når skjer det, hvor kommer lyden fra, og når var bilen sist på service?</p>
+                <p class="field__error" id="e-melding"></p>
+              </div>
+
+              <div class="form__foot">
+                <button class="btn btn--wide" type="submit" data-label="Send forespørsel">Send forespørsel</button>
+                <p class="small muted">Vi bruker opplysningene bare til å svare deg. Les <a class="link" href="pages/personvern.html">personvernerklæringen</a>.</p>
+              </div>
+            </form>
+
+            <!-- Kvittering: fylles ut og vises av form.js -->
+            <div class="receipt" data-form-receipt tabindex="-1" hidden>
+              <h3>Forespørselen er registrert</h3>
+              <p>Takk, <span data-r="navn"></span>. Vi ringer deg på <span data-r="telefon"></span> innen neste arbeidsdag.</p>
+              <dl>
+                <dt>Referanse</dt><dd data-r="ref"></dd>
+                <dt>Gjelder</dt><dd data-r="tjeneste"></dd>
+                <dt>Bil</dt><dd data-r="regnr"></dd>
+              </dl>
+              <p class="small muted">Dette er en demoside: ingenting er sendt eller lagret.</p>
+              <p><button class="link" type="button" data-form-again>Send en ny forespørsel</button></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLASSHOLDER: telefon, e-post, adresse og åpningstider -->
+        <aside class="contact__info" data-reveal="stagger" aria-label="Kontaktinformasjon">
+          <div class="contact__block">
+            <h3>Ring verkstedet</h3>
+            <a class="contact__phone" href="tel:+4755000000">55 00 00 00</a>
+            <p class="muted"><a class="link" href="mailto:post@damsgardbil.example">post@damsgardbil.example</a></p>
+          </div>
+
+          <div class="contact__block">
+            <h3>Her finner du oss</h3>
+            <address>
+              Damsgårdsveien 000<br>
+              5058 Bergen<br>
+              Innkjøring fra baksiden, port 2
+            </address>
+          </div>
+
+          <div class="contact__block">
+            <h3>Åpningstider</h3>
+            <table class="hours">
+              <tbody>
+                <tr><th scope="row">Mandag–torsdag</th><td>07.00–16.00</td></tr>
+                <tr><th scope="row">Fredag</th><td>07.00–15.00</td></tr>
+                <tr><th scope="row">Lørdag og søndag</th><td>Stengt</td></tr>
+                <tr><th scope="row">Nøkkelinnkast</th><td>Hele døgnet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- 10. FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="union-rule" aria-hidden="true"><span></span></div>
+
+      <div class="footer__top">
+        <div>
+          <a class="logo" href="#topp" aria-label="Damsgård Bil og Bremse – til toppen">
+            <svg class="logo__mark" aria-hidden="true"><use href="#logo-mark"/></svg>
+            <span class="logo__text">
+              <span class="logo__name">Damsgård</span>
+              <span class="logo__sub">Bil &amp; Bremse</span>
+            </span>
+          </a>
+          <p style="margin-top: var(--s-4); max-width: 26em">Allmennverksted i Damsgårdsveien. Service, bremser og feilsøking på alle vanlige bilmerker.</p>
+        </div>
+
+        <ul class="footer__links">
+          <li><a class="link" href="#tjenester">Tjenester</a></li>
+          <li><a class="link" href="#prosess">Slik jobber vi</a></li>
+          <li><a class="link" href="#sporsmal">Vanlige spørsmål</a></li>
+          <li><a class="link" href="#kontakt">Be om tilbud</a></li>
+        </ul>
+
+        <ul class="footer__links">
+          <!-- PLASSHOLDER: telefon, adresse -->
+          <li><a class="link" href="tel:+4755000000">55 00 00 00</a></li>
+          <li>Damsgårdsveien 000, 5058 Bergen</li>
+          <li><a class="link" href="pages/personvern.html">Personvern</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__bottom">
+        <!-- PLASSHOLDER: org.nr. -->
+        <p>© 2026 Damsgård Bil &amp; Bremse AS · Org.nr. 000 000 000 MVA</p>
+        <p class="footer__demo">Demoside – bedriften er oppdiktet og finnes ikke.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAST HANDLINGSLINJE (mobil) -->
+  <div class="actionbar" data-actionbar>
+    <a class="btn btn--ghost" href="tel:+4755000000" data-label="Ring">Ring</a>
+    <a class="btn" href="#kontakt" data-label="Be om tilbud">Be om tilbud</a>
+  </div>
+</body>
+</html>

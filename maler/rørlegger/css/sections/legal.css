@@ -1,0 +1,39 @@
+/* Tekstsider (personvern o.l.) */
+.legal {
+  padding-block: var(--sp-7);
+}
+
+.legal__inner {
+  max-width: 44rem;
+}
+
+.legal h1 {
+  font-size: clamp(var(--fs-3), 1.4rem + 3vw, var(--fs-5));
+}
+
+.legal .lead {
+  margin-top: var(--sp-4);
+}
+
+.legal h2 {
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-2);
+}
+
+.legal p + p,
+.legal ul {
+  margin-top: var(--sp-3);
+}
+
+.legal ul {
+  display: grid;
+  gap: var(--sp-2);
+  padding-left: 1.2em;
+}
+
+.legal__back {
+  display: inline-block;
+  margin-bottom: var(--sp-5);
+  font-weight: 600;
+}

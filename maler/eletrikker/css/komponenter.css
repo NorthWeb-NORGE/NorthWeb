@@ -1,0 +1,603 @@
+/* ==========================================================================
+   KOMPONENTER – byggeklosser som går igjen på alle sider og i alle maler:
+   knapper, toppmeny, logo, bunn, bildeplass, utfoldbare spørsmål, skjema.
+   ========================================================================== */
+
+/* --- Knapper ------------------------------------------------------------- */
+
+.knapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rom-3);
+  min-height: 3rem; /* godt over 44 px – lett å treffe med tommelen */
+  padding: var(--rom-3) var(--rom-5);
+  border: 1px solid var(--farge-blekk);
+  border-radius: var(--radius-pille);
+  background: var(--farge-blekk);
+  color: var(--farge-tekst-lys);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--tid-kort),
+    border-color var(--tid-kort),
+    color var(--tid-kort);
+}
+
+.knapp:hover {
+  border-color: var(--farge-stal);
+  background: var(--farge-stal);
+}
+
+/* Aksentknapp – brukes bare på mørk bunn, og bare én gang per skjermbilde */
+.knapp--aksent,
+.pa-mork .knapp--aksent {
+  border-color: var(--farge-messing);
+  background: var(--farge-messing);
+  color: var(--farge-blekk);
+}
+
+.knapp--aksent:hover {
+  border-color: var(--farge-messing-mork);
+  background: var(--farge-messing-mork);
+}
+
+.knapp--kant,
+.pa-mork .knapp--kant {
+  border-color: currentColor;
+  background: transparent;
+  color: inherit;
+}
+
+.knapp--kant:hover {
+  border-color: currentColor;
+  background: rgb(127 127 127 / 0.14);
+}
+
+.knapp svg {
+  flex: none;
+  width: 1.125em;
+  height: 1.125em;
+}
+
+/* --- Logo ---------------------------------------------------------------- */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rom-3);
+  color: var(--farge-blekk);
+  text-decoration: none;
+}
+
+.pa-mork .logo {
+  color: var(--farge-tekst-lys);
+}
+
+.logo__merke {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.logo__navn {
+  display: block;
+  font-family: var(--font-overskrift);
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.logo__tillegg {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+/* --- Toppmeny ------------------------------------------------------------ */
+
+.topp {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--farge-linje);
+  background: var(--farge-papir);
+}
+
+.topp__rad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--rom-3);
+  min-height: var(--topp-hoyde);
+}
+
+/* På de aller smaleste skjermene (360 px) dropper vi telefonikonet,
+   så logo, nummer og menyknapp får plass på én rad. */
+@media (max-width: 24em) {
+  .topp__tlf svg {
+    display: none;
+  }
+}
+
+/* 320 px (eldre, små telefoner): litt mindre logo og nummer */
+@media (max-width: 21.5em) {
+  .topp .logo__merke {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .topp .logo__navn {
+    font-size: 1rem;
+  }
+
+  .topp__tlf {
+    font-size: 0.8125rem;
+  }
+}
+
+.topp .logo {
+  margin-right: auto;
+}
+
+/* Smal skjerm: telefon vises før menyknappen, selv om knappen står først i
+   HTML-en. Da kommer menylenkene rett etter knappen når man tabber. */
+.topp__tlf {
+  order: 1;
+}
+
+.menyknapp {
+  order: 2;
+}
+
+.meny {
+  order: 3;
+}
+
+@media (min-width: 75em) {
+  .topp__tlf,
+  .topp__tilbud,
+  .meny {
+    order: 0;
+  }
+}
+
+.topp__tlf {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rom-2);
+  min-height: 2.75rem;
+  color: var(--farge-blekk);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.topp__tlf:hover {
+  text-decoration: underline;
+}
+
+.topp__tlf svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.topp__tilbud {
+  display: none;
+}
+
+/* Menyknapp (kun smal skjerm) */
+.menyknapp {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-right: calc(var(--rom-3) * -1);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-1);
+  background: none;
+  color: var(--farge-blekk);
+  cursor: pointer;
+}
+
+.js .menyknapp {
+  display: inline-flex;
+}
+
+.menyknapp svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.menyknapp__strek {
+  transition: transform var(--tid-kort), opacity var(--tid-kort);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.menyknapp[aria-expanded="true"] .menyknapp__strek:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menyknapp[aria-expanded="true"] .menyknapp__strek:nth-child(2) {
+  opacity: 0;
+}
+
+.menyknapp[aria-expanded="true"] .menyknapp__strek:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Selve menyen. Smal skjerm: egen rad under logoen, skjult til knappen
+   trykkes. Uten JavaScript vises den alltid, så ingen blir stående fast. */
+.meny {
+  flex-basis: 100%;
+  padding-bottom: var(--rom-4);
+}
+
+.js .meny {
+  display: none;
+}
+
+.js .meny.er-apen {
+  display: block;
+}
+
+.meny__liste {
+  list-style: none;
+}
+
+.meny__lenke {
+  display: block;
+  padding: var(--rom-3) 0;
+  border-top: 1px solid var(--farge-linje);
+  color: var(--farge-blekk);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.meny__lenke:hover {
+  color: var(--farge-stal);
+  text-decoration: underline;
+}
+
+.meny__tilbud {
+  width: 100%;
+  margin-top: var(--rom-4);
+}
+
+@media (min-width: 75em) {
+  .topp__rad {
+    flex-wrap: nowrap;
+    column-gap: var(--rom-5);
+  }
+
+  .js .menyknapp,
+  .meny__tilbud {
+    display: none;
+  }
+
+  .meny,
+  .js .meny {
+    display: block;
+    flex-basis: auto;
+    padding-bottom: 0;
+  }
+
+  .meny__liste {
+    display: flex;
+    gap: var(--rom-5);
+  }
+
+  .meny__lenke {
+    position: relative;
+    padding: var(--rom-3) 0;
+    border-top: 0;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+
+  /* Tynn messingstrek under lenken til seksjonen du står i */
+  .meny__lenke[aria-current="true"]::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: var(--rom-1);
+    left: 0;
+    height: 2px;
+    background: var(--farge-messing);
+  }
+
+  .topp__tilbud {
+    display: inline-flex;
+    min-height: 2.75rem;
+    padding-inline: var(--rom-5);
+    white-space: nowrap;
+  }
+}
+
+/* --- Bildeplass -----------------------------------------------------------
+   Plassholder med riktig størrelsesforhold. Byttes ut slik:
+
+     <div class="bildeplass bildeplass--4-3"> … </div>
+   blir
+     <img class="bilde bilde--4-3" src="bilder/skap.webp" width="1200"
+          height="900" loading="lazy" alt="Beskriv hva bildet viser">
+
+   Krysset er den vanlige skissemarkeringen for «her kommer et bilde».     */
+
+.bildeplass,
+.bilde {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-2);
+}
+
+.bilde {
+  object-fit: cover;
+}
+
+.bildeplass {
+  display: flex;
+  align-items: flex-end;
+  border: 1px solid var(--farge-linje-sterk);
+  background:
+    linear-gradient(to top right, transparent calc(50% - 0.5px), var(--farge-linje) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(to top left, transparent calc(50% - 0.5px), var(--farge-linje) 50%, transparent calc(50% + 0.5px)),
+    var(--farge-hvit);
+}
+
+.bildeplass--4-3,
+.bilde--4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.bildeplass--3-2,
+.bilde--3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+.bildeplass__tekst {
+  margin: var(--rom-3);
+  padding: var(--rom-1) var(--rom-3);
+  border-radius: var(--radius-pille);
+  background: var(--farge-hvit);
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  line-height: 1.4;
+}
+
+/* --- Utfoldbare spørsmål (FAQ) --------------------------------------------
+   Bygget på <details>/<summary>. Det er nettleserens egen komponent, så
+   tastatur og skjermleser fungerer uten en linje JavaScript.               */
+
+.sporsmal {
+  border-top: 1px solid var(--farge-linje);
+}
+
+.sporsmal:last-child {
+  border-bottom: 1px solid var(--farge-linje);
+}
+
+.sporsmal__tittel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--rom-4);
+  padding: var(--rom-4) 0;
+  color: var(--farge-blekk);
+  font-family: var(--font-overskrift);
+  font-size: var(--tekst-1);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  list-style: none;
+  cursor: pointer;
+}
+
+.sporsmal__tittel::-webkit-details-marker {
+  display: none;
+}
+
+.sporsmal__tittel:hover {
+  color: var(--farge-stal);
+}
+
+/* Pluss som blir til minus */
+.sporsmal__tegn {
+  position: relative;
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.3em;
+}
+
+.sporsmal__tegn::before,
+.sporsmal__tegn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  background: currentColor;
+  transition: transform var(--tid-kort);
+}
+
+.sporsmal__tegn::after {
+  transform: rotate(90deg);
+}
+
+.sporsmal[open] .sporsmal__tegn::after {
+  transform: rotate(0deg);
+}
+
+.sporsmal__svar {
+  padding: 0 var(--rom-6) var(--rom-5) 0;
+}
+
+/* --- Skjema -------------------------------------------------------------- */
+
+.felt {
+  display: block;
+}
+
+.felt + .felt,
+.feltrad + .feltrad,
+.feltrad + .felt,
+.felt + .feltrad {
+  margin-top: var(--rom-5);
+}
+
+.feltrad {
+  display: grid;
+  gap: var(--rom-5);
+}
+
+.feltrad > .felt {
+  margin-top: 0;
+}
+
+@media (min-width: 36em) {
+  .feltrad {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--rom-4);
+  }
+}
+
+.felt__navn {
+  display: block;
+  margin-bottom: var(--rom-2);
+  color: var(--farge-blekk);
+  font-weight: 600;
+}
+
+.felt__valgfritt {
+  color: var(--farge-tekst-dempet);
+  font-weight: 400;
+}
+
+.felt__inn {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--rom-3) var(--rom-4);
+  border: 1px solid var(--farge-linje-sterk);
+  border-radius: var(--radius-1);
+  background: var(--farge-hvit);
+  color: var(--farge-tekst);
+  font: inherit;
+  line-height: 1.4;
+}
+
+textarea.felt__inn {
+  min-height: calc(var(--rom-8) + var(--rom-5));
+  resize: vertical;
+}
+
+.felt__inn:focus-visible {
+  outline-offset: 1px;
+  border-color: var(--farge-stal);
+}
+
+.felt__inn[aria-invalid="true"] {
+  border-color: var(--farge-feil);
+  box-shadow: inset 3px 0 0 var(--farge-feil);
+}
+
+.felt__feil {
+  margin-top: var(--rom-2);
+  color: var(--farge-feil);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.felt__feil:empty {
+  display: none;
+}
+
+/* --- Bunn ---------------------------------------------------------------- */
+
+.bunn {
+  padding-block: var(--rom-7) var(--rom-5);
+  background: var(--farge-blekk);
+  font-size: 0.9375rem;
+}
+
+.bunn__kolonner {
+  display: grid;
+  gap: var(--rom-6);
+}
+
+@media (min-width: 48em) {
+  .bunn__kolonner {
+    grid-template-columns: var(--kol-stor) var(--kol-liten) var(--kol-liten);
+  }
+}
+
+.bunn__om {
+  max-width: 26rem;
+  margin-top: var(--rom-4);
+  color: var(--farge-tekst-lys-dempet);
+}
+
+.bunn .bunn__tittel {
+  margin-bottom: var(--rom-3);
+  color: var(--farge-tekst-lys-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bunn__liste {
+  list-style: none;
+}
+
+/* Lenkene får luft over og under, så de er lette å treffe med tommelen */
+.bunn__liste a {
+  display: inline-block;
+  padding: var(--rom-2) 0;
+  text-decoration: none;
+}
+
+.bunn__liste li:not(:has(a)) {
+  padding: var(--rom-2) 0;
+}
+
+.bunn__liste a:hover {
+  text-decoration: underline;
+}
+
+.bunn__slutt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rom-2) var(--rom-5);
+  justify-content: space-between;
+  margin-top: var(--rom-7);
+  padding-top: var(--rom-4);
+  border-top: 1px solid var(--farge-linje-mork);
+  color: var(--farge-tekst-lys-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+}
+
+.bunn__slutt p {
+  max-width: none;
+  margin: 0;
+}

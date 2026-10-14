@@ -1,0 +1,126 @@
+/* Slik jobber vi: et loddrett rør med fem koblinger. Røret fylles
+   (scaleY styrt av --p fra js/modules/process.js) i takt med rullingen,
+   og hver kobling «tennes» når væsken når den. */
+
+.process__intro {
+  position: static;
+}
+
+.process__intro > * + * {
+  margin-top: var(--s-5);
+}
+
+.steps {
+  --p: 1; /* uten JavaScript: helt fylt */
+  position: relative;
+  margin-top: var(--s-6);
+  padding-left: var(--s-6);
+}
+
+/* Tomt rør … */
+.steps::before,
+.steps::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: var(--stroke-thread);
+  background: var(--line);
+}
+
+/* … og fyllet oppå. */
+.steps::after {
+  background: var(--accent);
+  transform: scaleY(var(--p));
+  transform-origin: top;
+}
+
+.step {
+  position: relative;
+  padding-bottom: var(--s-6);
+  max-width: none;
+}
+
+.step:last-child {
+  padding-bottom: 0;
+}
+
+/* Koblingen: en liten rørmutter. */
+.step::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: calc(-1 * var(--s-6));
+  top: 0.45rem;
+  width: 17px;
+  height: 12px;
+  background: var(--bg);
+  border: var(--stroke) solid var(--line);
+  border-radius: 1px;
+}
+
+.step::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: calc(-1 * var(--s-6) + 1.5px);
+  top: calc(0.45rem + 1.5px);
+  width: 14px;
+  height: 9px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.step__when {
+  display: block;
+  color: var(--fg-muted);
+  margin-bottom: var(--s-2);
+}
+
+.step h3 {
+  font-size: var(--step-1);
+  line-height: 1.2;
+  margin-bottom: var(--s-3);
+}
+
+.step p {
+  color: var(--fg-muted);
+}
+
+/* Tilstander. .js-prefikset gjør at alt er «tent» uten JavaScript. */
+.js .step > * {
+  opacity: 0.45;
+  transform: translateX(var(--s-3));
+  transition:
+    opacity var(--dur-3) var(--ease),
+    transform var(--dur-3) var(--ease);
+}
+
+.step.is-on > *,
+html:not(.js) .step > * {
+  opacity: 1;
+  transform: none;
+}
+
+.step.is-on::after,
+html:not(.js) .step::after {
+  transform: scaleX(1);
+}
+
+.step.is-on::before {
+  border-color: var(--accent);
+}
+
+@media (min-width: 56em) {
+  .process__intro {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-5));
+  }
+
+  .steps {
+    margin-top: 0;
+  }
+}

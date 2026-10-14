@@ -1,0 +1,105 @@
+/* Hovedprosjektet: før/etter-bilder i den brede kolonnen, tekst i den smale.
+   Under: to mindre prosjekter i forholdet 1 : φ (speilvendt av raden over). */
+
+.project--large {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.project__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+.placeholder--4x5 {
+  aspect-ratio: 4 / 5;
+}
+
+.projects__row {
+  display: grid;
+  gap: var(--sp-6);
+  margin-top: var(--sp-6);
+}
+
+@media (min-width: 60rem) {
+  .project--large {
+    grid-template-columns: minmax(0, var(--col-major)) minmax(0, var(--col-minor));
+    gap: var(--sp-7);
+    align-items: end;
+  }
+
+  .projects__row {
+    grid-template-columns: minmax(0, var(--col-minor)) minmax(0, var(--col-major));
+    grid-template-rows: auto auto;
+    gap: 0 var(--sp-7);
+    margin-top: var(--sp-7);
+    padding-top: var(--sp-7);
+    border-top: 1px solid var(--line);
+  }
+
+  /* Subgrid: begge artiklene deler de samme to radene (bilde, tekst),
+     så det brede bildet får nøyaktig samme høyde som 4:3-bildet ved siden av. */
+  .projects__row .project {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+
+  .project--wide .placeholder {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+}
+
+.project__body {
+  margin-top: var(--sp-4);
+}
+
+.project--large .project__body {
+  margin-top: 0;
+}
+
+.project__kicker {
+  font-size: var(--fs--1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.project h3 {
+  margin-top: var(--sp-2);
+}
+
+.project:not(.project--large) h3 {
+  font-size: var(--fs-1);
+}
+
+.project__body > p:not(.project__kicker) {
+  margin-top: var(--sp-3);
+  color: #353d40;
+}
+
+.project__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-5);
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+}
+
+.project__meta div {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.project__meta dt {
+  color: var(--text-muted);
+}
+
+.project__meta dd {
+  font-weight: 600;
+}

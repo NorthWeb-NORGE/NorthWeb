@@ -1,0 +1,119 @@
+/* ==========================================================================
+   TEGNINGER OG BILDEPLASSER
+   Alle illustrasjoner er inline SVG med klassen .dwg og deler denne streken.
+   Fargene kommer fra de semantiske variablene, så tegningene følger tonen
+   i seksjonen de står i.
+   ========================================================================== */
+
+.dwg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: var(--stroke);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dwg .thin {
+  stroke-width: 1;
+}
+
+.dwg .heavy {
+  stroke-width: 2.25;
+}
+
+/* Skjult kant (stiplet) og senterlinje (strek-prikk) – som i en ekte
+   maskintegning. */
+.dwg .hidden-line {
+  stroke-width: 1;
+  stroke-dasharray: 5 4;
+}
+
+.dwg .center-line {
+  stroke: var(--fg-muted);
+  stroke-width: 0.75;
+  stroke-dasharray: 14 4 2 4;
+}
+
+/* Bremserøret – eneste sted i tegningene der aksenten brukes. */
+.dwg .pipe {
+  stroke: var(--accent);
+  stroke-width: var(--stroke-thread);
+}
+
+.dwg .pipe-glint {
+  stroke: var(--c-sheet);
+  stroke-width: 1.25;
+  opacity: 0; /* vises bare av løkka .loop-pulse i motion.css */
+}
+
+/* Flater som skal dekke streker bak seg. */
+.dwg .solid {
+  fill: var(--bg);
+}
+
+.dwg .tint {
+  fill: var(--accent);
+  fill-opacity: 0.16;
+  stroke: none;
+}
+
+.dwg .hatch {
+  stroke-width: 0.75;
+  stroke: var(--fg-muted);
+}
+
+.dwg text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  fill: var(--fg);
+  stroke: none;
+}
+
+.dwg .text-muted {
+  fill: var(--fg-muted);
+}
+
+.figure {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.figure figcaption {
+  color: var(--fg-muted);
+}
+
+/* --- Bildeplass -----------------------------------------------------------
+   Tydelig plassholder med fast størrelsesforhold (--ratio). Bytt hele
+   .ph-elementet med <img> og behold --ratio, så hopper ikke layouten.
+   Skraveringen er tegnekonvensjonen for «snitt gjennom materiale». */
+.ph {
+  position: relative;
+  aspect-ratio: var(--ratio, 1.618 / 1);
+  width: 100%;
+  background-color: var(--c-paper-2);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 11px,
+    var(--c-line) 11px 12px
+  );
+  border: 1px solid var(--c-line);
+  display: grid;
+  place-items: end start;
+}
+
+.ph__label {
+  margin: var(--s-4);
+  padding: var(--s-2) var(--s-3);
+  background: var(--c-sheet);
+  border: 1px solid var(--c-line);
+  color: var(--c-muted);
+  max-width: calc(100% - 2 * var(--s-4));
+}
+
+.curtain {
+  overflow: hidden;
+}

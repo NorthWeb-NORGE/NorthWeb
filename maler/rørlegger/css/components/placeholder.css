@@ -1,0 +1,48 @@
+/* Bildeplass med fast størrelsesforhold.
+   Bytt <svg> inni med <img> – rammen holder formen, så ingenting hopper. */
+.placeholder {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-kalk);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2);
+  aspect-ratio: 4 / 3;
+}
+
+.placeholder--golden {
+  aspect-ratio: 1.618 / 1;
+}
+
+.placeholder > svg,
+.placeholder > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder__label {
+  position: absolute;
+  left: var(--sp-4);
+  bottom: var(--sp-4);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--c-porselen);
+  border: 1px solid var(--line);
+  border-radius: var(--r-1);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+/* Fugemønstrene i plassholderne */
+.tile-line {
+  fill: none;
+  stroke: var(--c-fuge);
+  stroke-width: 1.5;
+}
+
+.tile-bg--kalk { fill: var(--c-kalk); }
+.tile-bg--irr { fill: #dfe5e1; }
+.tile-bg--sand { fill: #ebe5d8; }

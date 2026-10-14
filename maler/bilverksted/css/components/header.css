@@ -1,0 +1,201 @@
+/* Header: klistrer seg øverst, glir ut når du ruller ned og inn igjen når
+   du ruller opp (klassen .is-hidden settes i js/modules/header.js). */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--c-paper);
+  border-bottom: 1px solid var(--line);
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.header.is-hidden {
+  transform: translateY(-101%);
+}
+
+/* Tastaturbrukere skal aldri tabbe inn i en header de ikke ser. */
+.header:focus-within {
+  transform: none;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  min-height: var(--header-h);
+}
+
+.header__nav {
+  display: none;
+}
+
+.header__side {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* To klasser i selektoren: må vinne over .nav-link sin display lenger ned. */
+.header .header__phone {
+  display: none;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header__cta {
+  display: none;
+}
+
+/* Menylenker: en strek som vokser ut fra venstre – samme idé som røret. */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding-block: var(--s-2);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+/* --- Menyknapp (mobil) --------------------------------------------------- */
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 2.75rem;
+  padding-inline: var(--s-3);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.menu-btn__icon {
+  position: relative;
+  width: 1.25rem;
+  height: 0.6rem;
+}
+
+.menu-btn__icon::before,
+.menu-btn__icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  transition: transform var(--dur-1) var(--ease);
+}
+
+.menu-btn__icon::before {
+  top: 0;
+}
+
+.menu-btn__icon::after {
+  bottom: 0;
+  transform: scaleX(0.618);
+  transform-origin: left;
+}
+
+.menu-btn[aria-expanded="true"] .menu-btn__icon::after {
+  transform: scaleX(1);
+}
+
+/* --- Mobilmeny ------------------------------------------------------------
+   Ligger i flyten under headeren. Uten JavaScript er den alltid åpen
+   (ingen .js-klasse = ingen skjuling). */
+.mobile-nav {
+  border-top: 1px solid var(--line);
+  background: var(--c-paper);
+}
+
+.js .mobile-nav {
+  display: none;
+}
+
+.js .mobile-nav.is-open {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  max-height: calc(100dvh - var(--header-h));
+  overflow-y: auto;
+  border-bottom: 1px solid var(--line);
+}
+
+.mobile-nav ul {
+  padding-block: var(--s-4) var(--s-5);
+}
+
+.mobile-nav li + li {
+  border-top: 1px solid var(--line);
+}
+
+.mobile-nav a {
+  display: block;
+  padding-block: var(--s-4);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .mobile-nav.is-open li {
+    animation: nav-in var(--dur-2) var(--ease) both;
+    animation-delay: calc(var(--i, 0) * 40ms);
+  }
+
+  @keyframes nav-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--s-3));
+    }
+  }
+}
+
+/* --- Skrivebord ---------------------------------------------------------- */
+@media (min-width: 64em) {
+  .header__nav {
+    display: block;
+  }
+
+  .header__nav ul {
+    display: flex;
+    gap: var(--s-5);
+  }
+
+  .header .header__phone {
+    display: inline-block;
+  }
+
+  .header__cta {
+    display: inline-flex;
+  }
+
+  .menu-btn,
+  .mobile-nav,
+  .js .mobile-nav.is-open {
+    display: none;
+  }
+}

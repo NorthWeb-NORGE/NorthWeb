@@ -1,0 +1,42 @@
+/* Fast handlingslinje nederst på mobil: ring eller be om tilbud, alltid
+   innen tommelrekkevidde. Skjules når kontaktskjemaet er på skjermen. */
+
+.actionbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: 1fr 1.618fr;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  padding-bottom: calc(var(--s-3) + env(safe-area-inset-bottom, 0px));
+  background: var(--c-paper);
+  border-top: 1px solid var(--line);
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.actionbar.is-away {
+  transform: translateY(101%);
+}
+
+.actionbar .btn {
+  min-height: 3rem;
+  padding-inline: var(--s-3);
+}
+
+/* Plass til linja, så den aldri dekker footeren. */
+body {
+  padding-bottom: 4.6rem;
+}
+
+@media (min-width: 64em) {
+  .actionbar {
+    display: none;
+  }
+
+  body {
+    padding-bottom: 0;
+  }
+}

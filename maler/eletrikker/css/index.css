@@ -1,0 +1,1124 @@
+/* ==========================================================================
+   INDEX – seksjonene på forsiden, i samme rekkefølge som i index.html
+   ========================================================================== */
+
+.seksjonshode {
+  margin-bottom: var(--rom-6);
+}
+
+@media (min-width: 56em) {
+  .seksjonshode.gyllen {
+    align-items: end;
+  }
+}
+
+/* Liste med kort messingstrek som punkt */
+.punkter {
+  margin-top: var(--rom-5);
+  list-style: none;
+}
+
+.punkter li {
+  position: relative;
+  max-width: var(--maks-linjelengde);
+  padding-left: var(--rom-5);
+}
+
+.punkter li + li {
+  margin-top: var(--rom-3);
+}
+
+.punkter li::before {
+  content: "";
+  position: absolute;
+  top: 0.8em;
+  left: 0;
+  width: var(--rom-4);
+  height: 2px;
+  background: var(--farge-messing);
+}
+
+/* ==========================================================================
+   SKAPET
+   Hele siden er innsiden av et sikringsskap:
+     • .skinne      – samleskinna langs venstre kant. Fylles med messing
+                      («strøm») etter hvert som man ruller nedover.
+     • .hylle       – starten på hver seksjon: et vern, et merkeskilt og en
+                      DIN-skinne. Når raden kommer inn i bildet, trekkes en
+                      avgrening fra samleskinna og vernet slås på.
+   Uten JavaScript står alt «på» fra start.
+   ========================================================================== */
+
+.skapet {
+  /* Hvor langt til venstre for innholdet samleskinna står. Smal skjerm:
+     midt i sidemargen. Bred skjerm: innholdet flyttes inn og gir den plass. */
+  --skinne-plass: 0px;
+  --gren: calc(var(--sidemarg) / 2);
+  position: relative;
+}
+
+.skapet .ramme {
+  padding-left: calc(var(--sidemarg) + var(--skinne-plass));
+}
+
+.skinne {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Samme utregning som .ramme bruker for venstrekanten sin */
+  left: calc(max(var(--sidemarg), (100% - var(--maks-bredde)) / 2) + var(--skinne-plass) - var(--gren) - 2px);
+  z-index: 2;
+  width: 2px;
+  background: rgb(128 128 128 / 0.3);
+  pointer-events: none;
+}
+
+.skinne__strom {
+  position: absolute;
+  inset: 0;
+  background: var(--farge-messing);
+  transform-origin: top;
+}
+
+.js .skinne__strom {
+  transform: scaleY(var(--fremdrift, 0));
+}
+
+.hylle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--rom-3);
+  margin-bottom: var(--rom-6);
+}
+
+/* Avgreningen fra samleskinna inn til vernet */
+.hylle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: var(--gren);
+  height: 2px;
+  margin-top: -1px;
+  background: var(--farge-messing);
+  transform-origin: left;
+  transition: transform var(--tid-middels) var(--kurve);
+}
+
+/* DIN-skinna: metallstripe med avlange hull, fyller resten av raden */
+.hylle::after {
+  content: "";
+  flex: 1;
+  height: 0.75rem;
+  border-radius: var(--radius-pille);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 0.75rem, var(--din-hull) 0.75rem 1.75rem) center / calc(100% - 1.5rem) 3px no-repeat,
+    var(--din-metall);
+}
+
+.hylle__skilt {
+  flex: none;
+  margin: 0;
+  padding: var(--rom-1) var(--rom-3);
+  border: 1px solid var(--farge-linje-sterk);
+  border-radius: var(--radius-pille);
+  background: var(--farge-hvit);
+  color: var(--farge-blekk);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.pa-mork .hylle__skilt {
+  background: transparent;
+  color: var(--farge-tekst-lys);
+}
+
+.hylle__nr {
+  margin-right: var(--rom-2);
+  color: var(--farge-tekst-dempet);
+}
+
+/* Vernet: svart hus, spor og vippe. ::before er sporet, ::after er vippa. */
+.kursvern {
+  position: relative;
+  flex: none;
+  width: 1.75rem;
+  height: 2.625rem;
+  border: 1px solid var(--farge-linje-sterk);
+  border-radius: 0.45rem;
+  background: var(--farge-blekk);
+}
+
+.kursvern::before,
+.kursvern::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+}
+
+.kursvern::before {
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 0.75rem;
+  margin-left: -0.375rem;
+  border-radius: 0.25rem;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.kursvern::after {
+  top: 0.5rem;
+  width: 0.5rem;
+  height: 0.75rem;
+  margin-left: -0.25rem;
+  border-radius: 0.15rem;
+  background: var(--farge-messing);
+  transition:
+    transform var(--tid-middels) cubic-bezier(0.3, 1.5, 0.5, 1) 350ms,
+    background-color var(--tid-kort) 450ms;
+}
+
+/* Av-tilstand: bare når JavaScript kjører og raden ikke er nådd ennå */
+.js .hylle:not(.er-pa)::before {
+  transform: scaleX(0);
+}
+
+.js .hylle:not(.er-pa) .kursvern::after {
+  background: rgb(242 240 235 / 0.4);
+  transform: translateY(0.8rem);
+}
+
+@media (min-width: 66em) {
+  .skapet {
+    --skinne-plass: var(--rom-7);
+    --gren: var(--rom-5);
+  }
+
+  /* Vernet trekkes ut i margen, så merkeskiltet flukter med teksten under */
+  .hylle {
+    margin-left: calc(var(--gren) - var(--skinne-plass));
+  }
+}
+
+/* På virkelig store skjermer får skapet vegger og avrundede hjørner */
+@media (min-width: 104em) {
+  body {
+    background: var(--farge-papir-mork);
+  }
+
+  .skapet {
+    max-width: 100rem;
+    margin: var(--rom-5) auto;
+    overflow: clip; /* clip (ikke hidden) – ellers slutter position: sticky å virke */
+    border: 1px solid var(--farge-linje-sterk);
+    border-radius: var(--radius-3);
+    background: var(--farge-papir);
+  }
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.hero {
+  /* Svakt rutenett som på millimeterpapir. Rutestørrelsen er φ² rem. */
+  background:
+    linear-gradient(rgb(242 240 235 / 0.04) 1px, transparent 1px) 0 0 / var(--rom-6) var(--rom-6),
+    linear-gradient(90deg, rgb(242 240 235 / 0.04) 1px, transparent 1px) 0 0 / var(--rom-6) var(--rom-6),
+    var(--farge-blekk);
+}
+
+.hero__ramme {
+  display: grid;
+  gap: var(--rom-7);
+  padding-block: var(--rom-7);
+}
+
+.hero__ingress {
+  margin-top: var(--rom-5);
+}
+
+.hero__valg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rom-4);
+  margin-top: var(--rom-6);
+}
+
+.heroinfo {
+  display: grid;
+  gap: var(--rom-4);
+  margin-top: var(--rom-7);
+  padding-top: var(--rom-5);
+  border-top: 1px solid var(--farge-linje-mork);
+}
+
+.heroinfo dt {
+  margin-bottom: var(--rom-1);
+  color: var(--farge-tekst-lys-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.heroinfo dd {
+  line-height: 1.5;
+}
+
+.hero__figur {
+  width: 100%;
+  max-width: 27rem;
+  margin: 0;
+}
+
+.hero__bildetekst {
+  margin-top: var(--rom-4);
+  padding-left: var(--rom-4);
+  border-left: 2px solid var(--farge-messing);
+  color: var(--farge-tekst-lys-dempet);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 30em) {
+  .heroinfo {
+    grid-template-columns: var(--kol-stor) var(--kol-liten);
+    gap: var(--rom-6);
+  }
+}
+
+@media (min-width: 56em) {
+  .hero__ramme {
+    grid-template-columns: var(--kol-stor) var(--kol-liten);
+    align-items: center;
+    padding-block: var(--rom-8);
+  }
+
+  .hero__figur {
+    justify-self: end;
+  }
+}
+
+/* --- Sikringsskapet (signaturdetaljen) -----------------------------------
+   Rekkefølge: tilførsel tegnes → hovedbryter og jordfeilbrytere slås på →
+   samleskinna tegnes → kurs 01–08 slås på én etter én → lederne ut tegnes.
+   Hvert vern har --i (0, 1, 2 …) som ganges med 90 ms forsinkelse.        */
+
+.skap {
+  width: 100%;
+  height: auto;
+  color: var(--farge-tekst-lys);
+}
+
+.skap__kant {
+  fill: var(--farge-blekk);
+  stroke: currentColor;
+  stroke-opacity: 0.6;
+  stroke-width: 1.25;
+}
+
+.skap__kant--tynn {
+  fill: none;
+  stroke-opacity: 0.25;
+  stroke-width: 1;
+}
+
+.skap__skinne {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.2;
+}
+
+.skap__skrift,
+.skap__kurs text,
+.vern__nr {
+  fill: currentColor;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.skap__skrift {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+.skap__skrift--hoyre {
+  text-anchor: end;
+}
+
+.skap__kurs text {
+  font-size: 8.5px;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.vern__hus {
+  fill: #1f2328;
+  stroke: currentColor;
+  stroke-opacity: 0.6;
+}
+
+.vern__nr {
+  font-size: 7.5px;
+  opacity: 0.75;
+  text-anchor: middle;
+}
+
+.vern__spor {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.35;
+}
+
+.vern__ledig {
+  fill: none;
+  stroke: currentColor;
+  stroke-dasharray: 3 3;
+  stroke-opacity: 0.3;
+}
+
+.vern__klemme {
+  fill: var(--farge-blekk);
+  stroke: currentColor;
+  stroke-opacity: 0.6;
+}
+
+/* Vippa starter nede (av) og grå, og ender oppe (på) og messingfarget */
+.vern__vippe {
+  fill: var(--farge-messing);
+  animation: vippe-pa 320ms cubic-bezier(0.3, 1.5, 0.5, 1) both;
+  animation-delay: calc(1.3s + var(--i, 0) * 90ms);
+}
+
+@keyframes vippe-pa {
+  from {
+    fill: rgb(242 240 235 / 0.4);
+    transform: translateY(14px);
+  }
+}
+
+/* Lederne «tegnes» ved at en stiplet strek på lengde 1 skyves inn.
+   pathLength="1" i SVG-en gjør at dette virker uansett hvor lang streken er. */
+.leder {
+  fill: none;
+  stroke: var(--farge-messing);
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  stroke-width: 1.5;
+  animation: tegn-leder 500ms ease-out forwards;
+  animation-delay: var(--d, 0s);
+}
+
+.leder--kort {
+  animation-duration: 200ms;
+}
+
+.leder--ut {
+  animation-duration: 300ms;
+  animation-delay: calc(1.5s + var(--i, 0) * 90ms);
+}
+
+@keyframes tegn-leder {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==========================================================================
+   TJENESTER
+   ========================================================================== */
+
+.utvalgt {
+  align-items: center;
+  padding-block: var(--rom-6);
+  border-top: 1px solid var(--farge-linje);
+}
+
+.utvalgt--mork {
+  padding: var(--rom-6) clamp(var(--rom-5), 5vw, var(--rom-7));
+  border-top: 0;
+  border-radius: var(--radius-3);
+  background: var(--farge-stal);
+}
+
+.utvalgt__nr,
+.tjeneste__nr {
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.utvalgt__nr {
+  display: block;
+  margin-bottom: var(--rom-3);
+}
+
+.utvalgt--mork .utvalgt__nr {
+  color: var(--farge-messing);
+}
+
+.utvalgt__tittel {
+  font-size: clamp(var(--tekst-1), 1rem + 1.5vw, var(--tekst-3));
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.utvalgt__tittel + p {
+  margin-top: var(--rom-4);
+}
+
+/* Rapportutdraget – et «ark» med et ark til bak */
+.rapport {
+  position: relative;
+  padding: clamp(var(--rom-4), 4vw, var(--rom-5));
+  border: 1px solid var(--farge-linje-sterk);
+  border-radius: var(--radius-2);
+  background: var(--farge-hvit);
+}
+
+.rapport::before {
+  content: "";
+  position: absolute;
+  inset: var(--rom-3) calc(var(--rom-3) * -1) calc(var(--rom-3) * -1) var(--rom-3);
+  z-index: -1;
+  border: 1px solid var(--farge-linje);
+  border-radius: var(--radius-2);
+  background: var(--farge-papir-mork);
+}
+
+/* z-index: -1 over trenger en egen stabel for ikke å havne bak seksjonen */
+.utvalgt {
+  position: relative;
+  z-index: 0;
+}
+
+.rapport__hode {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--rom-4);
+  padding-bottom: var(--rom-3);
+  border-bottom: 1px solid var(--farge-blekk);
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  white-space: nowrap;
+}
+
+.rapport__liste {
+  list-style: none;
+}
+
+.rapport__rad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rom-4);
+  padding: var(--rom-3) 0;
+  border-bottom: 1px solid var(--farge-linje);
+}
+
+.rapport__rad:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.rapport__punkt {
+  color: var(--farge-blekk);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.rapport__punkt small {
+  display: block;
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 400;
+}
+
+.status {
+  flex: none;
+  padding: var(--rom-1) var(--rom-3);
+  border: 1px solid var(--farge-linje-sterk);
+  border-radius: var(--radius-pille);
+  color: var(--farge-stal);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.status--bor {
+  border-color: var(--farge-messing-mork);
+  background: rgb(212 164 55 / 0.28);
+  color: var(--farge-blekk);
+}
+
+.status--haster {
+  border-color: var(--farge-blekk);
+  background: var(--farge-blekk);
+  color: var(--farge-tekst-lys);
+}
+
+/* Ladeboksen */
+.lader {
+  width: 100%;
+  max-width: 21rem;
+  height: auto;
+  margin-inline: auto;
+  color: var(--farge-tekst-lys);
+}
+
+.lader__strek,
+.lader__leder {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}
+
+.lader__strek--svak {
+  stroke-opacity: 0.45;
+  stroke-width: 1;
+}
+
+.lader__leder {
+  stroke: var(--farge-messing);
+  stroke-width: 2;
+}
+
+.lader__skrift {
+  fill: currentColor;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+/* Tjeneste 03–07 */
+.tjenesteliste {
+  margin-top: var(--rom-6);
+  border-bottom: 1px solid var(--farge-linje);
+  list-style: none;
+}
+
+.tjeneste {
+  display: grid;
+  grid-template-columns: var(--rom-6) 1fr;
+  gap: var(--rom-3) var(--rom-4);
+  padding-block: var(--rom-5);
+  border-top: 1px solid var(--farge-linje);
+}
+
+.tjeneste__nr {
+  padding-top: 0.3em;
+}
+
+/* Lite vern under nummeret. Vippa er en bakgrunnsflate som flyttes opp
+   (på) når raden tones inn. */
+.tjeneste__nr::after {
+  content: "";
+  display: block;
+  width: 0.875rem;
+  height: 1.5rem;
+  margin-top: var(--rom-2);
+  border-radius: 0.3rem;
+  background:
+    linear-gradient(var(--farge-messing), var(--farge-messing)) center 3px / 6px 9px no-repeat,
+    var(--farge-blekk);
+  transition: background-position var(--tid-middels) var(--kurve) 400ms;
+}
+
+.js .tjeneste:not(.er-synlig) .tjeneste__nr::after {
+  background-position: center 12px;
+}
+
+.tjeneste > p {
+  grid-column: 2;
+}
+
+.tjeneste__typisk {
+  margin-top: var(--rom-2);
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+}
+
+@media (min-width: 56em) {
+  .tjeneste {
+    grid-template-columns: var(--rom-7) var(--kol-liten) var(--kol-stor);
+    column-gap: var(--rom-5);
+  }
+
+  .tjeneste > p {
+    grid-column: 3;
+  }
+}
+
+/* ==========================================================================
+   SLIK JOBBER VI
+   ========================================================================== */
+
+.lofter {
+  margin-top: var(--rom-6);
+  padding-top: var(--rom-5);
+  border-top: 1px solid var(--farge-linje-sterk);
+}
+
+.lofter__tittel {
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lofter__liste {
+  margin-top: var(--rom-3);
+  list-style: none;
+}
+
+.lofter__liste li {
+  position: relative;
+  padding: var(--rom-3) 0 var(--rom-3) var(--rom-5);
+  color: var(--farge-blekk);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Hake tegnet med to kanter på en rotert boks */
+.lofter__liste li::before {
+  content: "";
+  position: absolute;
+  top: 0.95em;
+  left: 0.2em;
+  width: 0.4em;
+  height: 0.7em;
+  border: solid var(--farge-stal);
+  border-width: 0 2px 2px 0;
+  transform: rotate(40deg);
+}
+
+/* Stegene henger på en loddrett linje, som avgreninger på et enlinjeskjema */
+.steg {
+  border-left: 1px solid var(--farge-linje-sterk);
+  list-style: none;
+}
+
+.steg__punkt {
+  position: relative;
+  padding: 0 0 var(--rom-6) var(--rom-5);
+}
+
+.steg__punkt:last-child {
+  padding-bottom: 0;
+}
+
+.steg__punkt::before {
+  content: "";
+  position: absolute;
+  top: 0.25em;
+  left: -6px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--farge-stal);
+  border-radius: 50%;
+  background: var(--farge-messing);
+  transition: background-color var(--tid-middels) 300ms;
+}
+
+/* Klemma er tom til steget er tonet inn – da «kobles den til» */
+.js .steg__punkt:not(.er-synlig)::before {
+  background: var(--farge-papir-mork);
+}
+
+.steg__nr {
+  display: block;
+  margin-bottom: var(--rom-2);
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.steg h3 {
+  font-size: var(--tekst-2);
+}
+
+@media (min-width: 56em) {
+  .prosess__side {
+    position: sticky;
+    top: calc(var(--topp-hoyde) + var(--rom-5));
+    align-self: start;
+  }
+
+  .steg__punkt {
+    padding-left: var(--rom-6);
+  }
+}
+
+/* ==========================================================================
+   PROSJEKTER
+   Ett stort øverst (bilde 61,8 % / tekst 38,2 %) + to små under.
+   ========================================================================== */
+
+.prosjekter {
+  display: grid;
+  gap: var(--rom-6);
+}
+
+.prosjekt__tekst {
+  padding-top: var(--rom-4);
+}
+
+.prosjekt__sted {
+  margin-bottom: var(--rom-2);
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.prosjekt--stort h3 {
+  font-size: var(--tekst-2);
+}
+
+.fakta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rom-3) var(--rom-6);
+  margin-top: var(--rom-4);
+  padding-top: var(--rom-3);
+  border-top: 1px solid var(--farge-linje);
+}
+
+.fakta dt {
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+}
+
+.fakta dd {
+  color: var(--farge-blekk);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (min-width: 40em) {
+  .prosjekter {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .prosjekt--stort {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 56em) {
+  .prosjekter {
+    gap: var(--rom-7);
+  }
+
+  /* Det store prosjektet: bilde og tekst side om side i gyllent snitt */
+  .prosjekt--stort {
+    display: grid;
+    grid-template-columns: var(--kol-stor) var(--kol-liten);
+    gap: var(--rom-7);
+    align-items: end;
+  }
+
+  .prosjekt--stort .prosjekt__tekst {
+    padding-top: 0;
+  }
+}
+
+/* ==========================================================================
+   TRYGGHET
+   ========================================================================== */
+
+.trygghet__ingress {
+  margin-top: var(--rom-5);
+  color: var(--farge-tekst-lys-dempet);
+  font-size: var(--tekst-1);
+  line-height: 1.5;
+}
+
+.garantier {
+  display: grid;
+  gap: var(--rom-6);
+}
+
+@media (min-width: 40em) {
+  .garantier {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--rom-6) var(--rom-6);
+  }
+}
+
+.garanti {
+  position: relative;
+  padding-top: var(--rom-4);
+  border-top: 1px solid var(--farge-linje-mork);
+}
+
+/* Kort messingstrek oppå skillelinja */
+.garanti::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: var(--rom-6);
+  height: 2px;
+  background: var(--farge-messing);
+}
+
+.garanti dt {
+  font-family: var(--font-overskrift);
+  font-size: var(--tekst-1);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.garanti dd {
+  margin-top: var(--rom-3);
+  color: var(--farge-tekst-lys-dempet);
+}
+
+.omtaler {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--rom-4) var(--rom-5);
+  margin-top: var(--rom-7);
+  padding: var(--rom-5);
+  border: 1px dashed var(--farge-tekst-dempet);
+  border-radius: var(--radius-2);
+}
+
+.omtaler > div {
+  flex: 1 1 18rem;
+}
+
+.omtaler__merke {
+  padding: var(--rom-1) var(--rom-3);
+  border: 1px solid var(--farge-messing);
+  border-radius: var(--radius-pille);
+  color: var(--farge-messing);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.omtaler p {
+  color: var(--farge-tekst-lys-dempet);
+}
+
+/* ==========================================================================
+   SPØRSMÅL OG PRISER
+   ========================================================================== */
+
+.prisguide {
+  align-self: start;
+  padding: var(--rom-5);
+  border: 1px solid var(--farge-linje-sterk);
+  border-radius: var(--radius-2);
+  background: var(--farge-hvit);
+}
+
+.prisguide h3 {
+  font-size: var(--tekst-2);
+}
+
+.prisliste {
+  margin-top: var(--rom-4);
+}
+
+.prisliste__rad {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--rom-4);
+  padding: var(--rom-3) 0;
+  border-bottom: 1px solid var(--farge-linje);
+  line-height: 1.4;
+}
+
+.prisliste dd {
+  flex: none;
+  color: var(--farge-blekk);
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.prisguide__note {
+  margin-top: var(--rom-4);
+  color: var(--farge-tekst-dempet);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 56em) {
+  .prisguide {
+    position: sticky;
+    top: calc(var(--topp-hoyde) + var(--rom-5));
+  }
+}
+
+/* ==========================================================================
+   KONTAKT
+   ========================================================================== */
+
+.kontakt__ingress {
+  margin-top: var(--rom-4);
+}
+
+.skjema {
+  padding: clamp(var(--rom-4), 4vw, var(--rom-6));
+  border: 1px solid var(--farge-linje);
+  border-radius: var(--radius-2);
+  background: var(--farge-papir);
+}
+
+.felt__hjelp {
+  margin-top: var(--rom-2);
+  color: var(--farge-tekst-dempet);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.skjema__slutt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rom-3) var(--rom-5);
+  margin-top: var(--rom-5);
+}
+
+.skjema__note {
+  flex: 1 1 14rem;
+  margin: 0;
+  color: var(--farge-tekst-dempet);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.kvittering {
+  display: flex;
+  gap: var(--rom-4);
+  padding: var(--rom-5);
+  border: 1px solid var(--farge-stal);
+  border-radius: var(--radius-2);
+  background: var(--farge-papir);
+}
+
+.kvittering[hidden],
+.skjema[hidden] {
+  display: none;
+}
+
+.kvittering > svg {
+  flex: none;
+  width: var(--rom-6);
+  height: var(--rom-6);
+  color: var(--farge-stal);
+}
+
+.kvittering h3 {
+  font-size: var(--tekst-2);
+}
+
+.kvittering .knapp {
+  margin-top: var(--rom-5);
+}
+
+.kontaktinfo__liste > div {
+  padding: var(--rom-4) 0;
+  border-top: 1px solid var(--farge-linje-sterk);
+}
+
+.kontaktinfo dt,
+.kontaktinfo__tittel {
+  color: var(--farge-tekst-dempet);
+  font-family: var(--font-mono);
+  font-size: var(--tekst--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kontaktinfo dd {
+  color: var(--farge-blekk);
+  line-height: 1.5;
+}
+
+.kontaktinfo dd a:not(.kontaktinfo__stor) {
+  display: inline-block;
+  padding: var(--rom-2) 0;
+}
+
+.kontaktinfo__stor {
+  color: var(--farge-blekk);
+  font-family: var(--font-overskrift);
+  font-size: var(--tekst-3);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.kontaktinfo__stor:hover {
+  text-decoration: underline;
+}
+
+.kontaktinfo__tittel {
+  padding-top: var(--rom-4);
+  border-top: 1px solid var(--farge-linje-sterk);
+}
+
+.tider {
+  width: 100%;
+  margin-top: var(--rom-2);
+  border-collapse: collapse;
+}
+
+.tider th,
+.tider td {
+  padding: var(--rom-2) 0;
+  color: var(--farge-blekk);
+  font-weight: 400;
+  text-align: left;
+}
+
+.tider td {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.kontaktinfo__vakt {
+  margin-top: var(--rom-4);
+  color: var(--farge-tekst-dempet);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}

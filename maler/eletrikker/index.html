@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <!--
+  ============================================================================
+  DEMOSIDE – MAL FOR HÅNDVERKSBEDRIFT (elektriker)
+  ============================================================================
+  Alt under er PLASSHOLDERE og må byttes ut før en ekte kunde bruker siden:
+
+    • Bedriftsnavn «Straumnes Elektro AS» – oppdiktet
+    • Telefon 55 00 00 00, e-post, adresse, åpningstider – oppdiktet
+    • Organisasjonsnummer 000 000 000 – oppdiktet
+    • Antall ansatte, «siden 2009», svartid, gratis befaring – oppdiktet
+    • Alle priser i prisguiden og i spørsmål/svar – veiledende gjetninger
+    • Prosjektene (Fana, Åsane, Sandviken) – oppdiktet
+    • Registrering hos DSB, forsikring og andre trygghetspåstander –
+      INGEN av disse er ekte. De skal kun stå hvis kunden kan dokumentere dem.
+    • Det finnes ingen kundeomtaler på siden. Legg aldri inn oppdiktede.
+
+  Søk etter «PLASSHOLDER» i denne fila for å finne hvert sted.
+
+  Filstruktur:
+    index.html            forsiden (må ligge i roten for GitHub Pages)
+    html/                 undersider (personvern)
+    css/variabler.css     farger, fonter, avstander – bytt merkevare her
+    css/base.css          nullstilling, typografi, hjelpeklasser
+    css/komponenter.css   knapper, meny, skjema, bunn
+    css/index.css         seksjonene på forsiden
+    js/index.js           meny, inntoning ved rulling, aktiv menylenke
+    js/skjema.js          validering av kontaktskjemaet
+    bilder/               favicon, og senere ekte bilder
+  ============================================================================
+  -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- PLASSHOLDER: tittel og beskrivelse -->
+  <title>Straumnes Elektro AS – elektriker i Bergen | El-sjekk, ladeboks og sikringsskap</title>
+  <meta name="description" content="Elektriker i Bergen og omegn. El-sjekk, elbillader, nytt sikringsskap, rehabilitering og smarthus. Skriftlig tilbud med fast pris og samsvarserklæring på hver jobb.">
+  <meta name="theme-color" content="#15171a">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:title" content="Straumnes Elektro AS – elektriker i Bergen">
+  <meta property="og:description" content="Skriftlig tilbud med fast pris før vi åpner sikringsskapet. El-sjekk, ladeboks, sikringsskap og rehabilitering.">
+
+  <link rel="icon" href="bilder/favicon.svg" type="image/svg+xml">
+
+  <!-- Strukturerte data: forteller Google at dette er en lokal elektriker,
+       hvor den holder til og når den har åpent. PLASSHOLDER: alle verdier. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Electrician",
+    "name": "Straumnes Elektro AS",
+    "telephone": "+4755000000",
+    "email": "post@straumneselektro.no",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Sandviksboder 14",
+      "postalCode": "5035",
+      "addressLocality": "Bergen",
+      "addressCountry": "NO"
+    },
+    "areaServed": ["Bergen", "Askøy", "Øygarden", "Bjørnafjorden"],
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "07:00", "closes": "15:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "14:00" }
+    ]
+  }
+  </script>
+
+  <!-- Fonter. preconnect gjør at nettleseren kobler seg til tidlig. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Schibsted+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/variabler.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/komponenter.css">
+  <link rel="stylesheet" href="css/index.css">
+
+  <script src="js/index.js" defer></script>
+  <script src="js/skjema.js" defer></script>
+</head>
+
+<body>
+  <a class="hopp" href="#innhold">Hopp til innhold</a>
+
+  <!-- ====================================================================
+       TOPP
+       ==================================================================== -->
+  <header class="topp">
+    <div class="ramme topp__rad">
+      <a class="logo" href="#topp" aria-label="Straumnes Elektro AS – til toppen">
+        <!-- Logomerket: en S formet som en leder mellom to klemmer.
+             Tegnet med currentColor, så samme SVG virker på lys og mørk bunn. -->
+        <svg class="logo__merke" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M27 10H17a5 5 0 0 0 0 10h6a5 5 0 0 1 0 10H13" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+          <circle cx="29.5" cy="10" r="4" fill="#d4a437"/>
+          <circle cx="10.5" cy="30" r="4" fill="#d4a437"/>
+        </svg>
+        <span>
+          <span class="logo__navn">Straumnes</span>
+          <span class="logo__tillegg">Elektro AS</span>
+        </span>
+      </a>
+
+      <button class="menyknapp" type="button" aria-expanded="false" aria-controls="meny" data-menyknapp>
+        <span class="kun-skjermleser">Meny</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+          <path class="menyknapp__strek" d="M3 6h18"/>
+          <path class="menyknapp__strek" d="M3 12h18"/>
+          <path class="menyknapp__strek" d="M3 18h18"/>
+        </svg>
+      </button>
+
+      <nav class="meny" id="meny" aria-label="Hovedmeny" data-meny>
+        <ul class="meny__liste">
+          <li><a class="meny__lenke" href="#tjenester">Tjenester</a></li>
+          <li><a class="meny__lenke" href="#prosess">Slik jobber vi</a></li>
+          <li><a class="meny__lenke" href="#prosjekter">Prosjekter</a></li>
+          <li><a class="meny__lenke" href="#trygghet">Trygghet</a></li>
+          <li><a class="meny__lenke" href="#sporsmal">Spørsmål og priser</a></li>
+        </ul>
+        <a class="knapp meny__tilbud" href="#kontakt">Be om tilbud</a>
+      </nav>
+
+      <!-- PLASSHOLDER: telefonnummer -->
+      <a class="topp__tlf" href="tel:+4755000000">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 1.5h3l1 3.5-1.8 1.2a8 8 0 0 0 3.6 3.6L10 8l3.5 1v3a1.5 1.5 0 0 1-1.6 1.5C6.4 13 3 9.600 2.500 3.1A1.5 1.500 0 0 1 3 1.500z" stroke-linejoin="round"/>
+        </svg>
+        <span class="kun-skjermleser">Ring oss på </span>55 00 00 00
+      </a>
+
+      <a class="knapp topp__tilbud" href="#kontakt">Be om tilbud</a>
+    </div>
+  </header>
+
+  <main class="skapet" id="innhold">
+    <!-- Samleskinna: går gjennom hele siden og fylles med «strøm» når man ruller.
+         Styres av js/index.js, utseende i css/index.css («Skapet»). -->
+    <div class="skinne" aria-hidden="true"><div class="skinne__strom"></div></div>
+
+    <!-- ==================================================================
+         HERO
+         ================================================================== -->
+    <section class="hero pa-mork" id="topp" aria-labelledby="hero-tittel">
+      <div class="ramme hero__ramme">
+        <div class="hero__tekst">
+          <!-- PLASSHOLDER: sted og årstall -->
+          <span class="etikett">Elektriker i Bergen og omegn · siden 2009</span>
+          <h1 id="hero-tittel">Fast pris før vi åpner sikrings&shy;skapet.</h1>
+          <!-- PLASSHOLDER: antall ansatte -->
+          <p class="ingress hero__ingress">
+            Vi er fem elektrikere som tar el&#8209;sjekk, ladeboks, nytt sikringsskap og
+            rehabilitering i Bergen og omegn. Du får skriftlig tilbud etter befaring,
+            et skap der hver kurs er merket, og samsvarserklæring når vi er ferdige.
+          </p>
+
+          <div class="hero__valg">
+            <a class="knapp knapp--aksent" href="#kontakt">Be om tilbud</a>
+            <a class="knapp knapp--kant" href="tel:+4755000000">Ring 55 00 00 00</a>
+          </div>
+
+          <!-- PLASSHOLDER: område og åpningstid -->
+          <dl class="heroinfo">
+            <div>
+              <dt>Vi kjører til</dt>
+              <dd>Bergen, Askøy, Øygarden og Bjørnafjorden</dd>
+            </div>
+            <div>
+              <dt>Åpent</dt>
+              <dd>Hverdager fra 07.00. Vakttelefon ved akutt feil.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Signaturdetaljen: et sikringsskap der vern etter vern slås på.
+             Ren SVG + CSS-animasjon (se css/index.css, «Sikringsskapet»).
+             --i styrer rekkefølgen: hvert vern venter litt lenger enn forrige. -->
+        <figure class="hero__figur">
+          <svg class="skap" viewBox="0 0 400 480" role="img" aria-labelledby="skap-tittel skap-beskrivelse">
+            <title id="skap-tittel">Tegning av et ryddig sikringsskap</title>
+            <desc id="skap-beskrivelse">Hovedbryter, overspenningsvern og to jordfeilbrytere øverst. Under står åtte nummererte kurssikringer og to ledige plasser. Nederst en kursfortegnelse som viser hva hver kurs forsyner.</desc>
+
+            <!-- Skap og dør -->
+            <rect class="skap__kant" x="30" y="20" width="340" height="440" rx="12"/>
+            <rect class="skap__kant skap__kant--tynn" x="42" y="32" width="316" height="416" rx="6"/>
+            <text class="skap__skrift" x="94" y="56">FORDELING · 230 V IT</text>
+            <text class="skap__skrift skap__skrift--hoyre" x="346" y="56">TEGN. 01</text>
+
+            <!-- DIN-skinner -->
+            <path class="skap__skinne" d="M54 118H346M54 256H346"/>
+
+            <!-- Tilførsel inn i toppen og samleskinne ned til kursene -->
+            <path class="leder" style="--d: 0.3s" pathLength="1" d="M82 20V76"/>
+            <path class="leder" style="--d: 0.9s" pathLength="1" d="M82 160V196H277"/>
+            <path class="leder leder--kort" style="--d: 1.2s" pathLength="1" d="M67 196V214M97 196V214M127 196V214M157 196V214M187 196V214M217 196V214M247 196V214M277 196V214"/>
+
+            <!-- Rad 1: hovedbryter, overspenningsvern, jordfeilbrytere -->
+            <g class="vern" transform="translate(54 76)" style="--i: -4">
+              <rect class="vern__hus" width="56" height="84" rx="4"/>
+              <text class="vern__nr" x="28" y="15">Q0</text>
+              <rect class="vern__spor" x="19" y="28" width="18" height="30" rx="3"/>
+              <rect class="vern__vippe" x="20.5" y="29.5" width="15" height="13" rx="2.5"/>
+              <text class="vern__nr" x="28" y="75">63 A</text>
+            </g>
+            <g transform="translate(116 76)">
+              <rect class="vern__hus" width="44" height="84" rx="4"/>
+              <text class="vern__nr" x="22" y="15">OVV</text>
+              <rect class="vern__spor" x="8" y="28" width="28" height="30" rx="1"/>
+              <path class="vern__spor" d="M14 43h16M22 35v16"/>
+            </g>
+            <g class="vern" transform="translate(166 76)" style="--i: -2">
+              <rect class="vern__hus" width="56" height="84" rx="4"/>
+              <text class="vern__nr" x="28" y="15">JFB</text>
+              <rect class="vern__spor" x="19" y="28" width="18" height="30" rx="3"/>
+              <rect class="vern__vippe" x="20.5" y="29.5" width="15" height="13" rx="2.5"/>
+              <text class="vern__nr" x="28" y="75">30 mA</text>
+            </g>
+            <g class="vern" transform="translate(228 76)" style="--i: -1">
+              <rect class="vern__hus" width="56" height="84" rx="4"/>
+              <text class="vern__nr" x="28" y="15">JFB</text>
+              <rect class="vern__spor" x="19" y="28" width="18" height="30" rx="3"/>
+              <rect class="vern__vippe" x="20.5" y="29.5" width="15" height="13" rx="2.5"/>
+              <text class="vern__nr" x="28" y="75">30 mA</text>
+            </g>
+
+            <!-- Rad 2: åtte kurssikringer -->
+            <g class="vern" transform="translate(54 214)" style="--i: 0">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">01</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <g class="vern" transform="translate(84 214)" style="--i: 1">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">02</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <g class="vern" transform="translate(114 214)" style="--i: 2">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">03</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <g class="vern" transform="translate(144 214)" style="--i: 3">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">04</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <g class="vern" transform="translate(174 214)" style="--i: 4">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">05</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <g class="vern" transform="translate(204 214)" style="--i: 5">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">06</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <g class="vern" transform="translate(234 214)" style="--i: 6">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">07</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <g class="vern" transform="translate(264 214)" style="--i: 7">
+              <rect class="vern__hus" width="26" height="84" rx="4"/>
+              <text class="vern__nr" x="13" y="15">08</text>
+              <rect class="vern__spor" x="8" y="28" width="10" height="30" rx="3"/>
+              <rect class="vern__vippe" x="9.5" y="29.5" width="7" height="13" rx="2"/>
+              <path class="leder leder--ut" pathLength="1" d="M13 84V118"/>
+              <circle class="vern__klemme" cx="13" cy="121" r="2.5"/>
+            </g>
+            <!-- Ledig plass til senere utvidelse -->
+            <rect class="vern__ledig" x="294" y="214" width="26" height="84" rx="4"/>
+            <rect class="vern__ledig" x="324" y="214" width="22" height="84" rx="4"/>
+
+            <!-- Kursfortegnelse -->
+            <text class="skap__skrift" x="54" y="368">KURSFORTEGNELSE</text>
+            <path class="skap__skinne" d="M54 376H346"/>
+            <g class="skap__kurs">
+              <text x="54" y="394">01 Kjøkken · 16 A</text>
+              <text x="54" y="409">02 Bad, gulvvarme · 16 A</text>
+              <text x="54" y="424">03 Stue · 16 A</text>
+              <text x="54" y="439">04 Soverom · 10 A</text>
+              <text x="208" y="394">05 Vaskerom · 16 A</text>
+              <text x="208" y="409">06 Bereder · 16 A</text>
+              <text x="208" y="424">07 Ladeboks · 32 A</text>
+              <text x="208" y="439">08 Utelys · 10 A</text>
+            </g>
+          </svg>
+          <figcaption class="hero__bildetekst">
+            Slik ser et skap ut når vi går: hver kurs merket, jordfeilvern på alt,
+            og plass til to kurser til.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         TJENESTER
+         To oppdrag løftes fram med egen illustrasjon, resten står som en
+         nummerert liste. Bevisst IKKE tre like kort på rad.
+         ================================================================== -->
+    <section class="seksjon" id="tjenester" aria-labelledby="tjenester-tittel">
+      <div class="ramme">
+        <!-- Ny rad i skapet: vern + merkeskilt + DIN-skinne -->
+        <div class="hylle" data-hylle>
+          <span class="kursvern" aria-hidden="true"></span>
+          <p class="hylle__skilt"><span class="hylle__nr">Rad 01</span> Tjenester</p>
+        </div>
+        <div class="gyllen gyllen--omvendt seksjonshode" data-vis>
+          <div>
+            <h2 id="tjenester-tittel">Det vi gjør mest av</h2>
+          </div>
+          <p class="ingress">
+            Sju typer oppdrag fyller det meste av arbeidsuka vår. Er du usikker på hva
+            du trenger, beskriv problemet. Da sier vi hva som må gjøres nå og hva som kan vente.
+          </p>
+        </div>
+
+        <!-- 01 El-sjekk -->
+        <article class="utvalgt gyllen" data-vis>
+          <div class="utvalgt__tekst">
+            <span class="utvalgt__nr">01</span>
+            <h3 class="utvalgt__tittel">El-sjekk og tilstandsrapport</h3>
+            <p>
+              En sertifisert kontrollør går gjennom anlegget etter NEK 405-2: åpner sikringsskapet, måler
+              isolasjon og jordfeil, ser etter varmgang med termokamera og sjekker
+              våtrom, utekurser og alt som er lagt opp i ettertid. Du får en rapport
+              med bilder, der hvert funn er sortert etter hvor mye det haster.
+            </p>
+            <ul class="punkter">
+              <li>Tar to til tre timer i en vanlig enebolig</li>
+              <li>Rapport på e-post innen tre arbeidsdager</li>
+              <li>Flere forsikringsselskap gir lavere premie etter godkjent el-kontroll</li>
+            </ul>
+          </div>
+
+          <!-- Illustrasjon i ren HTML/CSS: utdrag av en rapport -->
+          <div class="rapport" role="img" aria-label="Eksempel på utdrag fra en tilstandsrapport med fem kontrollpunkter: to er i orden, to bør utbedres og ett haster.">
+            <div class="rapport__hode" aria-hidden="true">
+              <span>Tilstandsrapport · utdrag</span>
+              <span>Side 3 / 8</span>
+            </div>
+            <ul class="rapport__liste" aria-hidden="true">
+              <li class="rapport__rad">
+                <span class="rapport__punkt">Isolasjonsmåling<small>Over 200 MΩ på alle kurser</small></span>
+                <span class="status">I orden</span>
+              </li>
+              <li class="rapport__rad">
+                <span class="rapport__punkt">Jordfeilbryter<small>Løser ut ved 22 mA</small></span>
+                <span class="status">I orden</span>
+              </li>
+              <li class="rapport__rad">
+                <span class="rapport__punkt">Kurs 04, soverom<small>Varmgang i tilkobling, 71 °C</small></span>
+                <span class="status status--haster">Haster</span>
+              </li>
+              <li class="rapport__rad">
+                <span class="rapport__punkt">Utekurs, terrasse<small>Koblingsboks uten lokk</small></span>
+                <span class="status status--bor">Bør utbedres</span>
+              </li>
+              <li class="rapport__rad">
+                <span class="rapport__punkt">Bad<small>Stikkontakt uten jordfeilvern</small></span>
+                <span class="status status--bor">Bør utbedres</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 02 Elbil-lading -->
+        <article class="utvalgt utvalgt--mork gyllen gyllen--omvendt pa-mork" data-vis>
+          <svg class="lader" viewBox="-20 0 340 300" role="img" aria-label="Tegning av en ladeboks på vegg med ladekabel, forsynt fra egen kurs.">
+            <!-- Vegg og bakke -->
+            <path class="lader__strek lader__strek--svak" d="M20 270H300"/>
+            <!-- Rør med egen kurs ned til boksen -->
+            <path class="lader__leder" d="M160 0V44"/>
+            <text class="lader__skrift" x="172" y="16">EGEN KURS</text>
+            <text class="lader__skrift" x="172" y="30">32 A · JORDFEILVERN TYPE B</text>
+            <!-- Boksen -->
+            <rect class="lader__strek" x="112" y="44" width="96" height="138" rx="10"/>
+            <rect class="lader__strek lader__strek--svak" x="122" y="54" width="76" height="118" rx="5"/>
+            <path class="lader__leder" d="M140 74H180"/>
+            <circle class="lader__strek" cx="160" cy="126" r="22"/>
+            <circle class="lader__strek lader__strek--svak" cx="160" cy="126" r="13"/>
+            <!-- Kabel og plugg -->
+            <path class="lader__strek" d="M160 148C160 236 66 196 70 246C73 282 236 270 250 204"/>
+            <rect class="lader__strek" x="238" y="170" width="24" height="36" rx="5"/>
+            <path class="lader__strek lader__strek--svak" d="M244 170V160M256 170V160"/>
+            <!-- Målsetting -->
+            <path class="lader__strek lader__strek--svak" d="M52 182V270M46 182H58M46 270H58"/>
+            <text class="lader__skrift" x="44" y="230" text-anchor="end">0,9–1,5 m</text>
+          </svg>
+
+          <div class="utvalgt__tekst">
+            <span class="utvalgt__nr">02</span>
+            <h3 class="utvalgt__tittel">Elbil-lading</h3>
+            <p>
+              Ladeboks på egen kurs med riktig jordfeilvern, montert og dokumentert.
+              De fleste boliger i Bergen har 230 V IT-nett. Da gir en kurs på 32 A
+              opptil 7,4 kW. Det holder til å fylle et vanlig bilbatteri over natten.
+            </p>
+            <ul class="punkter">
+              <li>Vi sjekker først om hovedsikringen tåler det, og setter opp laststyring hvis den ikke gjør det</li>
+              <li>Borettslag og sameier: felles anlegg med lastbalansering og måling per plass</li>
+              <li>Har du kjøpt boks selv, sier vi fra før montering om den ikke passer nettet ditt</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 03–07 som nummerert liste -->
+        <ol class="tjenesteliste">
+          <li class="tjeneste" data-vis>
+            <span class="tjeneste__nr">03</span>
+            <div class="tjeneste__hode">
+              <h3>Sikringsskap</h3>
+              <p class="tjeneste__typisk">Typisk: én arbeidsdag</p>
+            </div>
+            <p>
+              Bytte fra skrusikringer til automatsikringer med jordfeilautomat på hver
+              kurs, overspenningsvern og plass til flere kurser senere. Når vi går, er
+              hver kurs merket og kursfortegnelsen henger i døra.
+            </p>
+          </li>
+          <li class="tjeneste" data-vis>
+            <span class="tjeneste__nr">04</span>
+            <div class="tjeneste__hode">
+              <h3>Nybygg og rehabilitering</h3>
+              <p class="tjeneste__typisk">Typisk: to til seks uker, i etapper</p>
+            </div>
+            <p>
+              Komplett anlegg fra inntak til siste stikkontakt. Vi tegner anlegget
+              sammen med deg før veggene lukkes, slik at brytere og kontakter havner
+              der du faktisk kommer til å bruke dem.
+            </p>
+          </li>
+          <li class="tjeneste" data-vis>
+            <span class="tjeneste__nr">05</span>
+            <div class="tjeneste__hode">
+              <h3>Smarthus og styring</h3>
+              <p class="tjeneste__typisk">Typisk: én til tre dager</p>
+            </div>
+            <p>
+              Styring av lys, varme og lading som også virker når internett er nede.
+              Vi setter opp det du kommer til å bruke, og viser deg hvordan du endrer det selv.
+            </p>
+          </li>
+          <li class="tjeneste" data-vis>
+            <span class="tjeneste__nr">06</span>
+            <div class="tjeneste__hode">
+              <h3>Feilsøking og utbedring</h3>
+              <p class="tjeneste__typisk">Typisk: én til tre timer</p>
+            </div>
+            <p>
+              Sikring som går, jordfeil som kommer og forsvinner, stikkontakt som blir
+              varm. Vi måler oss fram til årsaken og sier hva utbedringen koster før vi begynner på den.
+            </p>
+          </li>
+          <li class="tjeneste" data-vis>
+            <span class="tjeneste__nr">07</span>
+            <div class="tjeneste__hode">
+              <h3>Næringsbygg</h3>
+              <p class="tjeneste__typisk">Typisk: serviceavtale eller prosjekt</p>
+            </div>
+            <p>
+              Service, ombygging og internkontroll for butikk, kontor, verksted og
+              borettslag. Fast kontaktperson, arbeid utenom åpningstid når det trengs,
+              og dokumentasjon som holder når tilsynet kommer.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SLIK JOBBER VI
+         ================================================================== -->
+    <section class="seksjon seksjon--dempet" id="prosess" aria-labelledby="prosess-tittel">
+      <div class="ramme">
+        <!-- Ny rad i skapet: vern + merkeskilt + DIN-skinne -->
+        <div class="hylle" data-hylle>
+          <span class="kursvern" aria-hidden="true"></span>
+          <p class="hylle__skilt"><span class="hylle__nr">Rad 02</span> Slik jobber vi</p>
+        </div>
+        <div class="gyllen gyllen--omvendt">
+        <div class="prosess__side" data-vis>
+          <h2 id="prosess-tittel">Fra første telefon til siste underskrift</h2>
+
+          <div class="lofter">
+            <h3 class="lofter__tittel">Fire ting du kan holde oss til</h3>
+            <ul class="lofter__liste">
+              <li>Prisen er avtalt før vi begynner.</li>
+              <li>Hver kurs er merket når vi går.</li>
+              <li>Vi dekker til, rydder og støvsuger.</li>
+              <li>Papirene kommer uten at du må mase.</li>
+            </ul>
+          </div>
+        </div>
+
+        <ol class="steg">
+          <li class="steg__punkt" data-vis>
+            <span class="steg__nr">Steg 1</span>
+            <h3>Du tar kontakt</h3>
+            <p>
+              Ring eller send skjemaet. Vi svarer innen én arbeidsdag og stiller de
+              spørsmålene vi trenger for å vite om vi må se på anlegget først.
+            </p>
+          </li>
+          <li class="steg__punkt" data-vis>
+            <span class="steg__nr">Steg 2</span>
+            <h3>Befaring</h3>
+            <p>
+              Vi ser på sikringsskapet, måler det som må måles og tar bilder. Små
+              jobber priser vi ofte ut fra bilder du sender, så slipper du å vente på oss.
+            </p>
+          </li>
+          <li class="steg__punkt" data-vis>
+            <span class="steg__nr">Steg 3</span>
+            <h3>Skriftlig tilbud</h3>
+            <p>
+              Fast pris der det lar seg gjøre, med arbeid og materiell spesifisert.
+              Ser vi noe som kan gi tillegg, for eksempel skjulte koblinger i en gammel vegg, står det i tilbudet.
+            </p>
+          </li>
+          <li class="steg__punkt" data-vis>
+            <span class="steg__nr">Steg 4</span>
+            <h3>Arbeidet</h3>
+            <p>
+              Vi kommer til avtalt tid og dekker til gulv og møbler. Dukker det opp
+              noe uforutsett, stopper vi og avtaler pris med deg før vi fortsetter.
+            </p>
+          </li>
+          <li class="steg__punkt" data-vis>
+            <span class="steg__nr">Steg 5</span>
+            <h3>Dokumentasjon</h3>
+            <p>
+              Du får samsvarserklæring, oppdatert kursfortegnelse og måleresultatene
+              fra sluttkontrollen samlet i én PDF. Den skal du ta vare på så lenge
+              anlegget står.
+            </p>
+          </li>
+        </ol>
+      </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         PROSJEKTER
+         PLASSHOLDER: alle tre prosjektene er oppdiktet. Bildeplassene byttes
+         ut med ekte bilder – se oppskrift i css/komponenter.css, «Bildeplass».
+         ================================================================== -->
+    <section class="seksjon" id="prosjekter" aria-labelledby="prosjekter-tittel">
+      <div class="ramme">
+        <!-- Ny rad i skapet: vern + merkeskilt + DIN-skinne -->
+        <div class="hylle" data-hylle>
+          <span class="kursvern" aria-hidden="true"></span>
+          <p class="hylle__skilt"><span class="hylle__nr">Rad 03</span> Prosjekter</p>
+        </div>
+        <div class="seksjonshode" data-vis>
+          <h2 id="prosjekter-tittel">Tre jobber fra det siste året</h2>
+        </div>
+
+        <div class="prosjekter">
+          <article class="prosjekt prosjekt--stort" data-vis>
+            <div class="bildeplass bildeplass--4-3">
+              <span class="bildeplass__tekst">Bilde 4:3 · nytt sikringsskap med åpen dør</span>
+            </div>
+            <div class="prosjekt__tekst">
+              <p class="prosjekt__sted">Enebolig fra 1974 · Fana</p>
+              <h3>Nytt sikringsskap og fjorten kurser lagt om</h3>
+              <p>
+                Skapet hadde skrusikringer, og to kurser forsynte halve huset. Vi
+                delte opp kursene, satte inn jordfeilautomater og la egne kurser til
+                induksjonstopp og ladeboks.
+              </p>
+              <dl class="fakta">
+                <div><dt>Omfang</dt><dd>Skap, 14 kurser, ladeboks</dd></div>
+                <div><dt>Varighet</dt><dd>3 arbeidsdager</dd></div>
+                <div><dt>Uten strøm</dt><dd>1 dag</dd></div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="prosjekt" data-vis>
+            <div class="bildeplass bildeplass--3-2">
+              <span class="bildeplass__tekst">Bilde 3:2 · ladepunkter i garasje</span>
+            </div>
+            <div class="prosjekt__tekst">
+              <p class="prosjekt__sted">Borettslag · Åsane</p>
+              <h3>38 ladepunkter i felles garasje</h3>
+              <p>
+                Felles føringsvei med lastbalansering mot byggets hovedsikring. Hver
+                andelseier betaler for eget forbruk.
+              </p>
+              <dl class="fakta">
+                <div><dt>Omfang</dt><dd>38 plasser</dd></div>
+                <div><dt>Varighet</dt><dd>4 uker</dd></div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="prosjekt" data-vis>
+            <div class="bildeplass bildeplass--3-2">
+              <span class="bildeplass__tekst">Bilde 3:2 · ny fordeling i produksjonslokale</span>
+            </div>
+            <div class="prosjekt__tekst">
+              <p class="prosjekt__sted">Bakeri · Sandviken</p>
+              <h3>Ny fordeling og belysning i produksjonslokalet</h3>
+              <p>
+                Arbeidet ble gjort over to helger, slik at bakeriet ikke mistet en
+                eneste produksjonsdag.
+              </p>
+              <dl class="fakta">
+                <div><dt>Omfang</dt><dd>Fordeling, 46 armaturer</dd></div>
+                <div><dt>Varighet</dt><dd>2 helger</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         TRYGGHET
+         PLASSHOLDER: INGEN av påstandene under er ekte. Registrering hos DSB,
+         forsikring og reklamasjonsvilkår skal bare stå hvis kunden kan
+         dokumentere dem. Det er ingen kundeomtaler her – legg aldri inn
+         oppdiktede, kun ekte med navn og samtykke.
+         ================================================================== -->
+    <section class="seksjon seksjon--mork pa-mork" id="trygghet" aria-labelledby="trygghet-tittel">
+      <div class="ramme">
+        <!-- Ny rad i skapet: vern + merkeskilt + DIN-skinne -->
+        <div class="hylle" data-hylle>
+          <span class="kursvern" aria-hidden="true"></span>
+          <p class="hylle__skilt"><span class="hylle__nr">Rad 04</span> Trygghet</p>
+        </div>
+        <div class="gyllen gyllen--omvendt">
+          <div data-vis>
+            <h2 id="trygghet-tittel">Papirene i orden</h2>
+            <p class="trygghet__ingress">
+              Elektrisk arbeid som er gjort feil, ser du ikke før det blir varmt.
+              Dette bør du spørre enhver elektriker om, oss også.
+            </p>
+          </div>
+
+          <dl class="garantier">
+            <div class="garanti" data-vis>
+              <dt>Registrert i Elvirksomhetsregisteret</dt>
+              <dd>
+                Alle som utfører elektrisk arbeid for andre, skal være registrert hos
+                DSB og ha en faglig ansvarlig med installatørutdanning. Du kan selv
+                søke opp virksomheten i registeret.
+              </dd>
+            </div>
+            <div class="garanti" data-vis>
+              <dt>Samsvarserklæring på hver jobb</dt>
+              <dd>
+                Erklæringen bekrefter at arbeidet følger forskriften, og viser hva
+                som er gjort og hvilke målinger som er tatt. Du får den uten å be om
+                det.
+              </dd>
+            </div>
+            <div class="garanti" data-vis>
+              <dt>Ansvarsforsikring</dt>
+              <dd>
+                Dekker skade på bolig og eiendeler som følge av arbeidet vårt.
+                Forsikringsbeviset sender vi hvis du ber om det.
+              </dd>
+            </div>
+            <div class="garanti" data-vis>
+              <dt>Fem års reklamasjonsrett</dt>
+              <dd>
+                Etter håndverkertjenesteloven kan du som forbruker reklamere i inntil
+                fem år på arbeid som er ment å vare. Feil vi har gjort, retter vi
+                uten kostnad for deg.
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Tydelig merket plass til ekte omtaler. Ikke fyll med oppdiktet tekst. -->
+        <aside class="omtaler" aria-labelledby="omtaler-tittel" data-vis>
+          <span class="omtaler__merke">Demo</span>
+          <div>
+            <h3 id="omtaler-tittel">Plass til kundeomtaler</h3>
+            <p>
+              Her kommer omtaler fra ekte kunder, med navn og hvilket oppdrag det
+              gjaldt. Denne demosiden viser ingen, fordi vi ikke dikter opp omtaler.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SPØRSMÅL OG PRISER
+         PLASSHOLDER: alle priser er veiledende gjetninger.
+         ================================================================== -->
+    <section class="seksjon" id="sporsmal" aria-labelledby="sporsmal-tittel">
+      <div class="ramme">
+        <!-- Ny rad i skapet: vern + merkeskilt + DIN-skinne -->
+        <div class="hylle" data-hylle>
+          <span class="kursvern" aria-hidden="true"></span>
+          <p class="hylle__skilt"><span class="hylle__nr">Rad 05</span> Spørsmål og priser</p>
+        </div>
+        <div class="gyllen">
+        <div>
+          <div class="seksjonshode" data-vis>
+            <h2 id="sporsmal-tittel">Det folk spør om før de ringer</h2>
+          </div>
+
+          <div class="sporsmalsliste" data-vis>
+            <details class="sporsmal">
+              <summary class="sporsmal__tittel">Trenger jeg elektriker for å montere ladeboks?<span class="sporsmal__tegn" aria-hidden="true"></span></summary>
+              <div class="sporsmal__svar">
+                <p>
+                  Ja. En ladeboks er en fast installasjon og skal monteres av en
+                  registrert elektrovirksomhet. Den skal ha egen kurs og jordfeilvern
+                  som er beregnet for elbillading, og du skal få samsvarserklæring.
+                </p>
+                <p>
+                  Uten erklæringen kan du få problemer både med forsikringen og når
+                  boligen skal selges.
+                </p>
+              </div>
+            </details>
+
+            <details class="sporsmal">
+              <summary class="sporsmal__tittel">Hvor ofte bør man ta el-sjekk?<span class="sporsmal__tegn" aria-hidden="true"></span></summary>
+              <div class="sporsmal__svar">
+                <p>
+                  Vi anbefaler hvert tiende år i en vanlig bolig, og hvert femte år
+                  hvis anlegget er eldre enn 30 år, har skrusikringer eller er bygget
+                  på av flere eiere.
+                </p>
+                <p>
+                  Ta også en sjekk når du kjøper bolig, og med én gang hvis sikringer
+                  er varme, går ofte eller det lukter svidd.
+                </p>
+              </div>
+            </details>
+
+            <details class="sporsmal">
+              <summary class="sporsmal__tittel">Hva har jeg lov til å gjøre selv?<span class="sporsmal__tegn" aria-hidden="true"></span></summary>
+              <div class="sporsmal__svar">
+                <p>
+                  Du kan bytte lyspærer og skrusikringer, skifte dekklokk på brytere
+                  og stikkontakter, montere støpsel på en ledning og koble til lamper
+                  i tørre rom.
+                </p>
+                <p>
+                  Alt som er fast installert, som nye stikkontakter, flytting av brytere, gulvvarme og ladeboks, skal gjøres av elektriker. DSB har en
+                  fullstendig liste på sine nettsider.
+                </p>
+              </div>
+            </details>
+
+            <details class="sporsmal">
+              <summary class="sporsmal__tittel">Hva koster det å bytte sikringsskap?<span class="sporsmal__tegn" aria-hidden="true"></span></summary>
+              <div class="sporsmal__svar">
+                <p>
+                  For en enebolig med ti til seksten kurser ligger det som regel
+                  mellom 30 000 og 55 000 kroner inkludert mva. Prisen avhenger av
+                  antall kurser, om inntaket må oppgraderes og hvor ryddig det gamle
+                  anlegget er. Du får fast pris etter befaring.
+                </p>
+              </div>
+            </details>
+
+            <details class="sporsmal">
+              <summary class="sporsmal__tittel">Hvor lenge er strømmen borte mens dere jobber?<span class="sporsmal__tegn" aria-hidden="true"></span></summary>
+              <div class="sporsmal__svar">
+                <p>
+                  Når vi bytter sikringsskap, er strømmen normalt borte fra morgen til
+                  ettermiddag samme dag. Ved mindre jobber kobler vi bare ut den
+                  kursen vi arbeider på.
+                </p>
+                <p>
+                  Har du fryser, akvarium eller hjemmekontor, si fra, så planlegger vi rundt det.
+                </p>
+              </div>
+            </details>
+
+            <details class="sporsmal">
+              <summary class="sporsmal__tittel">Tar dere små jobber?<span class="sporsmal__tegn" aria-hidden="true"></span></summary>
+              <div class="sporsmal__svar">
+                <p>
+                  Ja. En ny stikkontakt eller en bryter som skal byttes er helt
+                  greit. Vi prøver å samle småjobber i samme område på samme dag, så
+                  blir kjøringen billigere for deg.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <aside class="prisguide" aria-labelledby="pris-tittel" data-vis>
+          <span class="etikett">Prisguide</span>
+          <h3 id="pris-tittel">Hva det pleier å koste</h3>
+          <dl class="prisliste">
+            <div class="prisliste__rad">
+              <dt>El-sjekk, enebolig</dt>
+              <dd>fra 3 900 kr</dd>
+            </div>
+            <div class="prisliste__rad">
+              <dt>Ladeboks ferdig montert, inntil 10 m fra skap</dt>
+              <dd>fra 14 900 kr</dd>
+            </div>
+            <div class="prisliste__rad">
+              <dt>Nytt sikringsskap, 12 kurser</dt>
+              <dd>fra 34 000 kr</dd>
+            </div>
+            <div class="prisliste__rad">
+              <dt>Ny stikkontakt på eksisterende kurs</dt>
+              <dd>fra 1 900 kr</dd>
+            </div>
+            <div class="prisliste__rad">
+              <dt>Timepris, montør</dt>
+              <dd>1 150 kr</dd>
+            </div>
+          </dl>
+          <p class="prisguide__note">
+            Veiledende priser inkludert mva. Endelig pris får du skriftlig etter befaring.
+          </p>
+        </aside>
+      </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         KONTAKT
+         Skjemaet er en ren frontend-demo: ingenting sendes noe sted.
+         Validering og suksessmelding ligger i js/skjema.js.
+         ================================================================== -->
+    <section class="seksjon seksjon--dempet" id="kontakt" aria-labelledby="kontakt-tittel">
+      <div class="ramme">
+        <!-- Ny rad i skapet: vern + merkeskilt + DIN-skinne -->
+        <div class="hylle" data-hylle>
+          <span class="kursvern" aria-hidden="true"></span>
+          <p class="hylle__skilt"><span class="hylle__nr">Rad 06</span> Kontakt</p>
+        </div>
+        <div class="gyllen">
+        <div>
+          <div class="seksjonshode" data-vis>
+            <h2 id="kontakt-tittel">Fortell hva du trenger</h2>
+            <p class="kontakt__ingress">
+              Beskriv jobben så godt du kan. Et bilde av sikringsskapet sparer ofte en
+              befaring. Det kan du sende på e-post etterpå.
+            </p>
+          </div>
+
+          <form class="skjema" novalidate data-skjema data-vis>
+            <div class="feltrad">
+              <div class="felt">
+                <label class="felt__navn" for="navn">Navn</label>
+                <input class="felt__inn" id="navn" name="navn" type="text" autocomplete="name" required aria-describedby="navn-feil">
+                <p class="felt__feil" id="navn-feil" aria-live="polite"></p>
+              </div>
+              <div class="felt">
+                <label class="felt__navn" for="telefon">Telefon</label>
+                <input class="felt__inn" id="telefon" name="telefon" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="telefon-feil">
+                <p class="felt__feil" id="telefon-feil" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="feltrad">
+              <div class="felt">
+                <label class="felt__navn" for="epost">E-post</label>
+                <input class="felt__inn" id="epost" name="epost" type="email" autocomplete="email" required aria-describedby="epost-feil">
+                <p class="felt__feil" id="epost-feil" aria-live="polite"></p>
+              </div>
+              <div class="felt">
+                <label class="felt__navn" for="gjelder">Hva gjelder det? <span class="felt__valgfritt">(valgfritt)</span></label>
+                <select class="felt__inn" id="gjelder" name="gjelder">
+                  <option value="">Velg …</option>
+                  <option>El-sjekk</option>
+                  <option>Elbil-lading</option>
+                  <option>Sikringsskap</option>
+                  <option>Nybygg eller rehabilitering</option>
+                  <option>Smarthus og styring</option>
+                  <option>Feilsøking</option>
+                  <option>Næring eller borettslag</option>
+                  <option>Noe annet</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="felt">
+              <label class="felt__navn" for="melding">Beskriv jobben</label>
+              <textarea class="felt__inn" id="melding" name="melding" rows="5" required aria-describedby="melding-hjelp melding-feil"></textarea>
+              <p class="felt__hjelp" id="melding-hjelp">Ta gjerne med adresse, byggeår og hva slags sikringer du har.</p>
+              <p class="felt__feil" id="melding-feil" aria-live="polite"></p>
+            </div>
+
+            <div class="skjema__slutt">
+              <button class="knapp" type="submit">Send forespørsel</button>
+              <p class="skjema__note">Demo: skjemaet sender ingenting. Vi svarer innen én arbeidsdag.</p>
+            </div>
+          </form>
+
+          <!-- Vises av js/skjema.js når skjemaet er gyldig -->
+          <div class="kvittering" role="status" tabindex="-1" hidden data-kvittering>
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="16" cy="16" r="14"/>
+              <path d="M9.500 16.500l4.500 4.500 8.500-9.500" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <h3>Takk, <span data-kvittering-navn></span>. Forespørselen er mottatt.</h3>
+              <p>
+                Vi ringer eller sender e-post innen én arbeidsdag. Haster det, ring
+                <a href="tel:+4755000000">55 00 00 00</a>.
+              </p>
+              <button class="knapp knapp--kant" type="button" data-ny-foresporsel>Send en ny forespørsel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLASSHOLDER: all kontaktinfo og åpningstider -->
+        <aside class="kontaktinfo" aria-label="Kontaktinformasjon" data-vis>
+          <dl class="kontaktinfo__liste">
+            <div>
+              <dt>Telefon</dt>
+              <dd><a class="kontaktinfo__stor" href="tel:+4755000000">55 00 00 00</a></dd>
+            </div>
+            <div>
+              <dt>E-post</dt>
+              <dd><a href="mailto:post@straumneselektro.no">post@straumneselektro.no</a></dd>
+            </div>
+            <div>
+              <dt>Verksted og kontor</dt>
+              <dd>Sandviksboder 14<br>5035 Bergen</dd>
+            </div>
+          </dl>
+
+          <h3 class="kontaktinfo__tittel">Åpningstider</h3>
+          <table class="tider">
+            <tbody>
+              <tr><th scope="row">Mandag–torsdag</th><td>07.00–15.30</td></tr>
+              <tr><th scope="row">Fredag</th><td>07.00–14.00</td></tr>
+              <tr><th scope="row">Lørdag og søndag</th><td>Stengt</td></tr>
+            </tbody>
+          </table>
+          <p class="kontaktinfo__vakt">
+            Akutt feil utenom åpningstid? Ring samme nummer. Telefonen er satt over til montøren som har vakt.
+          </p>
+        </aside>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================================================================
+       BUNN
+       ==================================================================== -->
+  <footer class="bunn pa-mork">
+    <div class="ramme">
+      <div class="bunn__kolonner">
+        <div>
+          <a class="logo" href="#topp" aria-label="Straumnes Elektro AS – til toppen">
+            <svg class="logo__merke" viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M27 10H17a5 5 0 0 0 0 10h6a5 5 0 0 1 0 10H13" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+              <circle cx="29.5" cy="10" r="4" fill="#d4a437"/>
+              <circle cx="10.5" cy="30" r="4" fill="#d4a437"/>
+            </svg>
+            <span>
+              <span class="logo__navn">Straumnes</span>
+              <span class="logo__tillegg">Elektro AS</span>
+            </span>
+          </a>
+          <p class="bunn__om">
+            Elektroinstallatør i Bergen. Vi tar oppdrag for privatkunder, borettslag
+            og næring i Bergen, Askøy, Øygarden og Bjørnafjorden.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="bunn__tittel">Sider</h2>
+          <ul class="bunn__liste">
+            <li><a href="#tjenester">Tjenester</a></li>
+            <li><a href="#prosess">Slik jobber vi</a></li>
+            <li><a href="#prosjekter">Prosjekter</a></li>
+            <li><a href="#sporsmal">Spørsmål og priser</a></li>
+            <li><a href="html/personvern.html">Personvern</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="bunn__tittel">Kontakt</h2>
+          <!-- PLASSHOLDER -->
+          <ul class="bunn__liste">
+            <li><a href="tel:+4755000000">55 00 00 00</a></li>
+            <li><a href="mailto:post@straumneselektro.no">post@straumneselektro.no</a></li>
+            <li>Sandviksboder 14, 5035 Bergen</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bunn__slutt">
+        <!-- PLASSHOLDER: organisasjonsnummer -->
+        <p>© <span data-ar>2026</span> Straumnes Elektro AS · Org.nr. 000 000 000 MVA</p>
+        <p>Demoside – bedriften er oppdiktet.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

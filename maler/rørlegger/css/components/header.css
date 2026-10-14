@@ -1,0 +1,249 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  transition: translate 600ms var(--ease-out);
+}
+
+/* Glir ut ved rulling nedover (js/modules/header.js), men aldri når
+   noe i den har tastaturfokus */
+.site-header.is-hidden:not(:focus-within) {
+  translate: 0 -101%;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-3) var(--sp-4);
+  min-height: 4.236rem;
+}
+
+/* Logo */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-right: auto;
+  color: var(--c-kull);
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: var(--c-kull);
+}
+
+/* Merket er en S formet som en vannlås, tegnet som et rør i snitt:
+   en tykk strek (røret) med en tynnere strek i bakgrunnsfargen oppå
+   (hulrommet), og en messingmuffe i hver ende. Samme strek som i
+   tegningene og i røret som følger siden. */
+.logo__mark {
+  flex: none;
+  width: 2.618rem;
+  height: 2.618rem;
+}
+
+.logo__pipe,
+.logo__bore {
+  fill: none;
+}
+
+.logo__pipe {
+  stroke: currentColor;
+  stroke-width: 6.5;
+}
+
+.logo__bore {
+  stroke: var(--logo-bg, var(--bg));
+  stroke-width: 3.2;
+}
+
+.logo__muffe {
+  fill: var(--accent);
+}
+
+/* Merket vipper litt når man holder over logoen */
+.logo__mark {
+  transition: rotate 700ms var(--ease-out);
+}
+
+.logo:hover .logo__mark {
+  rotate: -8deg;
+}
+
+.logo__text {
+  display: grid;
+  line-height: 1;
+}
+
+.logo__name {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.logo__tag {
+  margin-top: 3px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Navigasjon – mobil først: en liste som folder seg ut under headeren */
+.nav {
+  order: 3;
+  flex-basis: 100%;
+  padding-bottom: var(--sp-4);
+}
+
+/* Uten JavaScript står menyen åpen. Med JS skjules den til man trykker. */
+.js .nav:not(.is-open) {
+  display: none;
+}
+
+.nav__list {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.nav__link {
+  display: block;
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--c-kull);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav__link:hover,
+.nav__link[aria-current="true"] {
+  color: var(--brand);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.header-phone {
+  display: none;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--c-kull);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.header-phone svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--brand);
+}
+
+.site-header__cta {
+  display: none;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 2.618rem;
+  padding: 0 var(--sp-3);
+  background: none;
+  border: var(--line-w) solid var(--c-kull);
+  border-radius: var(--r-2);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.js .nav-toggle {
+  display: inline-flex;
+}
+
+.nav-toggle__icon {
+  position: relative;
+  width: 1.1rem;
+  height: 0.6rem;
+  border-block: var(--line-w) solid currentColor;
+  transition: height var(--dur) var(--ease);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon {
+  height: 0;
+}
+
+@media (min-width: 30rem) {
+  .site-header__cta {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 40rem) {
+  .header-phone {
+    display: inline-flex;
+  }
+}
+
+/* Bred skjerm: menyen på én linje */
+@media (min-width: 68rem) {
+  .site-header__inner {
+    flex-wrap: nowrap;
+    gap: var(--sp-5);
+  }
+
+  .logo {
+    margin-right: 0;
+  }
+
+  .nav,
+  .js .nav:not(.is-open) {
+    display: block;
+    order: 0;
+    flex-basis: auto;
+    margin-inline: auto;
+    padding: 0;
+  }
+
+  .nav__list {
+    display: flex;
+    gap: var(--sp-5);
+    border: 0;
+  }
+
+  .nav__link {
+    position: relative;
+    padding: var(--sp-3) 0;
+    border: 0;
+    font-size: 0.9375rem;
+  }
+
+  /* Messingstrek som vokser frem fra venstre ved hover, og blir
+     stående under seksjonen man er i */
+  .nav__link::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 500ms var(--ease-out);
+  }
+
+  .nav__link:hover::after,
+  .nav__link[aria-current="true"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .js .nav-toggle {
+    display: none;
+  }
+}

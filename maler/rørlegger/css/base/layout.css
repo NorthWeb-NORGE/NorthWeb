@@ -1,0 +1,70 @@
+.container {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+.section--alt {
+  background: var(--bg-alt);
+}
+
+/* Gyllent snitt som rutenett: innhold φ, sidekolonne 1 */
+.split {
+  display: grid;
+  gap: var(--sp-6);
+}
+
+@media (min-width: 60rem) {
+  .split {
+    grid-template-columns: minmax(0, var(--col-major)) minmax(0, var(--col-minor));
+    gap: var(--sp-7);
+  }
+
+  .split--reverse {
+    grid-template-columns: minmax(0, var(--col-minor)) minmax(0, var(--col-major));
+  }
+}
+
+/* Seksjonshode: overskrift i den brede kolonnen, ingress i den smale */
+.section-head {
+  display: grid;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+@media (min-width: 60rem) {
+  .section-head {
+    grid-template-columns: minmax(0, var(--col-major)) minmax(0, var(--col-minor));
+    gap: var(--sp-7);
+    align-items: end;
+    margin-bottom: var(--sp-7);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--sp-4);
+  top: -10rem;
+  z-index: 100;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--c-kull);
+  color: var(--c-porselen);
+  border-radius: var(--r-2);
+}
+
+.skip-link:focus {
+  top: var(--sp-4);
+  color: var(--c-porselen);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,91 @@
+/* Liten, moderne reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Ankerlenker skal ikke havne bak den klistrede headeren */
+  scroll-padding-top: 5.5rem;
+}
+
+body,
+h1, h2, h3, h4,
+p, figure, blockquote,
+dl, dd, ol, ul {
+  margin: 0;
+}
+
+ol[class],
+ul[class] {
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+address {
+  font-style: normal;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* JS-rullingen (js/modules/smoothscroll.js) styrer selv; da må CSS-varianten av */
+html.has-smooth-scroll {
+  scroll-behavior: auto;
+}
+
+/* Seksjoner som får fokus via en menylenke skal ikke få ramme rundt seg */
+section:focus {
+  outline: none;
+}
+
+/* Synlig fokus for tastaturbrukere, likt over hele siden */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

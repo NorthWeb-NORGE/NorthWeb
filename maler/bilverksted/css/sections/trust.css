@@ -1,0 +1,54 @@
+/* Trygghet: ingen merker eller «badges». En spesifikasjonsliste – begrep til
+   venstre i overskriftsfonten, forklaring til høyre. */
+
+.spec {
+  border-top: var(--stroke) solid var(--fg);
+}
+
+.spec__row {
+  display: grid;
+  gap: var(--s-3);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--line);
+}
+
+.spec dt {
+  font-family: var(--font-display);
+  font-size: var(--step-h);
+  line-height: 1.272;
+}
+
+.spec dd {
+  color: var(--fg-muted);
+}
+
+.spec dd strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+@media (min-width: 56em) {
+  .spec__row {
+    grid-template-columns: 1fr 1.618fr;
+    gap: var(--s-6);
+    padding-block: var(--s-6);
+  }
+}
+
+/* --- Varsellampe-seksjonen ------------------------------------------------- */
+.lampsec__text > * + * {
+  margin-top: var(--s-5);
+}
+
+.lampsec__grid {
+  display: grid;
+  gap: var(--s-6);
+}
+
+@media (min-width: 56em) {
+  .lampsec__grid {
+    grid-template-columns: var(--cols-golden-rev);
+    gap: var(--s-7);
+    align-items: start;
+  }
+}
