@@ -230,57 +230,22 @@ $$(".lead").forEach(function(l){
 
 var mm=gsap.matchMedia();
 
-/* behandlinger: horisontal scroll på store skjermer */
-mm.add("(min-width: 900px)",function(){
-  var track=$(".track"), sec=$(".counter");
-  var dist=function(){return track.scrollWidth-window.innerWidth};
-  var h=gsap.to(track,{x:function(){return -dist()},ease:"none",
-    scrollTrigger:{trigger:sec,start:"top top",end:function(){return "+="+dist()},pin:true,scrub:1,invalidateOnRefresh:true,anticipatePin:1}});
-  gsap.to(".progress i",{scaleX:1,ease:"none",scrollTrigger:{trigger:sec,start:"top top",end:function(){return "+="+dist()},scrub:true}});
-  $$(".panel .pic svg").forEach(function(s){
-    gsap.fromTo(s,{rotate:-20,scale:.85},{rotate:14,scale:1,ease:"none",scrollTrigger:{trigger:s.parentNode,containerAnimation:h,start:"left right",end:"right left",scrub:true}});
-  });
-  $$(".panel:not(.intro)").forEach(function(p){
-    gsap.from(p.querySelectorAll("h3, p"),{y:30,autoAlpha:0,duration:.9,stagger:.06,ease:"power3.out",scrollTrigger:{trigger:p,containerAnimation:h,start:"left 85%"}});
-  });
+/* behandlinger: menyen glir inn rad for rad */
+gsap.from(".mi",{y:30,autoAlpha:0,duration:.9,stagger:.07,ease:"power3.out",scrollTrigger:{trigger:".menu-list",start:"top 82%"}});
 
-  /* 180 minutter: teller og aktivt steg */
-  var hrs=$("#hrs"), hb=$("#hrs-bar");
-  ScrollTrigger.create({trigger:".steps",start:"top 60%",end:"bottom 60%",scrub:true,onUpdate:function(st){
-    hrs.textContent=Math.round(st.progress*TOTAL); hb.style.transform="scaleX("+st.progress+")";
-  }});
-  $$(".step").forEach(function(s){
-    ScrollTrigger.create({trigger:s,start:"top 60%",end:"bottom 60%",toggleClass:{targets:s,className:"on"}});
-  });
-  return function(){ hrs.textContent=TOTAL; };
-});
-mm.add("(max-width: 899px)",function(){
-  $$(".panel").forEach(function(p){
-    gsap.from(p,{y:50,autoAlpha:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:p,start:"top 88%"}});
-  });
-  var hrs=$("#hrs");
-  ScrollTrigger.create({trigger:".clock",start:"top 75%",once:true,onEnter:function(){
-    var o={v:0};gsap.to(o,{v:TOTAL,duration:2,ease:"power2.out",onUpdate:function(){hrs.textContent=Math.round(o.v)}});
-    gsap.to("#hrs-bar",{scaleX:1,duration:2,ease:"power2.out"});
-  }});
-});
+/* 180 minutter: telleren går og stegene tennes etter tur langs tidslinjen */
+ScrollTrigger.create({trigger:".steps",start:"top 78%",once:true,onEnter:function(){
+  var o={v:0};
+  gsap.to(o,{v:TOTAL,duration:2.8,ease:"power2.inOut",onUpdate:function(){$("#hrs").textContent=Math.round(o.v)}});
+  gsap.to("#hrs-bar",{scaleX:1,duration:2.8,ease:"power2.inOut"});
+  $$(".step").forEach(function(s,i){gsap.delayedCall(i*.55,function(){s.classList.add("on")})});
+}});
+gsap.from(".step",{y:30,autoAlpha:0,duration:.9,stagger:.12,ease:"power3.out",scrollTrigger:{trigger:".steps",start:"top 85%"}});
 
 /* frisørliste */
-gsap.from(".cake",{y:30,autoAlpha:0,duration:.9,stagger:.07,ease:"power3.out",scrollTrigger:{trigger:".cakes",start:"top 82%"}});
+gsap.from(".cake",{y:60,autoAlpha:0,duration:1.1,stagger:.09,ease:"power3.out",scrollTrigger:{trigger:".cakes",start:"top 82%"}});
 gsap.from(".biz",{y:80,autoAlpha:0,duration:1.3,ease:"expo.out",scrollTrigger:{trigger:".biz",start:"top 88%"}});
 gsap.to(".biz .bg-stamp",{rotate:180,ease:"none",scrollTrigger:{trigger:".order",start:"top bottom",end:"bottom top",scrub:true}});
-
-/* portrett som følger musa */
-if(window.matchMedia("(hover:hover) and (min-width:900px)").matches){
-  var pv=$("#preview"), pu=$("#preview-use");
-  var qx=gsap.quickTo(pv,"x",{duration:.6,ease:"power3"}), qy=gsap.quickTo(pv,"y",{duration:.6,ease:"power3"});
-  gsap.set(pv,{xPercent:-50,yPercent:-50,scale:.6,rotate:-10});
-  window.addEventListener("mousemove",function(e){qx(e.clientX+130);qy(e.clientY)});
-  $$(".cake").forEach(function(r){
-    r.addEventListener("mouseenter",function(){pu.setAttribute("href","#"+r.dataset.cake);gsap.to(pv,{autoAlpha:1,scale:1,rotate:0,duration:.5,ease:"back.out(1.6)"});});
-    r.addEventListener("mouseleave",function(){gsap.to(pv,{autoAlpha:0,scale:.6,rotate:-10,duration:.35,ease:"power2.in"});});
-  });
-}
 
 /* sitat: ord lyser opp mens du scroller */
 var q=$("#quote");

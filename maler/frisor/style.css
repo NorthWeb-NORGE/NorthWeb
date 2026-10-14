@@ -320,3 +320,101 @@ footer dd{margin:0;text-align:right}
 }
 @media (max-width:440px){.top .wrap{gap:1rem}.top .btn{flex-shrink:0;padding:.75em 1em}.top .btn .arrow{display:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* =====================================================================
+   UNIK LAYOUT · SALONG LYS
+   Redaksjonell og sentrert som et magasinomslag: buede portretter,
+   prisliste i menystil, vannrett tidslinje og frisørkort med portrett.
+   ===================================================================== */
+
+/* Hero: sentrert, med buede portretter på hver side */
+.hero .wrap{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:clamp(9rem,14vw,12rem)}
+.hero h1{max-width:none;margin-inline:auto}
+.hero-row{flex-direction:column;align-items:center;justify-content:center;gap:1.6rem}
+.hero .actions,.today{justify-content:center}
+.stamp-wrap{left:0;right:0;margin-inline:auto;top:calc(76px + 1.5rem);width:clamp(96px,10vw,130px)}
+.float{display:none}
+.arch{position:absolute;z-index:1;bottom:0;margin:0;width:clamp(170px,17vw,250px);aspect-ratio:3/4.3;border-radius:999px 999px 0 0;overflow:hidden;
+  background:linear-gradient(180deg,rgba(241,166,126,.42),rgba(91,51,70,.75));box-shadow:inset 0 0 0 1px rgba(247,242,236,.14);display:grid;align-items:end;justify-items:center}
+.arch svg{width:125%;height:auto;margin-bottom:-8%}
+.arch.a1{left:clamp(16px,4vw,64px)}
+.arch.a2{right:clamp(16px,4vw,64px)}
+@media (max-width:1180px){.arch{width:150px;opacity:.5}}
+@media (max-width:900px){.arch{display:none}}
+
+/* Løpebånd: tynt og elegant */
+.marquee{padding-block:.9rem;background:var(--white)}
+.marquee-group{font-size:clamp(1.3rem,2.4vw,1.9rem);font-style:italic;gap:1.8rem;padding-right:1.8rem}
+
+/* Behandlinger: salongmeny med prikkede ledelinjer */
+.menu{padding-block:clamp(5rem,11vw,9rem);background:var(--white);border-bottom:1px solid var(--line)}
+.menu-head{max-width:40rem;margin:0 auto clamp(3rem,6vw,4.5rem);display:grid;justify-items:center;gap:1rem;text-align:center}
+.menu-head .lead{margin-inline:auto}
+.menu-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(2rem,6vw,5rem);border-top:1px solid var(--ink)}
+.mi{display:grid;grid-template-columns:58px minmax(0,1fr);align-items:center;gap:1.2rem;padding:1.5rem 0;border-bottom:1px solid var(--line)}
+.mi-ic{width:58px;height:58px;border-radius:50%;background:var(--tint);display:grid;place-items:center;transition:transform .7s var(--ease),background .4s}
+.mi-ic svg{width:80%;height:auto}
+.mi:hover .mi-ic{transform:rotate(-14deg) scale(1.1);background:var(--rose)}
+.mi-top{display:flex;align-items:baseline;gap:.8rem}
+.mi-top b{font-family:var(--f-display);font-weight:400;font-size:1.65rem;line-height:1.1;white-space:nowrap}
+.mi-top .dots{flex:1;min-width:1rem;border-bottom:2px dotted var(--line);transform:translateY(-.3em)}
+.mi-top .pr{font-family:var(--f-display);font-style:italic;font-size:1.3rem;color:var(--accent-text);white-space:nowrap}
+.mi p{margin-top:.35rem;color:var(--muted);font-size:.95rem;display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.mi p span{flex-shrink:0;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--tint);padding:.3em .7em;border-radius:99px}
+@media (max-width:860px){.menu-list{grid-template-columns:1fr}}
+@media (max-width:480px){.mi-top{flex-wrap:wrap}.mi-top .dots{display:none}.mi-top .pr{width:100%}}
+
+/* Bak stolen: lys bakgrunn og vannrett tidslinje */
+.process{background:var(--tint);color:var(--ink)}
+.process .wrap{grid-template-columns:1fr;gap:clamp(2.5rem,5vw,4rem)}
+.process .kicker{color:var(--accent-text)}
+.clock{position:static;height:auto;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"k k" "h p" "h b";align-items:end;column-gap:clamp(2rem,6vw,5rem);row-gap:1rem;padding-top:clamp(5rem,10vw,8rem)}
+.clock .kicker{grid-area:k}.hours{grid-area:h}.clock p{grid-area:p;opacity:.75}.bar{grid-area:b;max-width:none;background:var(--line)}
+.hours small{color:var(--accent-text)}
+.bar i{background:var(--accent-text)}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.6rem;padding:0 0 clamp(5rem,10vw,8rem);position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:10px;height:2px;background:var(--line)}
+.step,.step:last-child{min-height:0;border:0;justify-content:flex-start;padding-top:2.8rem;position:relative;gap:.6rem}
+.step::before{content:"";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:var(--paper);border:2px solid var(--accent-text);transition:background .5s,transform .5s var(--ease)}
+.step.on::before{background:var(--accent-text);transform:scale(1.15)}
+.step .t{color:var(--accent-text)}
+.step h3{font-size:clamp(1.35rem,1.9vw,1.75rem)}
+.step p{font-size:.95rem}
+.anim .step{opacity:.35}
+@media (max-width:899px){
+  .clock{grid-template-columns:1fr;grid-template-areas:"k" "h" "p" "b";padding-top:5rem}
+  .steps{grid-template-columns:1fr;gap:2rem}
+  .steps::before{left:10px;right:auto;top:0;bottom:2rem;width:2px;height:auto}
+  .step,.step:last-child{padding:0 0 0 3rem}
+  .anim .step{opacity:.35}
+}
+
+/* Frisørene: kort med buet portrett */
+.order .wrap{grid-template-columns:1fr}
+.order .wrap > div:first-child{text-align:center;display:grid;justify-items:center}
+.order .lead{margin-inline:auto}
+.cakes{border:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem;width:100%;text-align:left}
+.cake{display:flex;flex-direction:column;gap:.3rem;padding:0 0 1rem;border:0;background:var(--white);border-radius:999px 999px 14px 14px;overflow:hidden;box-shadow:0 0 0 1px var(--line);transition:transform .6s var(--ease),box-shadow .4s}
+.cake::before{display:none}
+.cake:hover{transform:translateY(-8px);box-shadow:0 0 0 1px var(--line),0 24px 40px -24px rgba(30,25,22,.4)}
+.cake .pt{aspect-ratio:1/1.1;background:linear-gradient(180deg,var(--rose),var(--tint));display:grid;align-items:end;justify-items:center;overflow:hidden;margin-bottom:.6rem}
+.cake .pt svg{width:112%;height:auto;margin-bottom:-6%;transition:transform .8s var(--ease)}
+.cake:hover .pt svg{transform:scale(1.06)}
+.cake b,.cake .price,.cake .meta,.cake .when{padding-inline:1rem;text-align:left;white-space:normal}
+.cake:hover b{transform:none}
+.cake .price{align-self:flex-start;margin:0 0 .2rem 1rem;padding:.25em .7em;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;background:var(--tint);border-radius:99px}
+.cake .when{margin-top:auto;padding-top:.4rem}
+.tip{text-align:center}
+.biz{position:relative;top:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(2rem,5vw,4rem);border-radius:24px;padding:clamp(2rem,4vw,3.4rem)}
+.biz .kicker,.biz h3,.biz > p:first-of-type{grid-column:1}
+.biz ul{grid-column:2;grid-row:1/span 3}
+.biz > p:last-of-type,.biz .btn{grid-column:2}
+@media (max-width:1100px){.cakes{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:899px){.biz{grid-template-columns:1fr}.biz > *{grid-column:1!important;grid-row:auto!important}}
+@media (max-width:620px){.cakes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Sitat: sentrert med stort anførselstegn */
+.says figure{margin-inline:auto;text-align:center;position:relative}
+.says blockquote{font-style:italic}
+.says .qmark{display:block;font-family:var(--f-display);font-size:clamp(7rem,14vw,11rem);line-height:.6;color:var(--peach);height:.5em}
+.says figcaption{justify-content:center}
