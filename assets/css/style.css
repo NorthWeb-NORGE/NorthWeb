@@ -572,6 +572,12 @@ textarea {
   gap: 24px
 }
 
+.work-wide {
+  grid-column: 1 / -1;
+  width: calc(50% - 12px);
+  justify-self: center
+}
+
 .work {
   background: var(--white);
   border-radius: var(--radius);
@@ -1915,6 +1921,10 @@ footer a:hover {
 
   .work-grid {
     grid-template-columns: 1fr
+  }
+
+  .work-wide {
+    width: auto
   }
 
   .work .frame {

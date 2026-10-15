@@ -190,7 +190,9 @@
   <div class="float f2" data-speed="0.6" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-tast"/></svg></div></div>
   <div class="float f3" data-speed="0.15" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#i-trofe"/></svg></div></div>
 
+  <div class="grid-floor" aria-hidden="true"></div>
   <div class="wrap">
+    <i class="hud tl" aria-hidden="true"></i><i class="hud tr" aria-hidden="true"></i><i class="hud bl" aria-hidden="true"></i><i class="hud br" aria-hidden="true"></i>
     <h1 aria-label="Fra rommet til scenen. Sammen."><!-- PLASSHOLDER -->
       <span class="line" aria-hidden="true"><span class="li">Fra rommet</span></span>
       <span class="line" aria-hidden="true"><span class="li">til scenen.</span></span>
@@ -207,6 +209,11 @@
       <span><i class="dot" id="live-dot" aria-hidden="true"></i><span id="status">Trening tirsdag og torsdag</span></span>
       <span>Klubbhuset, Bergen</span><!-- PLASSHOLDER -->
       <span>Tryouts CS2 åpne til 1. nov</span><!-- PLASSHOLDER -->
+    </div>
+    <div class="match reveal-hero"><!-- PLASSHOLDER: neste kamp -->
+      <span class="m-label"><i></i>Neste kamp · CS2</span>
+      <b id="nedtelling">--:--:--</b>
+      <span class="m-teams">Kvasir <em>vs</em> Fjord Five</span>
     </div>
   </div>
 </section>
@@ -254,48 +261,53 @@
   </div>
 </section>
 
-<!-- ===== SEKSJON: Lagene (scroller sidelengs på store skjermer) ===== -->
-<section class="counter" id="lagene">
-  <div class="track">
-    <div class="panel intro">
+<!-- ===== SEKSJON: Lagene (lagkort) ===== -->
+<section class="roster" id="lagene">
+  <div class="wrap">
+    <div class="roster-head">
       <span class="kicker">Lagene</span>
-      <h2 class="h2" style="margin-top:1rem">Seks lag, ett klubbhus</h2>
+      <h2 class="h2">Seks lag, ett klubbhus</h2>
       <p class="lead">Fra akademiet for 13-åringer til rosteret som jakter opprykk. Alle trener på klubbhuset.</p><!-- PLASSHOLDER -->
-      <p class="hint"><i></i>Scroll for å se mer</p>
     </div>
-    <!-- PLASSHOLDER: lag, divisjoner og treningstider -->
-    <article class="panel">
-      <div class="pic"><span class="when">Tir + tor 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-mus"/></svg></div>
-      <h3>Counter-Strike 2 <small>1. div</small></h3>
-      <p>Fem spillere og to reserver. Topp fire i fjor, nå jakter vi opprykk.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Man + ons 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-skjerm"/></svg></div>
-      <h3>League of Legends <small>1. div</small></h3>
-      <p>Klubbens eldste lag. Tre av spillerne har vært med siden starten.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Scrims søndag</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-tast"/></svg></div>
-      <h3>Valorant <small>2. div</small></h3>
-      <p>Nytt lag fra i høst. Vi ser etter en sentinel og en lagkaptein.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Onsdag 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-kontroller"/></svg></div>
-      <h3>Rocket League <small>Elite</small></h3>
-      <p>Tre mot tre, og kanskje de raskeste hendene på Vestlandet.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Torsdag 18–21</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-trofe"/></svg></div>
-      <h3>EA Sports FC <small>1 mot 1</small></h3>
-      <p>Fire spillere i solo-ligaen. Vant regionsmesterskapet i vår.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Tir + tor 17–18.30</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-headset"/></svg></div>
-      <h3>Akademiet <small>13–17 år</small></h3>
-      <p>Lagspill, kommunikasjon og sunn skjermbruk, med egen trener.</p>
-    </article>
+    <div class="teams"><!-- PLASSHOLDER: lag, divisjoner og treningstider -->
+      <article class="team">
+        <div class="team-top"><span class="team-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-mus"/></svg></span><span class="div">1. div</span></div>
+        <h3>Counter-Strike 2</h3>
+        <p>Fem spillere og to reserver. Topp fire i fjor, nå jakter vi opprykk.</p>
+        <span class="when">Tir + tor 18–21</span>
+      </article>
+      <article class="team">
+        <div class="team-top"><span class="team-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-skjerm"/></svg></span><span class="div">1. div</span></div>
+        <h3>League of Legends</h3>
+        <p>Klubbens eldste lag. Tre av spillerne har vært med siden starten.</p>
+        <span class="when">Man + ons 18–21</span>
+      </article>
+      <article class="team">
+        <div class="team-top"><span class="team-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-tast"/></svg></span><span class="div">2. div</span><span class="flag">Rekrutterer</span></div>
+        <h3>Valorant</h3>
+        <p>Nytt lag fra i høst. Vi ser etter en sentinel og en lagkaptein.</p>
+        <span class="when">Scrims søndag</span>
+      </article>
+      <article class="team">
+        <div class="team-top"><span class="team-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-kontroller"/></svg></span><span class="div">Elite</span></div>
+        <h3>Rocket League</h3>
+        <p>Tre mot tre, og kanskje de raskeste hendene på Vestlandet.</p>
+        <span class="when">Onsdag 18–21</span>
+      </article>
+      <article class="team">
+        <div class="team-top"><span class="team-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-trofe"/></svg></span><span class="div">1 mot 1</span><span class="flag">Regionsmester</span></div>
+        <h3>EA Sports FC</h3>
+        <p>Fire spillere i solo-ligaen. Vant regionsmesterskapet i vår.</p>
+        <span class="when">Torsdag 18–21</span>
+      </article>
+      <article class="team">
+        <div class="team-top"><span class="team-ic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#i-headset"/></svg></span><span class="div">13–17 år</span></div>
+        <h3>Akademiet</h3>
+        <p>Lagspill, kommunikasjon og sunn skjermbruk, med egen trener.</p>
+        <span class="when">Tir + tor 17–18.30</span>
+      </article>
+    </div>
   </div>
-  <div class="progress" aria-hidden="true"><i></i></div>
 </section>
 
 <!-- ===== SEKSJON: Kampdag (BRANSJEDETALJ, nedtelling før kampstart) ===== -->
@@ -356,9 +368,13 @@
 <!-- PLASSHOLDER: sitatet er fiktivt. Bruk kun ekte uttalelser med samtykke. -->
 <section class="says">
   <div class="wrap">
-    <figure>
+    <figure class="chat">
+      <span class="av" aria-hidden="true">HR</span>
+      <div class="msg">
+      <div class="who"><b>Hilde Rasmussen</b><span class="role">Forelder</span><time>i dag 21:14</time></div>
       <blockquote id="quote">«Sønnen min gikk fra å game alene på rommet til å ha et lag, en trener og faste tider. Nå har han venner i hele byen, og han legger seg før midnatt.»</blockquote>
-      <figcaption>Hilde Rasmussen, forelder i akademiet</figcaption>
+      <figcaption class="sr">Hilde Rasmussen, forelder i akademiet</figcaption>
+      </div>
     </figure>
   </div>
 </section>

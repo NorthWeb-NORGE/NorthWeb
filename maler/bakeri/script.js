@@ -88,13 +88,18 @@ $$('a[href^="#"]').forEach(function(a){
 var tl=gsap.timeline({defaults:{ease:"expo.out"}});
 tl.from(".hero .li",{yPercent:118,rotate:2,duration:1.35,stagger:.11})
   .from(".stamp-spin",{scale:.4,rotate:-160,autoAlpha:0,duration:1.8},0)
-  .from(".float .fin",{yPercent:60,rotate:-25,autoAlpha:0,duration:1.6,stagger:.12},.15)
+  .from(".plate",{scale:.6,rotate:-25,autoAlpha:0,duration:1.6},.15)
+  .from(".sticker",{scale:0,rotate:-90,duration:1.2,ease:"back.out(2)"},.9)
   .from(".reveal-hero > *",{y:26,autoAlpha:0,duration:1,stagger:.08,ease:"power3.out"},.55)
   .from(".top .wrap > *",{y:-20,autoAlpha:0,duration:1,stagger:.08,ease:"power3.out"},.3);
 
 /* stempel: roterer alltid, raskere med scroll */
 var spin=gsap.to(".stamp-spin",{rotate:360,duration:30,repeat:-1,ease:"none"});
 gsap.to(".stamp-wrap",{rotate:140,yPercent:30,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+
+/* fatet svever litt, og brødet roterer sakte når du scroller */
+gsap.to(".plate-in",{y:-14,duration:3,ease:"sine.inOut",repeat:-1,yoyo:true});
+gsap.to(".plate-in svg",{rotate:25,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
 
 /* svevende brød, parallakse */
 $$(".float").forEach(function(f){
@@ -142,39 +147,17 @@ $$(".lead").forEach(function(l){
 
 var mm=gsap.matchMedia();
 
-/* disken: horisontal scroll på store skjermer */
-mm.add("(min-width: 900px)",function(){
-  var track=$(".track"), sec=$(".counter");
-  var dist=function(){return track.scrollWidth-window.innerWidth};
-  var h=gsap.to(track,{x:function(){return -dist()},ease:"none",
-    scrollTrigger:{trigger:sec,start:"top top",end:function(){return "+="+dist()},pin:true,scrub:1,invalidateOnRefresh:true,anticipatePin:1}});
-  gsap.to(".progress i",{scaleX:1,ease:"none",scrollTrigger:{trigger:sec,start:"top top",end:function(){return "+="+dist()},scrub:true}});
-  $$(".panel .pic svg").forEach(function(s,i){
-    gsap.fromTo(s,{rotate:-30,scale:.85},{rotate:20,scale:1,ease:"none",scrollTrigger:{trigger:s.parentNode,containerAnimation:h,start:"left right",end:"right left",scrub:true}});
-  });
-  $$(".panel:not(.intro)").forEach(function(p){
-    gsap.from(p.querySelectorAll("h3, p"),{y:30,autoAlpha:0,duration:.9,stagger:.06,ease:"power3.out",scrollTrigger:{trigger:p,containerAnimation:h,start:"left 85%"}});
-  });
+/* disken: kortene legges fram ett og ett */
+gsap.from(".item",{y:70,rotate:function(i){return i%2?4:-4},autoAlpha:0,duration:1.1,stagger:.09,ease:"back.out(1.4)",scrollTrigger:{trigger:".shelf",start:"top 82%"}});
 
-  /* 36 timer: teller og aktivt steg */
-  var hrs=$("#hrs"), hb=$("#hrs-bar");
-  ScrollTrigger.create({trigger:".steps",start:"top 60%",end:"bottom 60%",scrub:true,onUpdate:function(st){
-    var v=Math.round(st.progress*36); hrs.textContent=v; hb.style.transform="scaleX("+st.progress+")";
-  }});
-  $$(".step").forEach(function(s){
-    ScrollTrigger.create({trigger:s,start:"top 60%",end:"bottom 60%",toggleClass:{targets:s,className:"on"}});
-  });
-  return function(){ hrs.textContent="36"; };
-});
-mm.add("(max-width: 899px)",function(){
-  $$(".panel").forEach(function(p){
-    gsap.from(p,{y:50,autoAlpha:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:p,start:"top 88%"}});
-  });
-  var hrs=$("#hrs");
-  ScrollTrigger.create({trigger:".clock",start:"top 75%",once:true,onEnter:function(){
-    var o={v:0};gsap.to(o,{v:36,duration:2,ease:"power2.out",onUpdate:function(){hrs.textContent=Math.round(o.v)}});
-    gsap.to("#hrs-bar",{scaleX:1,duration:2,ease:"power2.out"});
-  }});
+/* 36 timer: teller og aktivt steg langs sikksakk-tidslinjen */
+var hrs=$("#hrs"), hb=$("#hrs-bar");
+ScrollTrigger.create({trigger:".steps",start:"top 60%",end:"bottom 60%",scrub:true,onUpdate:function(st){
+  hrs.textContent=Math.round(st.progress*36); hb.style.transform="scaleX("+st.progress+")";
+}});
+$$(".step").forEach(function(s,i){
+  ScrollTrigger.create({trigger:s,start:"top 70%",end:"bottom 40%",toggleClass:{targets:s,className:"on"}});
+  gsap.from(s,{x:i%2?60:-60,autoAlpha:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:s,start:"top 88%"}});
 });
 
 /* kakeliste */

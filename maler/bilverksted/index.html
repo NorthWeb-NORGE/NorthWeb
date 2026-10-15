@@ -12,7 +12,7 @@
   <meta property="og:locale" content="nb_NO">
   <meta property="og:title" content="Damsgård Bil &amp; Bremse – bilverksted i Bergen">
   <meta property="og:description" content="Fra oljeskift til bremser. Pris før vi løfter bilen, og ingenting ekstra uten at du har sagt ja.">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPCEtLSBMb2dvbWVya2V0OiDCq2TCuyBhdiBicmVtc2Vza2l2ZSwga2FsaXBlciBvZyBicmVtc2Vyw7hyLiBGYXJnZW5lIG3DpQogICAgICAgZW5kcmVzIGhlciBmb3IgaMOlbmQgaHZpcyBwYWxldHRlbiBpIHZhcmlhYmxlcy5jc3MgYnl0dGVzLiAtLT4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSI2IiBmaWxsPSIjZjNlZmU2Ii8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTEgNSkgc2NhbGUoMC45OCkiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+CiAgICA8Y2lyY2xlIGN4PSIxOSIgY3k9IjM2IiByPSIxNCIgc3Ryb2tlPSIjMWQyMjIwIiBzdHJva2Utd2lkdGg9IjIuNiIvPgogICAgPGNpcmNsZSBjeD0iMTkiIGN5PSIzNiIgcj0iMy41IiBzdHJva2U9IiMxZDIyMjAiIHN0cm9rZS13aWR0aD0iMi42Ii8+CiAgICA8cGF0aCBkPSJNMzIuNCAyNS41QTE3IDE3IDAgMCAxIDMyLjQgNDYuNSIgc3Ryb2tlPSIjOWU3ODI4IiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJidXR0Ii8+CiAgICA8cGF0aCBkPSJNMzYgNTBWNE0zMiA0aDgiIHN0cm9rZT0iIzFkMjIyMCIgc3Ryb2tlLXdpZHRoPSIyLjYiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
 
   <!--
     Dette lille skriptet MÅ ligge i <head>, før CSS-en tegner noe:
@@ -40,8 +40,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/index.css">
-  <script type="module" src="js/index.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -148,7 +148,7 @@
         <!-- SIGNATURTEGNINGEN
              Skivebrems sett forfra. Bremserøret (class="pipe") går ut nederst
              til venstre – der sitter data-thread-anchor, og derfra tar
-             js/modules/thread.js over og fører røret nedover hele siden.
+             script.js over og fører røret nedover hele siden.
              Mål og betegnelser er illustrasjon, ikke et ekte datablad. -->
         <figure class="hero__figure">
           <svg class="dwg" data-hero style="--delay:.7s" viewBox="0 0 520 620" role="img" aria-labelledby="hero-t hero-d">
@@ -376,7 +376,7 @@
           <p class="muted" data-reveal>Fem ledd, i samme rekkefølge hver gang. Det er ikke noe du trenger å huske – men du skal vite hvor bilen din er i løpet.</p>
         </div>
 
-        <!-- data-process: js/modules/process.js fyller røret (--p) og
+        <!-- data-process: script.js fyller røret (--p) og
              tenner stegene (.is-on) etter hvert som du ruller. -->
         <ol class="steps" data-process>
           <li class="step">
@@ -484,7 +484,7 @@
 
         <!-- Forklaringene ligger i HTML-en. Uten JavaScript vises alle seks;
              med JavaScript styrer knappene hvilken som vises
-             (js/modules/lamps.js). Rådene er generelle – BEKREFT mot
+             (script.js). Rådene er generelle – BEKREFT mot
              fagansvarlig før en ekte kunde bruker dem. -->
         <div class="lamps" data-lamps data-reveal>
           <div class="lamps__panel" role="group" aria-label="Velg varsellampe">
@@ -682,7 +682,7 @@
 
           <!-- SKJEMA – ren frontend-demo. Ingenting sendes noe sted.
                Kobles til f.eks. Formspree, Netlify Forms eller eget
-               endepunkt i js/modules/form.js (se README). -->
+               endepunkt i script.js. -->
           <div class="sheet" data-reveal style="margin-top: var(--s-6)">
             <div class="sheet__title note">
               <span>Arbeidsordre · forespørsel</span>
@@ -744,11 +744,11 @@
 
               <div class="form__foot">
                 <button class="btn btn--wide" type="submit" data-label="Send forespørsel">Send forespørsel</button>
-                <p class="small muted">Vi bruker opplysningene bare til å svare deg. Les <a class="link" href="pages/personvern.html">personvernerklæringen</a>.</p>
+                <p class="small muted">Vi bruker opplysningene bare til å svare deg. Les <a class="link" href="#personvern">personvernerklæringen</a>.</p>
               </div>
             </form>
 
-            <!-- Kvittering: fylles ut og vises av form.js -->
+            <!-- Kvittering: fylles ut og vises av script.js -->
             <div class="receipt" data-form-receipt tabindex="-1" hidden>
               <h3>Forespørselen er registrert</h3>
               <p>Takk, <span data-r="navn"></span>. Vi ringer deg på <span data-r="telefon"></span> innen neste arbeidsdag.</p>
@@ -794,6 +794,43 @@
         </aside>
       </div>
     </section>
+  
+    <!-- PLASSHOLDER: hele teksten er et eksempel. En ekte kunde må få
+         erklæringen tilpasset det de faktisk samler inn, og hvem som er
+         databehandlere (skjematjeneste, e-post, verkstedsystem). -->
+    <article class="legal" id="personvern">
+      <div class="container">
+        <div class="legal__body">
+          <h2 data-split>Personvern&shy;erklæring</h2>
+          <p class="lead">Kort fortalt: vi samler inn det vi trenger for å svare deg og gjøre jobben på bilen din, og ikke mer.</p>
+
+          <h3>Hvem er ansvarlig?</h3>
+          <p>Damsgård Bil &amp; Bremse AS (org.nr. 000 000 000) er behandlingsansvarlig. Spørsmål om personvern sender du til <a class="link" href="mailto:post@damsgardbil.example">post@damsgardbil.example</a>.</p>
+
+          <h3>Hva vi lagrer</h3>
+          <ul>
+            <li>Navn, telefonnummer og e-postadresse når du tar kontakt</li>
+            <li>Registreringsnummer og det du forteller om bilen</li>
+            <li>Arbeidsordre, faktura og servicehistorikk når vi har gjort en jobb</li>
+          </ul>
+
+          <h3>Hvorfor</h3>
+          <p>For å svare på henvendelsen din, gi tilbud, utføre arbeidet og oppfylle bokføringsloven. Vi bruker ikke opplysningene til markedsføring uten at du har bedt om det, og vi selger dem aldri videre.</p>
+
+          <h3>Hvor lenge</h3>
+          <p>Henvendelser som ikke blir til en jobb, slettes etter tolv måneder. Fakturaer oppbevares i fem år, slik bokføringsloven krever. Servicehistorikk oppbevares så lenge bilen er kunde hos oss.</p>
+
+          <h3>Informasjonskapsler og skrifter</h3>
+          <p>Nettsiden bruker ingen informasjonskapsler til sporing eller statistikk. Vi lagrer ett lite merke i nettleserøkten din for å huske at åpningsanimasjonen er vist; det forsvinner når du lukker fanen.</p>
+          <p>Skriftene hentes fra Google Fonts. Det betyr at nettleseren din kobler seg til Googles servere, og at IP-adressen din blir synlig for dem.</p>
+
+          <h3>Rettighetene dine</h3>
+          <p>Du kan be om innsyn i, retting av og sletting av opplysningene vi har om deg. Mener du at vi behandler opplysningene feil, kan du klage til Datatilsynet.</p>
+
+          <p class="small muted" style="margin-top: var(--s-6)">Demoside – bedriften er oppdiktet, og kontaktskjemaet på forsiden sender eller lagrer ingenting.</p>
+        </div>
+      </div>
+    </article>
   </main>
 
   <!-- 10. FOOTER -->
@@ -824,7 +861,7 @@
           <!-- PLASSHOLDER: telefon, adresse -->
           <li><a class="link" href="tel:+4755000000">55 00 00 00</a></li>
           <li>Damsgårdsveien 000, 5058 Bergen</li>
-          <li><a class="link" href="pages/personvern.html">Personvern</a></li>
+          <li><a class="link" href="#personvern">Personvern</a></li>
         </ul>
       </div>
 

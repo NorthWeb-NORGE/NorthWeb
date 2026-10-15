@@ -30,14 +30,12 @@
   <meta property="og:title" content="Straumsnes Rør AS – rørlegger i Bergen">
   <meta property="og:description" content="Bad, bereder, rørfornying og døgnvakt ved vannlekkasje. Fast pris og bildedokumentasjon.">
 
-  <link rel="icon" href="assets/svg/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+CiAgPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iI2YyZWZlOCIvPgogIDxwYXRoIGQ9Ik0zMSAxMEgxN2E1IDUgMCAwIDAgMCAxMGg2YTUgNSAwIDAgMSAwIDEwSDkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFmMjUyNyIgc3Ryb2tlLXdpZHRoPSI2LjUiLz4KICA8cGF0aCBkPSJNMzEgMTBIMTdhNSA1IDAgMCAwIDAgMTBoNmE1IDUgMCAwIDEgMCAxMEg5IiBmaWxsPSJub25lIiBzdHJva2U9IiNmMmVmZTgiIHN0cm9rZS13aWR0aD0iMy4yIi8+CiAgPHBhdGggZD0iTTMwIDUuNWgzLjV2OUgzMHpNNi41IDI1LjVIMTB2OUg2LjV6IiBmaWxsPSIjYjA4ZDNjIi8+Cjwvc3ZnPgo=" type="image/svg+xml">
 
-  <!-- Fonter. For ekte kunder: vurder å legge fontfilene i assets/fonts/ (se README). -->
+  <!-- Fonter. For ekte kunder: vurder å legge fontfilene i assets/fonts/. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/index.css">
 
   <!-- Kjører før siden tegnes:
        .js            = CSS vet at animasjonene kan skjule ting til de skal vises
@@ -54,11 +52,11 @@
       setTimeout(function () {
         d.classList.add("is-loaded");
         d.classList.remove("intro-pending");
+        // Modulene meldte seg aldri (nettverksfeil, file://): vis alt uten animasjon
+        if (!window.__moduler) d.classList.remove("js");
       }, 3500);
     })();
   </script>
-  <script type="module" src="js/index.js"></script>
-
   <!-- Strukturerte data for Google. PLASSHOLDER: alle verdier. -->
   <script type="application/ld+json">
   {
@@ -78,6 +76,8 @@
     "openingHours": "Mo-Fr 07:00-15:30"
   }
   </script>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -157,7 +157,7 @@
         </div>
 
         <!-- Signaturtegning: isometrisk rørføring i et bad. Ren SVG, ingen bildefil.
-             Rørene (klasse dr-pipe) tegnes opp ved lasting, se css/sections/hero.css. -->
+             Rørene (klasse dr-pipe) tegnes opp ved lasting, se style.css. -->
         <figure class="hero__figure">
           <svg class="hero-drawing" viewBox="70 126 460 438" role="img" aria-labelledby="tegn-tittel tegn-besk">
             <title id="tegn-tittel">Isometrisk tegning av røropplegget i et bad</title>
@@ -184,7 +184,7 @@
             </g>
 
             <!-- Stigeledninger: kommer opp nedenfra og går langs veggen til fordelerskapet.
-                 De to linjene fortsetter ut av tegningen og nedover hele siden (js/modules/pagepipe.js),
+                 De to linjene fortsetter ut av tegningen og nedover hele siden (script.js),
                  så x-verdiene 459.5 og 464.75 og y=564 må stemme med det som står der. -->
             <path class="dr-pipe dr-kv" pathLength="1" d="M464.75 564V263L295 166V224"/>
             <path class="dr-pipe dr-vv" pathLength="1" d="M459.5 564V266L302 176V244" style="--d: 120ms"/>
@@ -638,7 +638,7 @@
           <h2 data-split>Det folk lurer på <em>før</em> de ringer</h2>
           <p data-reveal style="--reveal-delay: 200ms">Finner du ikke svaret? Ring <a class="tel" href="tel:+4755000000">55 00 00 00</a>, så svarer en rørlegger.</p>
           <!-- Liten interaktiv tegning: en kuleventil sett ovenfra. Klikk for å stenge/åpne.
-               Logikken ligger i js/modules/valve.js, utseendet i css/components/valve.css. -->
+               Logikken ligger i script.js, utseendet i style.css. -->
           <figure class="valve" data-reveal style="--reveal-delay: 320ms">
             <button class="valve__button" type="button" aria-pressed="false" aria-describedby="valve-status">
               <span class="visually-hidden">Steng eller åpne stoppekranen</span>
@@ -729,7 +729,7 @@
 
         <div class="split">
           <div data-reveal>
-            <!-- Skjemaet er en frontend-demo. Se js/modules/form.js for å koble på ekte innsending. -->
+            <!-- Skjemaet er en frontend-demo. Se script.js for å koble på ekte innsending. -->
             <form class="form" id="tilbudsskjema" novalidate>
               <div class="form__row">
                 <div class="field">
@@ -787,7 +787,7 @@
                 <button class="btn btn--primary" type="submit">Send forespørsel<svg class="btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></button>
                 <p class="form__note">
                   Pågår det en lekkasje nå? Ikke bruk skjemaet. Ring <a class="tel" href="tel:+4790000000">900 00 000</a>.
-                  Vi bruker opplysningene bare til å svare deg. Les <a href="pages/personvern.html">personvernerklæringen</a>.
+                  Vi bruker opplysningene bare til å svare deg. Les <a href="#personvern">personvernerklæringen</a>.
                 </p>
               </div>
             </form>
@@ -835,11 +835,45 @@
         </div>
       </div>
     </section>
+  
+    <section class="legal" id="personvern">
+    <div class="container">
+      <div class="legal__inner">
+        <h2>Personvern</h2>
+        <p class="lead">Kort fortalt: vi bruker opplysningene dine til å svare deg og utføre jobben, og ikke til noe annet.</p>
+
+        <h3>Hvem er ansvarlig?</h3>
+        <p>Straumsnes Rør AS (org.nr. 000 000 000) er behandlingsansvarlig for personopplysningene som beskrives her. Spørsmål kan sendes til <a href="mailto:post@straumsnesror.no">post@straumsnesror.no</a>.</p>
+
+        <h3>Hva vi samler inn</h3>
+        <ul>
+          <li>Navn, telefonnummer og e-postadresse når du sender kontaktskjemaet eller ringer oss.</li>
+          <li>Adresse og beskrivelse av jobben, og eventuelle bilder du sender.</li>
+          <li>Bilder vi tar av rørarbeidet som del av dokumentasjonen.</li>
+        </ul>
+
+        <h3>Hvorfor og med hvilket grunnlag</h3>
+        <p>Vi behandler opplysningene for å svare på henvendelsen din, gi tilbud og gjennomføre avtalen med deg (personvernforordningen artikkel 6 nr. 1 bokstav b). Fakturaopplysninger lagres fordi bokføringsloven krever det (bokstav c).</p>
+
+        <h3>Hvor lenge</h3>
+        <p>Henvendelser som ikke blir til et oppdrag, slettes innen tolv måneder. Dokumentasjon fra utførte jobber oppbevarer vi så lenge reklamasjonsfristen løper, og regnskapsbilag i fem år.</p>
+
+        <h3>Hvem vi deler med</h3>
+        <p>Vi selger aldri opplysninger. Vi deler bare det som er nødvendig med underleverandører på jobben din, for eksempel elektriker eller flislegger, og med leverandørene av e-post- og regnskapssystemene våre.</p>
+
+        <h3>Informasjonskapsler</h3>
+        <p>Nettsiden bruker ingen informasjonskapsler til sporing eller markedsføring. Skrifttypene hentes fra Google Fonts, og da overføres IP-adressen din til Google.</p>
+
+        <h3>Rettighetene dine</h3>
+        <p>Du kan be om innsyn i, retting av eller sletting av opplysningene vi har om deg. Mener du at vi behandler opplysninger i strid med regelverket, kan du klage til Datatilsynet.</p>
+      </div>
+    </div>
+  </section>
   </main>
 
   <!-- ====================== FOOTER ====================== -->
   <footer class="site-footer">
-    <!-- Løpende stripe med dekningsområdet. Farten følger rullingen (js/modules/marquee.js).
+    <!-- Løpende stripe med dekningsområdet. Farten følger rullingen (script.js).
          PLASSHOLDER: stedsnavn. Skjult for skjermlesere, de samme stedene står i teksten under. -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
@@ -872,7 +906,7 @@
             <li><a href="#tjenester">Tjenester</a></li>
             <li><a href="#prosjekter">Prosjekter</a></li>
             <li><a href="#sporsmal">Vanlige spørsmål</a></li>
-            <li><a href="pages/personvern.html">Personvern</a></li>
+            <li><a href="#personvern">Personvern</a></li>
           </ul>
         </nav>
 

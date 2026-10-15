@@ -3,6 +3,16 @@
 var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
 
 /* ---------- ting som fungerer uten animasjon ---------- */
+/* nedtelling til neste kamp. PLASSHOLDER: kampdag (6 = lørdag) og klokkeslett */
+try{
+  var KAMPDAG=6, KAMPTIME=19, ned=$("#nedtelling");
+  var nesteKamp=function(){var d=new Date();d.setHours(KAMPTIME,0,0,0);var add=(KAMPDAG-d.getDay()+7)%7;if(add===0&&Date.now()>=d)add=7;d.setDate(d.getDate()+add);return d;};
+  var tegnNed=function(){
+    var s=Math.max(0,Math.floor((nesteKamp()-Date.now())/1000)), dg=Math.floor(s/86400), t=Math.floor(s%86400/3600), m=Math.floor(s%3600/60), sek=s%60, p=function(n){return String(n).padStart(2,"0")};
+    ned.textContent=(dg?dg+"d ":"")+p(t)+":"+p(m)+":"+p(sek);
+  };
+  tegnNed(); setInterval(tegnNed,1000);
+}catch(e){}
 /* status i hero: trening pågår nå, eller når neste trening er */
 try{
   var trening={1:[18,21],2:[17,21],3:[18,21],4:[17,21]}; /* PLASSHOLDER: ukedag (0 = søndag): [start, slutt] */
@@ -81,7 +91,7 @@ var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(reduce || !window.gsap || !window.ScrollTrigger){ return; }
 gsap.registerPlugin(ScrollTrigger);
 document.documentElement.classList.add("anim");
-$("#hrs").textContent="0";
+$("#hrs").textContent=TOTAL;
 
 /* myk scrolling */
 var lenis=null;
@@ -162,40 +172,16 @@ $$(".lead").forEach(function(l){
 
 var mm=gsap.matchMedia();
 
-/* lagene: horisontal scroll på store skjermer */
-mm.add("(min-width: 900px)",function(){
-  var track=$(".track"), sec=$(".counter");
-  var dist=function(){return track.scrollWidth-window.innerWidth};
-  var h=gsap.to(track,{x:function(){return -dist()},ease:"none",
-    scrollTrigger:{trigger:sec,start:"top top",end:function(){return "+="+dist()},pin:true,scrub:1,invalidateOnRefresh:true,anticipatePin:1}});
-  gsap.to(".progress i",{scaleX:1,ease:"none",scrollTrigger:{trigger:sec,start:"top top",end:function(){return "+="+dist()},scrub:true}});
-  $$(".panel .pic svg").forEach(function(s){
-    gsap.fromTo(s,{rotate:-30,scale:.85},{rotate:20,scale:1,ease:"none",scrollTrigger:{trigger:s.parentNode,containerAnimation:h,start:"left right",end:"right left",scrub:true}});
-  });
-  $$(".panel:not(.intro)").forEach(function(p){
-    gsap.from(p.querySelectorAll("h3, p"),{y:30,autoAlpha:0,duration:.9,stagger:.06,ease:"power3.out",scrollTrigger:{trigger:p,containerAnimation:h,start:"left 85%"}});
-  });
+/* lagene: kortene glir inn */
+gsap.from(".team",{y:60,autoAlpha:0,duration:1,stagger:.08,ease:"power3.out",scrollTrigger:{trigger:".teams",start:"top 82%"}});
 
-  /* kampdag: teller og aktivt steg */
-  var hrs=$("#hrs"), hb=$("#hrs-bar");
-  ScrollTrigger.create({trigger:".steps",start:"top 60%",end:"bottom 60%",scrub:true,onUpdate:function(st){
-    hrs.textContent=Math.round(st.progress*TOTAL); hb.style.transform="scaleX("+st.progress+")";
-  }});
-  $$(".step").forEach(function(s){
-    ScrollTrigger.create({trigger:s,start:"top 60%",end:"bottom 60%",toggleClass:{targets:s,className:"on"}});
-  });
-  return function(){ hrs.textContent=TOTAL; };
-});
-mm.add("(max-width: 899px)",function(){
-  $$(".panel").forEach(function(p){
-    gsap.from(p,{y:50,autoAlpha:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:p,start:"top 88%"}});
-  });
-  var hrs=$("#hrs");
-  ScrollTrigger.create({trigger:".clock",start:"top 75%",once:true,onEnter:function(){
-    var o={v:0};gsap.to(o,{v:TOTAL,duration:2,ease:"power2.out",onUpdate:function(){hrs.textContent=Math.round(o.v)}});
-    gsap.to("#hrs-bar",{scaleX:1,duration:2,ease:"power2.out"});
-  }});
-});
+/* kampdag: teller ned fra T–90 til 0 og tenner kortene etter tur */
+ScrollTrigger.create({trigger:".steps",start:"top 78%",once:true,onEnter:function(){
+  var o={v:0};
+  gsap.to(o,{v:TOTAL,duration:3,ease:"power1.inOut",onUpdate:function(){$("#hrs").textContent=Math.round(TOTAL-o.v)}});
+  gsap.to("#hrs-bar",{scaleX:1,duration:3,ease:"power1.inOut"});
+  $$(".step").forEach(function(s,i){gsap.delayedCall(i*.6,function(){s.classList.add("on")})});
+}});
 
 /* tilbudsliste */
 gsap.from(".cake",{y:30,autoAlpha:0,duration:.9,stagger:.07,ease:"power3.out",scrollTrigger:{trigger:".cakes",start:"top 82%"}});

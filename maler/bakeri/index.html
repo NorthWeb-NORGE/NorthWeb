@@ -196,6 +196,7 @@
   <div class="float f3" data-speed="0.15" aria-hidden="true"><div class="fin"><svg viewBox="0 0 200 200"><use href="#l-rund"/></svg></div></div>
 
   <div class="wrap">
+    <div class="hero-text">
     <h1 aria-label="Ferskt brød fra Osøyro, hver morgen."><!-- PLASSHOLDER -->
       <span class="line" aria-hidden="true"><span class="li">Ferskt brød</span></span>
       <span class="line" aria-hidden="true"><span class="li">fra Osøyro,</span></span>
@@ -213,7 +214,14 @@
       <span>Hamnevegen 12, Os</span><!-- PLASSHOLDER -->
       <span>Skillingsboller ferske fra kl. 06</span>
     </div>
+    </div>
+    <div class="plate" aria-hidden="true">
+      <div class="steam"><i></i><i></i><i></i></div>
+      <div class="plate-in"><svg viewBox="0 0 200 200"><use href="#l-surdeig"/></svg></div>
+      <span class="sticker">Ut av ovnen<b>kl. 06.40</b></span>
+    </div>
   </div>
+  <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C180 60 360 0 540 30 S900 60 1080 30 S1350 0 1440 30 V60 H0Z"/></svg>
 </section>
 
 <!-- ===== SEKSJON: Løpebånd ===== -->
@@ -259,48 +267,53 @@
   </div>
 </section>
 
-<!-- ===== SEKSJON: I disken (scroller sidelengs på store skjermer) ===== -->
-<section class="counter" id="disken">
-  <div class="track">
-    <div class="panel intro">
+<!-- ===== SEKSJON: I disken (produktkort som i en bakeridisk) ===== -->
+<section class="case" id="disken">
+  <div class="wrap">
+    <div class="case-head">
       <span class="kicker">I disken</span>
-      <h2 class="h2" style="margin-top:1rem">Det vi baker hver dag</h2>
+      <h2 class="h2">Det vi baker hver dag</h2>
       <p class="lead">Seks faste varer som kundene kommer tilbake for. Priser per stykk.</p><!-- PLASSHOLDER -->
-      <p class="hint"><i></i>Scroll for å se mer</p>
     </div>
-    <!-- PLASSHOLDER: priser og tidspunkt -->
-    <article class="panel">
-      <div class="pic"><span class="when">Ferdig kl. 06.40</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-surdeig"/></svg></div>
-      <h3>Surdeigsbrød <small>kr 78</small></h3>
-      <p>Hever i 36 timer. Sprø skorpe og holder seg i flere dager.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Ferdig kl. 04.30</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-grov"/></svg></div>
-      <h3>Grovbrød med rug <small>kr 62</small></h3>
-      <p>Ekstra grovt med solsikkekjerner. Kundenes favoritt til matpakken.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Ferdig kl. 06.00</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-bolle"/></svg></div>
-      <h3>Skillingsbolle <small>kr 39</small></h3>
-      <p>Med kardemomme i deigen og godt med kanel i hver runde.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">To runder daglig</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-baguette"/></svg></div>
-      <h3>Baguette <small>kr 42</small></h3>
-      <p>Ny runde klokka halv tre, så den er sprø til middag.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Ferdig kl. 05.15</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-rund"/></svg></div>
-      <h3>Rundstykker, 4 stk. <small>kr 48</small></h3>
-      <p>Lyse, grove eller med havre. Klar til morgenleveransene.</p>
-    </article>
-    <article class="panel">
-      <div class="pic"><span class="when">Ferdig kl. 10.00</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-fyrste"/></svg></div>
-      <h3>Fyrstekake <small>kr 189</small></h3>
-      <p>Mandelfyll og mørdeig. Holder til 8–10 personer.</p>
-    </article>
+    <div class="shelf"><!-- PLASSHOLDER: priser og tidspunkt -->
+      <article class="item fav">
+        <div class="item-pic"><span class="ribbon">Dagens favoritt</span><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-surdeig"/></svg><span class="tag">kr 78</span></div>
+        <h3>Surdeigsbrød</h3>
+        <p>Hever i 36 timer. Sprø skorpe og holder seg i flere dager.</p>
+        <span class="when">Ferdig kl. 06.40</span>
+      </article>
+      <article class="item">
+        <div class="item-pic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-grov"/></svg><span class="tag">kr 62</span></div>
+        <h3>Grovbrød med rug</h3>
+        <p>Ekstra grovt med solsikkekjerner. Kundenes favoritt til matpakken.</p>
+        <span class="when">Ferdig kl. 04.30</span>
+      </article>
+      <article class="item">
+        <div class="item-pic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-bolle"/></svg><span class="tag">kr 39</span></div>
+        <h3>Skillingsbolle</h3>
+        <p>Med kardemomme i deigen og godt med kanel i hver runde.</p>
+        <span class="when">Ferdig kl. 06.00</span>
+      </article>
+      <article class="item">
+        <div class="item-pic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-baguette"/></svg><span class="tag">kr 42</span></div>
+        <h3>Baguette</h3>
+        <p>Ny runde klokka halv tre, så den er sprø til middag.</p>
+        <span class="when">To runder daglig</span>
+      </article>
+      <article class="item">
+        <div class="item-pic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-rund"/></svg><span class="tag">kr 48</span></div>
+        <h3>Rundstykker, 4 stk.</h3>
+        <p>Lyse, grove eller med havre. Klar til morgenleveransene.</p>
+        <span class="when">Ferdig kl. 05.15</span>
+      </article>
+      <article class="item">
+        <div class="item-pic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#l-fyrste"/></svg><span class="tag">kr 189</span></div>
+        <h3>Fyrstekake</h3>
+        <p>Mandelfyll og mørdeig. Holder til 8–10 personer.</p>
+        <span class="when">Ferdig kl. 10.00</span>
+      </article>
+    </div>
   </div>
-  <div class="progress" aria-hidden="true"><i></i></div>
 </section>
 
 <!-- ===== SEKSJON: 36 timer (BRANSJEDETALJ, ekte rekkefølge) ===== -->
@@ -363,7 +376,7 @@
   <div class="wrap">
     <figure>
       <blockquote id="quote">«Vi har fått fredagsfrokost fra Brekke i fire år. Den har ikke kommet for sent én eneste gang, og ingen på kontoret vil bytte.»</blockquote>
-      <figcaption>Ingrid Sæle, kontorleder i et regnskapsbyrå på Os</figcaption>
+      <figcaption><span class="av" aria-hidden="true">IS</span><span>Ingrid Sæle, kontorleder i et regnskapsbyrå på Os</span></figcaption>
     </figure>
   </div>
 </section>
