@@ -1130,6 +1130,12 @@ textarea {
   border-radius: 999px
 }
 
+.plan .tag.ghost {
+  background: transparent;
+  color: var(--navy-muted);
+  box-shadow: inset 0 0 0 1px var(--navy-line)
+}
+
 .plan h3 {
   font-size: 24px;
   letter-spacing: -.03em;
