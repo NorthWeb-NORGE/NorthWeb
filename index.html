@@ -438,11 +438,13 @@
             </ul>
             <a href="#kontakt" class="btn btn-snow" data-pkg="Proff bilder">Velg Proff bilder</a>
           </div>
-          <div class="plan rv d2">
-            <h3>Nettbutikk</h3>
+          <div class="plan muted rv d2">
+            <h3>Nettbutikk – på forespørsel</h3>
             <p class="desc">Selg produktene dine på nett med trygg betaling.</p>
-            <div class="price">17 999 <small>kr</small></div>
+            <div class="price">fra 17 999 <small>kr</small></div>
             <div class="vat">eks. mva · engangspris</div>
+            <p class="note">Omfang avtales før vi starter. Inkluderer opptil ca. 20 produkter, Vipps og
+              kortbetaling.</p>
             <ul>
               <li><svg>
                   <use href="#check" />
@@ -460,13 +462,21 @@
                   <use href="#check" />
                 </svg>Opplæring i å legge inn varer</li>
             </ul>
-            <a href="#kontakt" class="btn btn-glass" data-pkg="Nettbutikk">Velg Nettbutikk</a>
+            <a href="#kontakt" class="btn btn-glass" data-pkg="Nettbutikk">Be om tilbud</a>
           </div>
         </div>
-        <div class="addon rv">
-          <div><b>Drift og support</b> – hosting, sikkerhet, backup og små endringer.</div>
-          <div><b>499 kr</b> / mnd</div>
+        <div class="addon-tiers rv">
+          <div class="tier">
+            <div class="tier-head"><b>Basis</b><span>299 kr <small>/ mnd eks. mva</small></span></div>
+            <p>Hosting, SSL, sikkerhetsoppdateringer, og at vi kan gjenopprette en tidligere versjon av siden.
+              Endringer faktureres per time.</p>
+          </div>
+          <div class="tier">
+            <div class="tier-head"><b>Pluss</b><span>499 kr <small>/ mnd eks. mva</small></span></div>
+            <p>Alt i Basis, pluss opptil 45 minutter endringer per måned (ikke overførbart).</p>
+          </div>
         </div>
+        <p class="addon-note rv">Endringer utover det som er inkludert: 700 kr per time eks. mva.</p>
       </div>
     </section>
 
@@ -576,7 +586,7 @@
               <div class="pkg" role="radiogroup" aria-label="Pakke">
                 <label><input type="radio" name="pakke" value="Basic"><span>Basic</span></label>
                 <label><input type="radio" name="pakke" value="Proff bilder" checked><span>Proff bilder</span></label>
-                <label><input type="radio" name="pakke" value="Nettbutikk"><span>Nettbutikk</span></label>
+                <label><input type="radio" name="pakke" value="Nettbutikk"><span>Nettbutikk (på forespørsel)</span></label>
                 <label><input type="radio" name="pakke" value="Usikker"><span>Usikker</span></label>
               </div>
             </div>
