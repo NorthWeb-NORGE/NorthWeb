@@ -99,13 +99,13 @@
           </svg><span><b>14 dager</b> fra start til lansering</span></div>
         <div><svg>
             <use href="#check" />
-          </svg><span><b>Fast pris</b> – ingen timer som tikker</span></div>
+          </svg><span><b>Fast pris</b> på pakken</span></div>
         <div><svg>
             <use href="#check" />
           </svg><span><b>Du eier</b> domene og innhold</span></div>
         <div><svg>
             <use href="#check" />
-          </svg><span><b>Support</b> når du trenger det</span></div>
+          </svg><span><b>Hjelp</b> etter lansering</span></div>
       </div>
     </div>
 
@@ -325,10 +325,10 @@
             </div>
           </div>
           <div class="tile t-d rv d1">
-            <h3>Endringer på minutter.</h3>
-            <p>Send en melding, så fikser vi det. Ofte samme dag.</p>
+            <h3>Endringer på en arbeidsdag.</h3>
+            <p>Små endringer ordner vi raskt – inkludert i Pluss.</p>
             <div class="viz">
-              <div class="big-num">&lt;24<small> timer</small></div>
+              <div class="big-num">1<small> arbeidsdag</small></div>
             </div>
           </div>
           <div class="tile t-e rv d2">
@@ -465,16 +465,23 @@
             <a href="#kontakt" class="btn btn-glass" data-pkg="Nettbutikk">Be om tilbud</a>
           </div>
         </div>
-        <div class="addon-tiers rv">
-          <div class="tier">
-            <div class="tier-head"><b>Basis</b><span>299 kr <small>/ mnd eks. mva</small></span></div>
-            <p>Hosting, SSL, sikkerhetsoppdateringer, og at vi kan gjenopprette en tidligere versjon av siden.
-              Endringer faktureres per time.</p>
-          </div>
-          <div class="tier">
-            <div class="tier-head"><b>Pluss</b><span>499 kr <small>/ mnd eks. mva</small></span></div>
-            <p>Alt i Basis, pluss opptil 45 minutter endringer per måned (ikke overførbart).</p>
-          </div>
+        <p class="addon-lead rv">Velg ett nivå for drift og support:</p>
+        <div class="addon-tiers rv" role="radiogroup" aria-label="Drift og support, velg ett nivå">
+          <label class="tier">
+            <input type="radio" name="support-tier" value="Basis">
+            <div class="tier-body">
+              <div class="tier-head"><b>Basis</b><span>299 kr <small>/ mnd eks. mva</small></span></div>
+              <p>Hosting, SSL, sikkerhetsoppdateringer, og at vi kan gjenopprette en tidligere versjon av siden.
+                Endringer faktureres per time.</p>
+            </div>
+          </label>
+          <label class="tier">
+            <input type="radio" name="support-tier" value="Pluss">
+            <div class="tier-body">
+              <div class="tier-head"><b>Pluss</b><span>499 kr <small>/ mnd eks. mva</small></span></div>
+              <p>Alt i Basis, pluss opptil 45 minutter endringer per måned (ikke overførbart).</p>
+            </div>
+          </label>
         </div>
         <p class="addon-note rv">Endringer utover det som er inkludert: 700 kr per time eks. mva.</p>
       </div>
@@ -492,7 +499,7 @@
             vi svarer når du ringer.</p>
           <div class="stats rv d3">
             <div><b>100 %</b><span>Engasjert</span></div>
-            <div><b>24/7</b><span>Support</span></div>
+            <div><b>1 dag</b><span>Svartid</span></div>
             <div><b>2 uker</b><span>Levering</span></div>
           </div>
         </div>
@@ -520,8 +527,13 @@
         <div class="faq">
           <details class="rv">
             <summary>Hva koster det egentlig?</summary>
-            <p>Prisen står i pakken du velger – en fast engangspris. I tillegg kommer domene (ca. 150 kr i året) og
-              eventuelt drift og support til 199 kr i måneden. Ingen skjulte kostnader.</p>
+            <p>Prisen står i pakken du velger – en fast engangspris. I tillegg kommer domene (ca. 150 kr i året), og
+              drift og support hvis du vil ha det: Basis til 299 kr i måneden eller Pluss til 499 kr i måneden. Ingen
+              skjulte kostnader.</p>
+          </details>
+          <details class="rv">
+            <summary>Hvordan betaler jeg?</summary>
+            <p>Du ser utkastet gratis. Sier du ja, betaler du 50 % før vi bygger og resten ved lansering.</p>
           </details>
           <details class="rv">
             <summary>Hva om jeg ikke liker utkastet?</summary>
@@ -529,9 +541,19 @@
               setter i gang.</p>
           </details>
           <details class="rv">
+            <summary>Hva er inkludert i byggingen?</summary>
+            <p>Gratis utkast først. To endringsrunder er inkludert mens vi bygger. Flere runder faktureres per time
+              (700 kr/t eks. mva).</p>
+          </details>
+          <details class="rv">
             <summary>Kan jeg endre innholdet selv?</summary>
             <p>Ja, vi kan sette opp et enkelt verktøy for tekst og bilder. De fleste foretrekker likevel å bare sende
               oss en melding, så ordner vi det.</p>
+          </details>
+          <details class="rv">
+            <summary>Hva må jeg levere selv?</summary>
+            <p>I Basic leverer du tekst og bilder selv, vi kan skrive tekstene mot tillegg. Proff bilder og Nettbutikk
+              inkluderer tekster og fotografering fra oss.</p>
           </details>
           <details class="rv">
             <summary>Hvor tar dere bilder?</summary>

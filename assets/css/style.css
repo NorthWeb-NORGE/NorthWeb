@@ -1199,18 +1199,53 @@ textarea {
   margin-top: auto
 }
 
+.addon-lead {
+  margin-top: 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--snow)
+}
+
 .addon-tiers {
-  margin-top: 20px;
+  margin-top: 12px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px
 }
 
 .tier {
+  display: block;
+  position: relative;
+  cursor: pointer
+}
+
+.tier input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none
+}
+
+.tier-body {
+  height: 100%;
   border-radius: var(--radius);
   padding: 22px 26px;
   box-shadow: inset 0 0 0 1px var(--navy-line);
-  color: var(--navy-muted)
+  color: var(--navy-muted);
+  transition: box-shadow .15s ease, background .15s ease
+}
+
+.tier:hover .tier-body {
+  box-shadow: inset 0 0 0 1px rgba(143, 209, 255, .4)
+}
+
+.tier input:checked+.tier-body {
+  background: rgba(143, 209, 255, .06);
+  box-shadow: inset 0 0 0 1.5px var(--ice)
+}
+
+.tier input:focus-visible+.tier-body {
+  outline: 2px solid var(--ice);
+  outline-offset: 2px
 }
 
 .tier-head {
@@ -1224,7 +1259,23 @@ textarea {
 .tier-head b {
   font-size: 18px;
   font-weight: 700;
-  color: var(--snow)
+  color: var(--snow);
+  display: flex;
+  align-items: center;
+  gap: 9px
+}
+
+.tier-head b::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--navy-muted)
+}
+
+.tier input:checked+.tier-body .tier-head b::before {
+  box-shadow: inset 0 0 0 5px var(--ice)
 }
 
 .tier-head span {
