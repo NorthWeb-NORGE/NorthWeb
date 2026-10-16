@@ -1294,7 +1294,9 @@ textarea {
 .tier-head small {
   font-size: 12px;
   font-weight: 500;
-  color: var(--navy-muted)
+  color: var(--navy-muted);
+  letter-spacing: normal;
+  margin-left: 3px
 }
 
 .tier p {
