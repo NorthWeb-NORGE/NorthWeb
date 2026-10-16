@@ -86,6 +86,11 @@
     a.addEventListener('click', function () { var r = document.querySelector('input[name="pakke"][value="' + a.dataset.pkg + '"]'); if (r) r.checked = true; });
   });
 
+  // Support-tier cards in the pricing section preselect the same choice in the form
+  document.querySelectorAll('input[name="support-tier"]').forEach(function (t) {
+    t.addEventListener('change', function () { var r = document.querySelector('input[name="support"][value="' + t.value + '"]'); if (r) r.checked = true; });
+  });
+
   // Contact form: step 1 emails a code, step 2 verifies it and delivers the message (see /api)
   var form = document.getElementById('contactForm'), verify = document.getElementById('verifyForm');
   var formBtn = document.getElementById('formBtn'), verifyBtn = document.getElementById('verifyBtn'), resendBtn = document.getElementById('resendBtn');

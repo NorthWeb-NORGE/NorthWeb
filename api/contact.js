@@ -3,6 +3,7 @@
 const L = require('./_lib');
 
 const PACKAGES = ['Basic', 'Proff bilder', 'Nettbutikk', 'Usikker'];
+const SUPPORT = ['Ingen ennå', 'Basis', 'Pluss'];
 const ERRORS = {
   wrong: [400, 'Feil kode. Sjekk e-posten og prøv igjen.'],
   expired: [400, 'Koden har gått ut. Be om en ny kode.'],
@@ -29,10 +30,11 @@ module.exports = async function handler(req, res) {
     const navn = L.oneLine(b.navn, 80);
     const bedrift = L.oneLine(b.bedrift, 120) || '-';
     const pakke = PACKAGES.includes(b.pakke) ? b.pakke : 'Usikker';
+    const support = SUPPORT.includes(b.support) ? b.support : 'Ingen ennå';
     const melding = L.clean(b.melding, 5000) || '(ingen melding)';
     if (!navn) return L.send(res, 400, { error: 'Navn mangler.' });
 
-    const rows = [['Navn', navn], ['Bedrift', bedrift], ['E-post', email + ' ✓ bekreftet'], ['Pakke', pakke]];
+    const rows = [['Navn', navn], ['Bedrift', bedrift], ['E-post', email + ' ✓ bekreftet'], ['Pakke', pakke], ['Drift og support', support]];
     await L.sendMail({
       to: L.env('CONTACT_TO', 'kontakt@northweb.no'),
       replyTo: email,
